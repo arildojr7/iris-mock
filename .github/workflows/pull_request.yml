@@ -17,11 +17,9 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2.4.2
 
-      - name: Run `iris-mock-plugin` checks
-        run: ./gradlew :iris-mock-plugin:ktlintCheck
+      - name: Run checks
+        run: ./gradlew ktlintCheck
 
-      - name: Run `sample` checks
-        run: ./gradlew :sample:ktlintCheck
 
   build:
     runs-on: ubuntu-latest
