@@ -1,0 +1,42 @@
+name: Run Checks
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  run-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 11
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2.4.2
+
+      - name: Run `iris-mock-plugin` checks
+        run: ./gradlew :iris-mock-plugin:ktlintCheck
+
+      - name: Run `sample` checks
+        run: ./gradlew :sample:ktlintCheck
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 11
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2.4.2
+
+      - name: Build `iris-mock-plugin`
+        run: ./gradlew :iris-mock-plugin:assemble
+
+      - name: Build `sample`
+        run: ./gradlew :sample:assembleDebug
