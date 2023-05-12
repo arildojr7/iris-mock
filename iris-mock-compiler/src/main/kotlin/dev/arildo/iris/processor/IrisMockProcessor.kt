@@ -25,6 +25,7 @@ class IrisMockProcessor(
             .filterIsInstance<KSClassDeclaration>()
 
         // Exit from the processor in case nothing is annotated with @IrisMockInterceptor
+        // TODO fix error when there's none annotated class
         if (!symbols.iterator().hasNext()) return emptyList()
 
         val file = codeGenerator.createNewFile(
