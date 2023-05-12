@@ -40,7 +40,6 @@ class IrisMockVisitor(apiVersion: Int, next: ClassVisitor) : ClassVisitor(apiVer
     inner class IrisMockMethodAdapter(originalVisitor: MethodVisitor) :
         MethodVisitor(api, originalVisitor) {
 
-
         override fun visitCode() {
             visitVarInsn(Opcodes.ALOAD, 0)
 

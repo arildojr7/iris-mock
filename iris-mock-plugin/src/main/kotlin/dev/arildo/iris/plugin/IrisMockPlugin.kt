@@ -11,7 +11,6 @@ import org.gradle.kotlin.dsl.getByType
 class IrisMockPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         target.pluginManager.withPlugin("com.android.application") {
-
             val androidComponents = target.extensions
                 .getByType(AndroidComponentsExtension::class)
 
