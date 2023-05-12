@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -35,6 +36,12 @@ android {
     }
 }
 
+kotlin.sourceSets.main {
+    kotlin.srcDirs(
+        file("build/generated/ksp/main/kotlin")
+    )
+}
+
 dependencies {
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -43,6 +50,9 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.7.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
+
+    implementation(project(":iris-mock"))
+    ksp(project(":iris-mock-compiler"))
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
