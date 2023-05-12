@@ -15,3 +15,4 @@
 local.properties
 /.idea
 *.gpg
+/iris-mock-plugin/build/
