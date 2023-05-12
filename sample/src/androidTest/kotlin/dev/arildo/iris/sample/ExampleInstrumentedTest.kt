@@ -1,4 +1,4 @@
-package dev.arildo.iris.mock
+package dev.arildo.iris.sample
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

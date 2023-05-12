@@ -1,8 +1,12 @@
 pluginManagement {
+    plugins {
+        kotlin("jvm") version "1.7.10"
+    }
     repositories {
         google()
         mavenCentral()
         gradlePluginPortal()
+        mavenLocal()
     }
 }
 dependencyResolutionManagement {
@@ -10,8 +14,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        mavenLocal()
     }
 }
 
-rootProject.name = "iris mock"
-include(":app")
+rootProject.name = "iris-mock"
+include(":sample")

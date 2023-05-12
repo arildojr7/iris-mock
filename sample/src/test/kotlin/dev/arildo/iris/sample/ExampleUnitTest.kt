@@ -1,4 +1,4 @@
-package dev.arildo.iris.mock
+package dev.arildo.iris.sample
 
 import org.junit.Test
 
