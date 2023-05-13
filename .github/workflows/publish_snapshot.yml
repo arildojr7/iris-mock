@@ -1,9 +1,9 @@
 name: publish
 
-on: push
-#  push:
-#    tags:
-#      - '*-snapshot'
+on:
+  push:
+    tags:
+      - '*-snapshot'
 
 jobs:
   snapshot:
