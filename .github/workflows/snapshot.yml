@@ -6,7 +6,7 @@ on: push
 #      - '*-snapshot'
 
 jobs:
-  snapshot:
+  publish:
     env:
       IS_RELEASE: false
       SONATYPE_USER: ${{ secrets.SONATYPE_USER }}
