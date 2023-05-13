@@ -1,12 +1,12 @@
-name: publish-snapshot
+name: publish
 
-on: push
-#  push:
-#    tags:
-#      - '*-snapshot'
+on:
+  push:
+    tags:
+      - '*-snapshot'
 
 jobs:
-  build:
+  snapshot:
     env:
       IS_RELEASE: false
       SONATYPE_USER: ${{ secrets.SONATYPE_USER }}
