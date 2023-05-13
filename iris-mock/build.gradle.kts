@@ -69,4 +69,5 @@ signing {
 dependencies {
     api("com.squareup.okhttp3:okhttp:3.14.9")
     api("com.squareup.okio:okio:2.8.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
 }

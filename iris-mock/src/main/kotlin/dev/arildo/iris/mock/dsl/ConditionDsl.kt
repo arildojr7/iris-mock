@@ -1,10 +1,13 @@
 @file:JvmMultifileClass
 @file:Suppress("unused")
+
 package dev.arildo.iris.mock.dsl
 
 import dev.arildo.iris.mock.IrisMockCondition
 import dev.arildo.iris.mock.IrisMockScope
 import dev.arildo.iris.mock.util.SUCCESS_CODE
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.runBlocking
 
 infix fun IrisMockCondition.mockResponse(response: String) {
     if (shouldIntercept) {
@@ -13,6 +16,6 @@ infix fun IrisMockCondition.mockResponse(response: String) {
     }
 }
 
-infix fun IrisMockCondition.then(block: IrisMockCondition.() -> Unit) {
-    if (shouldIntercept) block(this)
+infix fun IrisMockCondition.then(block: suspend IrisMockCondition.() -> Unit) = runBlocking(IO) {
+    if (shouldIntercept) block()
 }
