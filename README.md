@@ -43,7 +43,7 @@ repositories {
 ```
 
 #### Code
-Just create a class implementing the `Interceptor` interface and annotate it with `@IrisMockInterceptor`. That's all. The interceptor will be automatically injected at `OkHttp`
+Just create a class implementing the `Interceptor` interface and annotate it with `@IrisMockInterceptor`. That's all. The interceptor will be automatically injected at `OkHttp` 😎
 
 ```kotlin
 @IrisMockInterceptor
@@ -62,8 +62,7 @@ class MyInterceptor : Interceptor {
 
 ## Roadmap
 - Add support to [Ktor](https://github.com/ktorio/ktor)
-- Add support to coroutines
-- Add a DSL to ease modifications/mocks
+- Expand DSL
 - and many other cool things
 
 ## Contributing
