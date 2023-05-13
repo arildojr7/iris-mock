@@ -22,7 +22,7 @@ btw, Iris is my daughter's name 🥰
 #### Dependencies
 
 ```kotlin
-// add plugin to app module `build.gradle.kts`
+// add plugin to app module build.gradle.kts
 plugins {
     id("com.google.devtools.ksp")
     id("dev.arildo.iris-mock-plugin") version "0.0.1-SNAPSHOT"
@@ -34,7 +34,7 @@ dependencies {
     ksp("dev.arildo:iris-mock-compiler:0.0.1-SNAPSHOT")
 }
 
-// as there's no stable release yet, you need to add these lines on `settings.gradle.kts`
+// as there's no stable release yet, you need to add these lines on settings.gradle.kts
 repositories {
     maven {
         url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
