@@ -1,13 +1,15 @@
 <p align="center">
   <img src="assets/iris-mock-header.png" />
 </p>
-A kotlin-first tool to intercept android network calls, modify requests/responses and mock entire APIs.
+A kotlin-first tool to intercept android network calls, modify requests/responses and mock entire APIs. Also includes a cool DSL, that help to reduce boilerplate code and simplify development. 
 <br><br>
 btw, Iris is my daughter's name 🥰
 
 ## Features
 - Works with Retrofit, Volley and every libs that depend on OkHttp
 - Allow intercept call on 3rd-party libs
+- [DSL](https://kotlinlang.org/docs/type-safe-builders.html) to avoid boilerplate
+
 
 ## Why use iris mock?
 - A centralized tool to log, intercept and modify requests/response
@@ -23,13 +25,20 @@ btw, Iris is my daughter's name 🥰
 // add plugin to app module `build.gradle.kts`
 plugins {
     id("com.google.devtools.ksp")
-    id("dev.arildo.iris-mock-plugin") version "0.0.1"
+    id("dev.arildo.iris-mock-plugin") version "0.0.1-SNAPSHOT"
 }
 
 // add dependencies
 dependencies {
-    implementation("dev.arildo:iris-mock:0.0.1")
-    ksp("dev.arildo:iris-mock-compiler:0.0.1")
+    implementation("dev.arildo:iris-mock:0.0.1-SNAPSHOT")
+    ksp("dev.arildo:iris-mock-compiler:0.0.1-SNAPSHOT")
+}
+
+// as there's no stable release yet, you need to add these lines on `settings.gradle.kts`
+repositories {
+    maven {
+        url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+    }
 }
 ```
 
@@ -39,8 +48,14 @@ Just create a class implementing the `Interceptor` interface and annotate it wit
 ```kotlin
 @IrisMockInterceptor
 class MyInterceptor : Interceptor {
-    override fun intercept(chain: Interceptor.Chain) : Response {
-        return chain.proceed(chain.request())
+    override fun intercept(chain: Interceptor.Chain) = irisMockScope(chain) {
+        onGet(contains = "user/profile") mockResponse userProfileJson
+        onPost(endsWith = "/login") then {
+            delay(2_000) // supports coroutine 😎
+            if (requestContains("validPassword")) mockResponse(successLoginJson)
+            else mockResponse(errorPasswordJson)
+        }
+        startLogger() // you can log requests
     }
 }
 ```
