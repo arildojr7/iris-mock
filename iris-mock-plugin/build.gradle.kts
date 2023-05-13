@@ -1,6 +1,7 @@
 plugins {
     id("com.gradle.plugin-publish") version "1.2.0"
     `kotlin-dsl`
+    `signing`
 }
 
 configure<JavaPluginExtension> {
@@ -19,6 +20,24 @@ gradlePlugin {
     }
 }
 
+publishing {
+    repositories {
+        maven {
+            name = "OSSRH"
+            url = uri(getMavenUrl())
+            credentials {
+                username = System.getenv("SONATYPE_USER")
+                password = System.getenv("SONATYPE_PASSWORD")
+            }
+        }
+    }
+}
+signing {
+    setRequired {
+        gradle.taskGraph.allTasks.any { it is PublishToMavenRepository }
+    }
+}
+
 dependencies {
     implementation("com.android.tools.build:gradle:7.2.2")
     compileOnly("dev.gradleplugins:gradle-api:7.6")
@@ -26,4 +45,10 @@ dependencies {
     arrayOf("asm", "asm-util", "asm-commons").forEach {
         compileOnly("org.ow2.asm:$it:9.4")
     }
+}
+
+fun getMavenUrl(): String = if (System.getenv("IS_RELEASE") == "true") {
+    "" // TODO add release maven url
+} else {
+    "https://s01.oss.sonatype.org/content/repositories/snapshots/"
 }
