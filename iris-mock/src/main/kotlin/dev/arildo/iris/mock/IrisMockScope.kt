@@ -1,6 +1,7 @@
 package dev.arildo.iris.mock
 
 import dev.arildo.iris.mock.util.CONTENT_TYPE
+import dev.arildo.iris.mock.util.HttpCode
 import dev.arildo.iris.mock.util.IRIS_HEADER
 import dev.arildo.iris.mock.util.IRIS_MOCK_TAG
 import dev.arildo.iris.mock.util.MEDIA_TYPE
@@ -21,9 +22,9 @@ class IrisMockScope internal constructor(chain: Interceptor.Chain) {
 
     internal var enableLog = false
 
-    internal fun createCustomResponse(code: Int, body: String) {
+    internal fun createCustomResponse(httpCode: HttpCode, body: String = "") {
         customResponse = Response.Builder()
-            .code(code)
+            .code(httpCode.code)
             .protocol(Protocol.HTTP_2)
             .request(request)
             .message(body)
