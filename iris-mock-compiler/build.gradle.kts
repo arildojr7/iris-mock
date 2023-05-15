@@ -56,6 +56,11 @@ signing {
     sign(publishing.publications["maven"])
 }
 
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
 dependencies {
     implementation("com.google.devtools.ksp:symbol-processing-api:1.7.10-1.0.6")
 }

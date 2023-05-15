@@ -2,9 +2,7 @@ package dev.arildo.iris.sample
 
 import dev.arildo.iris.mock.annotation.IrisMockInterceptor
 import dev.arildo.iris.mock.dsl.irisMockScope
-import dev.arildo.iris.mock.dsl.logRequests
 import dev.arildo.iris.mock.dsl.mockResponse
-import dev.arildo.iris.mock.dsl.onGet
 import dev.arildo.iris.mock.dsl.onPost
 import dev.arildo.iris.mock.dsl.then
 import kotlinx.coroutines.delay
@@ -17,10 +15,5 @@ class FirstInterceptor : Interceptor {
             delay(2000)
             mockResponse("{\"data\" : \"Intercepted!\"}")
         }
-        onGet("") mockResponse mapOf(
-            "imageId" to 1234,
-            "imageUrl" to "https://imageurl.com"
-        )
-        logRequests()
     }
 }

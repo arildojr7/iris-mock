@@ -11,6 +11,8 @@ jobs:
       IS_RELEASE: true
       SONATYPE_USER: ${{ secrets.SONATYPE_USER }}
       SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+      GRADLE_PLUGIN_KEY: ${{ secrets.GRADLE_PLUGIN_KEY }}
+      GRADLE_PLUGIN_SECRET: ${{ secrets.GRADLE_PLUGIN_SECRET }}
       SIGNING_KEY_ID: ${{ secrets.GPG_KEY_ID }}
       SIGNING_PASSWORD: ${{ secrets.GPG_KEY_PASSWORD }}
       SIGNING_KEY: ${{ secrets.GPG_FILE_BASE64 }}
@@ -32,12 +34,14 @@ jobs:
           echo "signing.password=${SIGNING_PASSWORD}" >> ~/.gradle/gradle.properties
           echo "signing.secretKeyRingFile=${HOME}/.gradle/secring.gpg" >> ~/.gradle/gradle.properties
           echo ${SIGNING_KEY} | base64 -d > ~/.gradle/secring.gpg
+          echo "gradle.publish.key=${GRADLE_PLUGIN_KEY}" >> ~/.gradle/gradle.properties
+          echo "gradle.publish.secret=${GRADLE_PLUGIN_SECRET}" >> ~/.gradle/gradle.properties
 
       - name: Publish iris-mock
         run: ./gradlew :iris-mock:publish
 
       - name: Publish iris-mock-plugin
-        run: ./gradlew :iris-mock-plugin:publish
+        run: ./gradlew :iris-mock-plugin:publishPlugins
 
       - name: Publish iris-mock-compiler
         run: ./gradlew :iris-mock-compiler:publish
