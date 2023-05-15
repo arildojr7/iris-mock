@@ -9,33 +9,27 @@ configure<JavaPluginExtension> {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
+group = findProperty("GROUP_ID").toString()
+version = findProperty("PLUGIN_VERSION").toString()
+
 gradlePlugin {
+    website.set("https://github.com/arildojr7/iris-mock")
+    vcsUrl.set("https://github.com/arildojr7/iris-mock.git")
+
     plugins {
         create("irisMockPlugin") {
             id = findProperty("PLUGIN_ID").toString()
-            group = findProperty("GROUP_ID").toString()
-            version = findProperty("PLUGIN_VERSION").toString()
+            displayName = "Plugin to inject iris-mock custom interceptors at OkHttp"
+            description = "Injects custom interceptors at bytecode level in OkHttpClient. See GitHub for more info"
+            tags.set(listOf("interceptor", "android", "okhttp", "mock"))
             implementationClass = "dev.arildo.iris.plugin.IrisMockPlugin"
         }
     }
 }
 
-publishing {
-    repositories {
-        maven {
-            name = "OSSRH"
-            url = uri(getMavenUrl())
-            credentials {
-                username = System.getenv("SONATYPE_USER")
-                password = System.getenv("SONATYPE_PASSWORD")
-            }
-        }
-    }
-}
-signing {
-    setRequired {
-        gradle.taskGraph.allTasks.any { it is PublishToMavenRepository }
-    }
+java {
+    withJavadocJar()
+    withSourcesJar()
 }
 
 dependencies {
@@ -45,10 +39,4 @@ dependencies {
     arrayOf("asm", "asm-util", "asm-commons").forEach {
         compileOnly("org.ow2.asm:$it:9.4")
     }
-}
-
-fun getMavenUrl(): String = if (System.getenv("IS_RELEASE") == "true") {
-    "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-} else {
-    "https://s01.oss.sonatype.org/content/repositories/snapshots/"
 }

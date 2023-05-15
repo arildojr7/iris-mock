@@ -2,7 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
-    id("dev.arildo.iris-mock-plugin") version "0.0.1-SNAPSHOT"
+    id("dev.arildo.iris-mock-plugin") version "1.0.0"
 }
 
 android {
