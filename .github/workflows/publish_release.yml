@@ -1,6 +1,9 @@
 name: publish
 
-on: push
+on:
+  push:
+    tags-ignore:
+      - '*-snapshot'
 
 jobs:
   release:
@@ -37,8 +40,8 @@ jobs:
       - name: Publish iris-mock
         run: ./gradlew :iris-mock:publish
 
-      - name: Publish iris-mock-compiler
-        run: ./gradlew :iris-mock-compiler:publish
-
       - name: Publish iris-mock-plugin
         run: ./gradlew :iris-mock-plugin:publishPlugins
+
+      - name: Publish iris-mock-compiler
+        run: ./gradlew :iris-mock-compiler:publish
