@@ -48,7 +48,7 @@ dependencies {
 }
 
 fun getMavenUrl(): String = if (System.getenv("IS_RELEASE") == "true") {
-    "" // TODO add release maven url
+    "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
 } else {
     "https://s01.oss.sonatype.org/content/repositories/snapshots/"
 }

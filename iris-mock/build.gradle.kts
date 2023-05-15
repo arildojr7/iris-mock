@@ -40,7 +40,6 @@ publishing {
                 }
                 scm {
                     connection.set("scm:git:git://github.com/arildojr7/iris-mock.git")
-                    developerConnection.set("scm:git:ssh://example.com/my-library.git")
                     url.set("https://github.com/arildojr7/iris-mock")
                 }
             }
@@ -50,7 +49,7 @@ publishing {
     repositories {
         maven {
             name = "OSSRH"
-            url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+            url = uri(getMavenUrl())
             credentials {
                 username = System.getenv("SONATYPE_USER")
                 password = System.getenv("SONATYPE_PASSWORD")
@@ -71,4 +70,10 @@ dependencies {
     api("com.squareup.okio:okio:2.8.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+}
+
+fun getMavenUrl(): String = if (System.getenv("IS_RELEASE") == "true") { // todo refactor
+    "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+} else {
+    "https://s01.oss.sonatype.org/content/repositories/snapshots/"
 }
