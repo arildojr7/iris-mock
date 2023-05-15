@@ -27,7 +27,7 @@ publishing {
                 url.set("https://github.com/arildojr7/iris-mock")
                 licenses {
                     license {
-                        name.set("The Apache License, Version 2.0") // todo review licence
+                        name.set("The Apache License, Version 2.0")
                         url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
                     }
                 }
@@ -70,4 +70,5 @@ dependencies {
     api("com.squareup.okhttp3:okhttp:3.14.9")
     api("com.squareup.okio:okio:2.8.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
 }

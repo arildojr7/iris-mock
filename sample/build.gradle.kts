@@ -52,11 +52,11 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
 
-//    implementation(project(":iris-mock"))
-//    ksp(project(":iris-mock-compiler"))
+    implementation(project(":iris-mock"))
+    ksp(project(":iris-mock-compiler"))
 
-    implementation("dev.arildo:iris-mock:0.0.1-SNAPSHOT")
-    ksp("dev.arildo:iris-mock-compiler:0.0.1-SNAPSHOT")
+//    implementation("dev.arildo:iris-mock:0.0.1-SNAPSHOT")
+//    ksp("dev.arildo:iris-mock-compiler:0.0.1-SNAPSHOT")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
