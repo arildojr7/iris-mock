@@ -66,7 +66,7 @@ class MyInterceptor : Interceptor {
 - and many other cool things
 
 ## Contributing
-Feel free to open PRs and submit feature suggestions via the repository issues. Everything's welcome
+Feel free to open PRs and submit feature suggestions via the repository issues. Everything's welcome 😎
 
 ## Support
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://bmc.link/arildojr7)

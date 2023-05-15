@@ -25,27 +25,31 @@ class IrisMockProcessor(
             .filterIsInstance<KSClassDeclaration>()
 
         // Exit from the processor in case nothing is annotated with @IrisMockInterceptor
-        // TODO fix error when there's none annotated class
-        if (!symbols.iterator().hasNext()) return emptyList()
+        if (!symbols.iterator().hasNext()) {
+            runCatching {
+                createClassFile(resolver).use { it += blankInterceptorTemplate }
+            }
+            return emptyList()
+        }
 
-        val file = codeGenerator.createNewFile(
-            dependencies = Dependencies(false, *resolver.getAllFiles().toList().toTypedArray()),
-            packageName = "dev.arildo.iris.mock",
-            fileName = "IrisWrapperInterceptor"
-        )
+        createClassFile(resolver).use {
+            it += "package dev.arildo.iris.mock\n\n"
+            symbols.forEach { symbol -> symbol.accept(ImportsVisitor(it), Unit) }
 
-        file += "package dev.arildo.iris.mock\n\n"
+            it += firstPartClass()
+            symbols.forEach { symbol -> symbol.accept(InitVisitor(it), Unit) }
 
-        symbols.forEach { it.accept(ImportsVisitor(file), Unit) }
-
-        file += firstPartClass()
-        symbols.forEach { it.accept(InitVisitor(file), Unit) }
-
-        file += secondPartClass()
-        file.close()
+            it += secondPartClass()
+        }
 
         return symbols.filterNot { it.validate() }.toList()
     }
+
+    private fun createClassFile(resolver: Resolver) = codeGenerator.createNewFile(
+        dependencies = Dependencies(false, *resolver.getAllFiles().toList().toTypedArray()),
+        packageName = "dev.arildo.iris.mock",
+        fileName = "IrisWrapperInterceptor"
+    )
 
     inner class ImportsVisitor(private val file: OutputStream) : KSVisitorVoid() {
         override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: Unit) {
