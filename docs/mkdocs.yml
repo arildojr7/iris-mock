@@ -1,1 +1,40 @@
-site_name: My Docs
+site_name: iris mock
+site_url: https://irismock.arildo.dev
+
+theme:
+  name: material
+  icon:
+    repo: material/github
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: grey
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: yellow
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - search.suggest
+    - search.share
+
+plugins:
+  - search
+repo_url: https://github.com/arildojr7/iris-mock
+repo_name: arildojr7/iris-mock
+
+nav:
+  - Home: index.md
+  - Installation:
+      - Overview: install/install.md
