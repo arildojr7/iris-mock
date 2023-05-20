@@ -1,6 +1,6 @@
-package dev.arildo.iris.processor
+package dev.arildo.iris.processor.factory
 
-internal const val blankInterceptorTemplate = """
+internal fun blankInterceptorFactory() = """
 package dev.arildo.iris.mock
 
 import okhttp3.Interceptor

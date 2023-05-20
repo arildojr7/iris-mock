@@ -1,8 +1,9 @@
 @file:JvmMultifileClass
-@file:Suppress("unused")
+@file:Suppress("unused", "UnusedReceiverParameter")
 
 package dev.arildo.iris.mock.dsl
 
+import dev.arildo.iris.mock.IrisMock
 import dev.arildo.iris.mock.IrisMockScope
 import dev.arildo.iris.mock.util.readRequestBody
 import okhttp3.Interceptor
@@ -25,10 +26,15 @@ fun IrisMockScope.requestBodyContains(value: String, ignoreCase: Boolean = true)
     readRequestBody(request).contains(value, ignoreCase)
 
 /**
- * Enable logs for request calls. There is no difference if this function
- * is used at the beginning or at the end of the interceptor.
+ * Enable logs for all calls.
  */
-fun IrisMockScope.logRequests() {
-    // TODO improve
-    enableLog = true
+fun IrisMockScope.enableLogs() {
+    IrisMock.enableLogs = true
+}
+
+/**
+ * Disable logs for all calls.
+ */
+fun IrisMockScope.disableLogs() {
+    IrisMock.enableLogs = false
 }
