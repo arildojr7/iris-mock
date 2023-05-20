@@ -1,22 +1,18 @@
 site_name: iris mock
 site_url: https://irismock.arildo.dev
+repo_url: https://github.com/arildojr7/iris-mock
+repo_name: arildojr7/iris-mock
 copyright: Copyright &copy; 2023 Arildo Borges Jr
+
 extra_css:
   - stylesheets/extra.css
+
 theme:
   name: material
   logo: assets/icon2.png
-  font:
-    text: Roboto
-    code: Roboto Mono
   palette:
-    # Palette toggle for light mode
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      primary: custom
-
-
-
+    scheme: slate
+    primary: custom
   features:
     - navigation.tabs
     - navigation.tabs.sticky
@@ -27,7 +23,6 @@ theme:
     - navigation.indexes
     - search.suggest
     - search.highlight
-    - header.autohide
     - search.share
     - content.action.edit
     - content.code.annotate
@@ -36,10 +31,7 @@ theme:
 
 plugins:
   - search
-repo_url: https://github.com/arildojr7/iris-mock
-repo_name: arildojr7/iris-mock
 
-# Extensions
 markdown_extensions:
   - abbr
   - admonition
@@ -81,13 +73,24 @@ markdown_extensions:
       custom_checkbox: true
   - pymdownx.tilde
 
-nav:
-  - Home: index.md
-  - How to use:
-      - Overview: install/install.md
 extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/arildojr7/iris-mock
     - icon: fontawesome/brands/instagram
       link: https://www.instagram.com/arildoborgesjr
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Configure Gradle: getting-started/configure-gradle.md
+      - Creating Interceptor: getting-started/creating-interceptor.md
+  - DSL functions:
+      Conditionals: dsl/dsl.md
+      Headers: dsl/dsl.md
+      Interceptors: dsl/dsl.md
+      Logs: dsl/dsl.md
+      Responses: dsl/dsl.md
+  - Changelog: changelog/changelog.md
+  - FAQ: faq/faq.md
+  - Contributing: contributing/contributing.md

@@ -11,70 +11,22 @@
 <br>
 A kotlin-first tool to intercept android network calls, modify requests/responses and mock entire APIs. Also includes a cool DSL, that helps to reduce boilerplate code and simplify development.
 <br><br>
-btw, Iris is my daughter's name
+btw, Iris is my daughter's name :smiling_face_with_3_hearts:
 
 ## Features
 - Works with Retrofit, Volley and every libs that depend on OkHttp
-- Allow intercept call on 3rd-party libs
-- [DSL](https://kotlinlang.org/docs/type-safe-builders.html) to avoid boilerplate
+- Allow intercept call on 3rd party libs
+- [DSL](https://kotlinlang.org/docs/type-safe-builders.html){ target=_blank } to avoid boilerplate
 
-
-``` { .kotlin .copy }
-class test() : Interceptor {
-    override fun test() {
-    }
-}
-```
 
 ## Why use iris mock?
 - A centralized tool to log, intercept and modify requests/response
-- As it works at bytecode level, can be used with 3rd-party libs
-- Compiler developed using [KSP](https://github.com/google/ksp), up to 2x faster than KAPT
+- As it works at bytecode level, can be used with 3rd party libs
+- Compiler developed using [KSP](https://github.com/google/ksp){ target=_blank }, up to 2x faster than KAPT
 - No need to do SSL things, like inject certificate
 
-## How to use
-
-#### Dependencies
-
-```kotlin
-// add plugin to app module build.gradle.kts
-plugins {
-    id("com.google.devtools.ksp")
-    id("dev.arildo.iris-mock-plugin") version "1.0.0"
-}
-
-// add dependencies
-dependencies {
-    implementation("dev.arildo:iris-mock:1.0.0")
-    ksp("dev.arildo:iris-mock-compiler:1.0.0")
-}
-```
-
-#### Code
-Just create a class implementing the `Interceptor` interface and annotate it with `@IrisMockInterceptor`. That's all. The interceptor will be automatically injected at `OkHttp`
-
-```kotlin
-@IrisMockInterceptor
-class MyInterceptor : Interceptor {
-    override fun intercept(chain: Interceptor.Chain) = irisMockScope(chain) {
-        onGet(contains = "user/profile") mockResponse userProfileJson
-        onPost(endsWith = "/login") then {
-            delay(2_000) // supports coroutine 
-            if (requestContains("validPassword")) mockResponse(successLoginJson)
-            else mockResponse(errorPasswordJson)
-        }
-        startLogger() // you can log requests
-    }
-}
-```
 
 ## Roadmap
-- Add support to [Ktor](https://github.com/ktorio/ktor)
+- Add support to [Ktor](https://github.com/ktorio/ktor){ target=_blank }
 - Expand DSL
 - and many other cool things
-
-## Contributing
-Feel free to open PRs and submit feature suggestions via the repository issues. Everything's welcome 😎
-
-## Support
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://bmc.link/arildojr7)
