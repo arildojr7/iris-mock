@@ -1,40 +1,93 @@
 site_name: iris mock
 site_url: https://irismock.arildo.dev
-
+copyright: Copyright &copy; 2023 Arildo Borges Jr
+extra_css:
+  - stylesheets/extra.css
 theme:
   name: material
-  icon:
-    repo: material/github
+  logo: assets/icon2.png
+  font:
+    text: Roboto
+    code: Roboto Mono
   palette:
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: grey
-      toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
-    # Palette toggle for dark mode
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      primary: yellow
-      toggle:
-        icon: material/brightness-4
-        name: Switch to light mode
+      primary: custom
+
+
 
   features:
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.sections
     - navigation.expand
+    - navigation.footer
+    - navigation.top
+    - navigation.indexes
     - search.suggest
+    - search.highlight
+    - header.autohide
     - search.share
+    - content.action.edit
+    - content.code.annotate
+    - content.code.copy
+    - content.code.select
 
 plugins:
   - search
 repo_url: https://github.com/arildojr7/iris-mock
 repo_name: arildojr7/iris-mock
 
+# Extensions
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:materialx.emoji.twemoji
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: squidfunk
+      repo: mkdocs-material
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
 nav:
   - Home: index.md
-  - Installation:
+  - How to use:
       - Overview: install/install.md
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/arildojr7/iris-mock
+    - icon: fontawesome/brands/instagram
+      link: https://www.instagram.com/arildoborgesjr
