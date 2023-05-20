@@ -31,9 +31,8 @@ class IrisMockProcessor(
             return emptyList()
         }
 
-        createClassFile(resolver).use {
-            it += "package dev.arildo.iris.mock\n\n"
-            symbols.forEach { symbol -> symbol.accept(ImportsVisitor(it), Unit) }
+        // check if only Interceptor classes have been annotated with @IrisMockInterceptor
+        assertClassesAreInterceptorSubType(symbols)
 
         createClassFile(resolver).use { classFile ->
             classFile += wrapperInterceptorFactory(symbols)
@@ -48,23 +47,11 @@ class IrisMockProcessor(
         fileName = "IrisWrapperInterceptor"
     )
 
-    inner class ImportsVisitor(private val file: OutputStream) : KSVisitorVoid() {
-        override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: Unit) {
-            if (classDeclaration.classKind != ClassKind.CLASS) {
-                logger.error(
-                    "Only classes can be annotated with @IrisMockInterceptor",
-                    classDeclaration
-                )
-                return
+    private fun assertClassesAreInterceptorSubType(symbols: Sequence<KSClassDeclaration>) {
+        symbols.forEach { kClass ->
+            if (!kClass.superTypes.all { it.resolve().toString() == "Interceptor" }) {
+                throw ClassCastException("Only classes implementing okhttp3.Interceptor can be annotated: ${kClass.simpleName.asString()}")
             }
-
-            file += "import ${classDeclaration.qualifiedName?.asString()}\n"
-        }
-    }
-
-    inner class InitVisitor(private val file: OutputStream) : KSVisitorVoid() {
-        override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: Unit) {
-            file += "        ${classDeclaration.simpleName.asString()}(),\n"
         }
     }
 
