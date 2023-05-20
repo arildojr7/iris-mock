@@ -1,4 +1,4 @@
-name: Deploy Jekyll with GitHub Pages dependencies preinstalled
+name: publish docs
 
 on:
   # Runs on pushes targeting the default branch
@@ -38,7 +38,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: ./site
+          path: ./docs/site
 
   # Deployment job
   deploy:
