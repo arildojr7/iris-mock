@@ -27,6 +27,12 @@ gradlePlugin {
     }
 }
 
+signing {
+    setRequired {
+        gradle.taskGraph.allTasks.any { it is PublishToMavenRepository }
+    }
+}
+
 java {
     withJavadocJar()
     withSourcesJar()
