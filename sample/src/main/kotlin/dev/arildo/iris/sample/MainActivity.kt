@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     private fun fetchData() {
         lifecycleScope.launch(Dispatchers.IO) {
             val dummyRequest = DummyRequest()
-            val result = RetrofitInitializer.apiService().getUserProfile(dummyRequest)
+            val result = RetrofitInitializer.apiService().getUserProfile()
             withContext(Dispatchers.Main) {
                 binding.tvTest.text = result.body()?.data
             }
