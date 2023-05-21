@@ -9,13 +9,13 @@ You can choose to configure iris mock for entire project or just for a specific 
     // add plugin to app module build.gradle.kts
     plugins {
         id("com.google.devtools.ksp")
-        id("dev.arildo.iris-mock-plugin") version "1.0.0"
+        id("dev.arildo.iris-mock-plugin") version "1.0.1"
     }
 
     // add dependencies
     dependencies {
-        implementation("dev.arildo:iris-mock:1.0.0")
-        ksp("dev.arildo:iris-mock-compiler:1.0.0")
+        implementation("dev.arildo:iris-mock:1.0.1")
+        ksp("dev.arildo:iris-mock-compiler:1.0.1")
     }
     ```
 
@@ -34,7 +34,7 @@ You can choose to configure iris mock for entire project or just for a specific 
     // add plugin to app module build.gradle.kts
     plugins {
         id("com.google.devtools.ksp")
-        id("dev.arildo.iris-mock-plugin") version "1.0.0" apply false
+        id("dev.arildo.iris-mock-plugin") version "1.0.1" apply false
     }
 
     buildTypes {
@@ -44,8 +44,8 @@ You can choose to configure iris mock for entire project or just for a specific 
     }
 
     dependencies {
-        debugImplementation("dev.arildo:iris-mock:1.0.0")
-        kspDebug("dev.arildo:iris-mock-compiler:1.0.0")
+        debugImplementation("dev.arildo:iris-mock:1.0.1")
+        kspDebug("dev.arildo:iris-mock-compiler:1.0.1")
     }
     ```
 

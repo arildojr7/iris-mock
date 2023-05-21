@@ -86,11 +86,11 @@ nav:
       - Configure Gradle: getting-started/configure-gradle.md
       - Creating Interceptor: getting-started/creating-interceptor.md
   - DSL functions:
-      Conditionals: dsl/dsl.md
-      Headers: dsl/dsl.md
-      Interceptors: dsl/dsl.md
-      Logs: dsl/dsl.md
-      Responses: dsl/dsl.md
+      - Conditionals: dsl/dsl.md
+      - Headers: dsl/dsl.md
+      - Interceptors: dsl/dsl.md
+      - Logs: dsl/dsl.md
+      - Responses: dsl/dsl.md
   - Changelog: changelog/changelog.md
   - FAQ: faq/faq.md
   - Contributing: contributing/contributing.md
