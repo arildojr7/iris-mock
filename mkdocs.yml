@@ -2,6 +2,7 @@ site_name: iris mock
 site_url: https://irismock.arildo.dev
 repo_url: https://github.com/arildojr7/iris-mock
 repo_name: arildojr7/iris-mock
+edit_uri: ./edit/main/docs
 copyright: Copyright &copy; 2023 Arildo Borges Jr
 
 extra_css:
