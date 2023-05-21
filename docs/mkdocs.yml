@@ -1,0 +1,96 @@
+site_name: iris mock
+site_url: https://irismock.arildo.dev
+repo_url: https://github.com/arildojr7/iris-mock
+repo_name: arildojr7/iris-mock
+copyright: Copyright &copy; 2023 Arildo Borges Jr
+
+extra_css:
+  - stylesheets/extra.css
+
+theme:
+  name: material
+  logo: assets/icon2.png
+  palette:
+    scheme: slate
+    primary: custom
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.footer
+    - navigation.top
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.action.edit
+    - content.code.annotate
+    - content.code.copy
+    - content.code.select
+
+plugins:
+  - search
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:materialx.emoji.twemoji
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: squidfunk
+      repo: mkdocs-material
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/arildojr7/iris-mock
+    - icon: fontawesome/brands/instagram
+      link: https://www.instagram.com/arildoborgesjr
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Configure Gradle: getting-started/configure-gradle.md
+      - Creating Interceptor: getting-started/creating-interceptor.md
+  - DSL functions:
+      - Conditionals: dsl/dsl.md
+      - Headers: dsl/dsl.md
+      - Interceptors: dsl/dsl.md
+      - Logs: dsl/dsl.md
+      - Responses: dsl/dsl.md
+  - Changelog: changelog/changelog.md
+  - FAQ: faq/faq.md
+  - Contributing: contributing/contributing.md
