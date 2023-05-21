@@ -1,5 +1,5 @@
 @file:JvmMultifileClass
-@file:Suppress("unused")
+@file:Suppress("unused", "UnusedReceiverParameter")
 
 package dev.arildo.iris.mock.dsl
 
@@ -90,8 +90,8 @@ fun IrisMockCondition.mockCustomResponse(response: Map<String, Any?>, httpCode: 
  * }
  * ```
  */
-infix fun IrisMockCondition.then(block: suspend IrisMockCondition.() -> Unit) = runBlocking(IO) {
-    if (shouldIntercept) block()
+infix fun IrisMockCondition.then(block: suspend InterceptedScope.() -> Unit) = runBlocking(IO) {
+    if (shouldIntercept) block(InterceptedScope(method, shouldIntercept = true, irisMockScope))
 }
 
 /**

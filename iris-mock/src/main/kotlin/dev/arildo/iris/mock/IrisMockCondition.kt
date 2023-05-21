@@ -2,7 +2,7 @@ package dev.arildo.iris.mock
 
 import okhttp3.Request
 
-class IrisMockCondition internal constructor(
+open class IrisMockCondition internal constructor(
     internal val method: String,
     internal val shouldIntercept: Boolean,
     internal val irisMockScope: IrisMockScope

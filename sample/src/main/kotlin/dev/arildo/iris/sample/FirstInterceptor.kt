@@ -1,10 +1,12 @@
 package dev.arildo.iris.sample
 
 import dev.arildo.iris.mock.annotation.IrisMockInterceptor
+import dev.arildo.iris.mock.dsl.addHeader
 import dev.arildo.iris.mock.dsl.enableLogs
 import dev.arildo.iris.mock.dsl.irisMockScope
 import dev.arildo.iris.mock.dsl.mockResponse
 import dev.arildo.iris.mock.dsl.onGet
+import dev.arildo.iris.mock.dsl.onPost
 import dev.arildo.iris.mock.dsl.then
 import kotlinx.coroutines.delay
 import okhttp3.Interceptor
@@ -18,7 +20,11 @@ class FirstInterceptor : Interceptor {
 
         onGet(endsWith = "/public/characters") then {
             delay(2000)
+            addHeader("key" to "value")
             mockResponse("{\"data\" : \"Intercepted!\"}")
+        }
+        onPost(endsWith = "/login") then {
+            addHeader("key" to "value")
         }
         enableLogs()
     }
