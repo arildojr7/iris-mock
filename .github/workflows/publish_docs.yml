@@ -20,11 +20,11 @@ jobs:
         with:
           python-version: 3.x
       - run: pip install mkdocs-material pillow cairosvg
-      - run: cd docs && mkdocs build
+      - run: mkdocs build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: ./docs/site
+          path: ./site
 
   deploy:
     environment:
