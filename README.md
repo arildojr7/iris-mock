@@ -10,7 +10,7 @@
 
 A kotlin-first tool to intercept android network calls, modify requests/responses and mock entire APIs. Also includes a cool DSL, that helps to reduce boilerplate code and simplify development.
 <br><br>
-btw, Iris is my daughter's name
+btw, Iris is my daughter's name 🥰
 
 ## Features
 - Works with Retrofit, Volley and every libs that depend on OkHttp
@@ -54,7 +54,7 @@ class MyInterceptor : Interceptor {
             if (requestContains("validPassword")) mockResponse(successLoginJson)
             else mockResponse(errorPasswordJson)
         }
-        startLogger() // you can log requests
+        enableLogs() // you can log requests
     }
 }
 ```
