@@ -70,8 +70,15 @@ dependencies {
     api("com.squareup.okio:okio:2.8.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
+    testImplementation("io.mockk:mockk:1.13.5")
 }
-
+tasks.test {
+    useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
+}
 fun getMavenUrl(): String = if (System.getenv("IS_RELEASE") == "true") { // todo refactor
     "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
 } else {
