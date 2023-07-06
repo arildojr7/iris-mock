@@ -1,7 +1,6 @@
 package dev.arildo.iris.sample
 
 import dev.arildo.iris.mock.annotation.IrisMockInterceptor
-import dev.arildo.iris.mock.dsl.addHeader
 import dev.arildo.iris.mock.dsl.enableLogs
 import dev.arildo.iris.mock.dsl.irisMockScope
 import dev.arildo.iris.mock.dsl.mockResponse
@@ -20,11 +19,9 @@ class FirstInterceptor : Interceptor {
 
         onGet(endsWith = "/public/characters") then {
             delay(2000)
-            addHeader("key" to "value")
             mockResponse("{\"data\" : \"Intercepted!\"}")
         }
         onPost(endsWith = "/login") then {
-            addHeader("key" to "value")
         }
         enableLogs()
     }

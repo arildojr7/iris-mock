@@ -67,7 +67,7 @@ infix fun IrisMockCondition.mockResponse(response: Map<String, Any?>) {
  * ```
  *  @param response used as response body
  */
-fun IrisMockCondition.mockCustomResponse(response: Map<String, Any?>, httpCode: HttpCode = OK) {
+fun IrisMockCondition.mockCustomResponse(response: Map<String, String?>, httpCode: HttpCode = OK) {
     if (shouldIntercept) {
         IrisMockScope.logger.info("Mocking Response: [$method] ${irisMockScope.url}")
 

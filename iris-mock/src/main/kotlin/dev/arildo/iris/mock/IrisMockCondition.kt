@@ -1,9 +1,10 @@
 package dev.arildo.iris.mock
 
+import dev.arildo.iris.mock.util.Method
 import okhttp3.Request
 
 open class IrisMockCondition internal constructor(
-    internal val method: String,
+    internal val method: Method,
     internal val shouldIntercept: Boolean,
     internal val irisMockScope: IrisMockScope
 )
@@ -12,7 +13,7 @@ internal fun IrisMockScope.createCondition(
     request: Request,
     contains: String,
     endsWith: String,
-    method: String
+    method: Method
 ): IrisMockCondition {
     val url = request.url().toString()
     val chainMethod = request.method()
@@ -26,11 +27,11 @@ internal fun IrisMockScope.createCondition(
             }
 
             endsWith.isNotBlank() -> {
-                url.endsWith(endsWith, true) && chainMethod == method
+                url.endsWith(endsWith, true) && chainMethod == method.name
             }
 
             contains.isNotBlank() -> {
-                url.contains(contains, true) && chainMethod == method
+                url.contains(contains, true) && chainMethod == method.name
             }
 
             else -> throw IllegalArgumentException("Must provide a string to match on url")

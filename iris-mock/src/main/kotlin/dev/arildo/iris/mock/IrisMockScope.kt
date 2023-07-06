@@ -8,35 +8,42 @@ import dev.arildo.iris.mock.util.IRIS_MOCK_TAG
 import dev.arildo.iris.mock.util.MEDIA_TYPE
 import okhttp3.Interceptor
 import okhttp3.Protocol
-import okhttp3.Request
 import okhttp3.Response
 import okhttp3.ResponseBody
+import org.jetbrains.annotations.VisibleForTesting
 import java.util.logging.Logger
 
 class IrisMockScope internal constructor(chain: Interceptor.Chain) {
 
-    private var customResponse: Response? = null
+    @VisibleForTesting
+    internal var useCustomResponse = false
 
-    internal val request: Request = chain.request()
-    internal val url: String = request.url().toString()
+    internal val customResponse = Response.Builder()
+    internal val customRequest = chain.request().newBuilder()
+    internal val url = chain.request().url().toString()
 
     internal fun createCustomResponse(httpCode: HttpCode, body: String = "") {
-        customResponse = Response.Builder()
+        val request = customRequest.build()
+        useCustomResponse = true
+        customResponse
             .code(httpCode.code)
             .protocol(Protocol.HTTP_1_1)
             .request(request)
             .message(body)
             .body(ResponseBody.create(request.body()?.contentType(), body))
             .addHeader(CONTENT_TYPE, MEDIA_TYPE)
-            .build()
     }
 
     private fun createBlankResponse() = Response.Builder()
-        .request(request)
+        .request(customRequest.build())
+        .protocol(Protocol.HTTP_1_1)
+        .code(HttpCode.OK.code)
+        .message("")
         .addHeader(IRIS_HEADER_KEY, IRIS_HEADER_IGNORE)
         .build()
 
-    internal fun build(): Response = customResponse ?: createBlankResponse()
+    internal fun build(): Response =
+        if (useCustomResponse) customResponse.build() else createBlankResponse()
 
     companion object {
         internal val logger = Logger.getLogger(IRIS_MOCK_TAG)

@@ -23,7 +23,7 @@ fun irisMockScope(
  * @return true if it's included
  */
 fun IrisMockScope.requestBodyContains(value: String, ignoreCase: Boolean = true): Boolean =
-    readRequestBody(request).contains(value, ignoreCase)
+    readRequestBody(customRequest.build()).contains(value, ignoreCase)
 
 /**
  * Enable logs for all calls.
