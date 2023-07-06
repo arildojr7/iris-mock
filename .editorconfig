@@ -1,2 +1,0 @@
-[*.{kt,kts,gradle}]
-ktlint_code_style = ktlint_official
