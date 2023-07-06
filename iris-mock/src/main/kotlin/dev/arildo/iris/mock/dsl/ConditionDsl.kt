@@ -3,6 +3,7 @@
 
 package dev.arildo.iris.mock.dsl
 
+import dev.arildo.iris.mock.InterceptedScope
 import dev.arildo.iris.mock.IrisMockCondition
 import dev.arildo.iris.mock.IrisMockScope
 import dev.arildo.iris.mock.util.HttpCode
