@@ -2,7 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
-    id("dev.arildo.iris-mock-plugin") version "1.0.0" apply false
+    id("dev.arildo.iris-mock-plugin") version "1.0.0"
 }
 
 android {
@@ -23,9 +23,6 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
-        debug {
-            apply(plugin = "dev.arildo.iris-mock-plugin")
         }
     }
     compileOptions {
@@ -55,7 +52,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
 
-    debugImplementation(project(":iris-mock"))
+    implementation(project(":iris-mock"))
     kspDebug(project(":iris-mock-compiler"))
 
 //    implementation("dev.arildo:iris-mock:0.0.1-SNAPSHOT")
