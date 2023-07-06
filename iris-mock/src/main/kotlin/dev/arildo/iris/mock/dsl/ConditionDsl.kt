@@ -1,8 +1,9 @@
 @file:JvmMultifileClass
-@file:Suppress("unused")
+@file:Suppress("unused", "UnusedReceiverParameter")
 
 package dev.arildo.iris.mock.dsl
 
+import dev.arildo.iris.mock.InterceptedScope
 import dev.arildo.iris.mock.IrisMockCondition
 import dev.arildo.iris.mock.IrisMockScope
 import dev.arildo.iris.mock.util.HttpCode
@@ -67,7 +68,7 @@ infix fun IrisMockCondition.mockResponse(response: Map<String, Any?>) {
  * ```
  *  @param response used as response body
  */
-fun IrisMockCondition.mockCustomResponse(response: Map<String, Any?>, httpCode: HttpCode = OK) {
+fun IrisMockCondition.mockCustomResponse(response: Map<String, String?>, httpCode: HttpCode = OK) {
     if (shouldIntercept) {
         IrisMockScope.logger.info("Mocking Response: [$method] ${irisMockScope.url}")
 
@@ -90,8 +91,8 @@ fun IrisMockCondition.mockCustomResponse(response: Map<String, Any?>, httpCode: 
  * }
  * ```
  */
-infix fun IrisMockCondition.then(block: suspend IrisMockCondition.() -> Unit) = runBlocking(IO) {
-    if (shouldIntercept) block()
+infix fun IrisMockCondition.then(block: suspend InterceptedScope.() -> Unit) = runBlocking(IO) {
+    if (shouldIntercept) block(InterceptedScope(method, shouldIntercept = true, irisMockScope))
 }
 
 /**
