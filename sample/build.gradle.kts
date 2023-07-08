@@ -2,7 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
-    id("dev.arildo.iris-mock-plugin") version "1.0.0"
+    id("dev.arildo.iris-mock-plugin") version "1.0.1"
 }
 
 android {
@@ -52,11 +52,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
 
-    implementation(project(":iris-mock"))
-    kspDebug(project(":iris-mock-compiler"))
-
-//    implementation("dev.arildo:iris-mock:0.0.1-SNAPSHOT")
-//    ksp("dev.arildo:iris-mock-compiler:0.0.1-SNAPSHOT")
+//    kotlinCompilerPluginClasspath(project(":iris-mock-plugin"))
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

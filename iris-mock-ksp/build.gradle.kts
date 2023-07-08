@@ -62,7 +62,7 @@ java {
 }
 
 dependencies {
-    implementation("com.google.devtools.ksp:symbol-processing-api:1.7.10-1.0.6")
+    implementation("com.google.devtools.ksp:symbol-processing-api:1.8.21-1.0.11")
 }
 
 fun getMavenUrl(): String = if (System.getenv("IS_RELEASE") == "true") {

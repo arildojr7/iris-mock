@@ -12,4 +12,4 @@ internal const val ADD = "add"
 internal const val BUILD = "build"
 internal const val NETWORK_INTERCEPTORS = "networkInterceptors"
 
-internal const val IRIS_WRAPPER_INTERCEPTOR = "dev/arildo/iris/mock/IrisWrapperInterceptor"
+internal const val IRIS_WRAPPER_INTERCEPTOR = "dev/arildo/iris/mock/IrisMockWrapper"
