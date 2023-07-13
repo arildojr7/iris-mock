@@ -30,7 +30,7 @@ class IrisMockGradlePlugin : KotlinCompilerPluginSupportPlugin {
                 }
             }
         }
-        target.extensions.create("irisMock", TemplateGradleExtension::class.java)
+        target.extensions.create("irisMock", IrisMockGradleExtension::class.java)
     }
 
     override fun getCompilerPluginId(): String = "dev.arildo.iris-mock-plugin"
@@ -45,7 +45,7 @@ class IrisMockGradlePlugin : KotlinCompilerPluginSupportPlugin {
 
     override fun applyToCompilation(kotlinCompilation: KotlinCompilation<*>): Provider<List<SubpluginOption>> {
         val project = kotlinCompilation.target.project
-        val extension = project.extensions.getByType(TemplateGradleExtension::class.java)
+        val extension = project.extensions.getByType(IrisMockGradleExtension::class.java)
         val annotation = extension.redactedAnnotation
 
         if (annotation.get() == DEFAULT_ANNOTATION) { // todo verify why this check

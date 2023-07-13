@@ -7,7 +7,7 @@ import javax.inject.Inject
 internal const val DEFAULT_ANNOTATION = "dev/arildo/iris/mock/IrisWrapperInterceptor"
 internal const val VERSION = "1.0.10"
 
-abstract class TemplateGradleExtension @Inject constructor(objects: ObjectFactory) {
+abstract class IrisMockGradleExtension @Inject constructor(objects: ObjectFactory) {
     /**
      * Define a custom redacted marker annotation. The -annotations artifact won't be automatically
      * added to dependencies if you define your own!

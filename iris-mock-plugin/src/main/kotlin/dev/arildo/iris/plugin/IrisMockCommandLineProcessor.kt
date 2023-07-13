@@ -8,7 +8,7 @@ import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.config.CompilerConfigurationKey
 
 @ExperimentalCompilerApi
-class TemplateCommandLineProcessor : CommandLineProcessor {
+class IrisMockCommandLineProcessor : CommandLineProcessor {
     companion object {
         private const val OPTION_STRING = "string"
         private const val OPTION_FILE = "file"
