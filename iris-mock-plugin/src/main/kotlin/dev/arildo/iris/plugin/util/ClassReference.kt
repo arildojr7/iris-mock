@@ -34,7 +34,6 @@ import org.jetbrains.kotlin.resolve.DescriptorUtils
 import org.jetbrains.kotlin.resolve.descriptorUtil.parents
 import org.jetbrains.kotlin.resolve.scopes.DescriptorKindFilter
 import org.jetbrains.kotlin.resolve.scopes.getDescriptorsFiltered
-import kotlin.LazyThreadSafetyMode.NONE
 
 /**
  * Used to create a common type between [KtClassOrObject] class references and [ClassDescriptor]
@@ -124,17 +123,15 @@ public sealed class ClassReference : Comparable<ClassReference>, AnnotatedRefere
     ) : ClassReference() {
         override val fqName: FqName = classId.asSingleFqName()
 
-        override val constructors: List<MemberFunctionReference.Psi> by lazy(NONE) {
-            clazz.allConstructors.map { it.toFunctionReference(this) }
-        }
+        override val constructors: List<MemberFunctionReference.Psi>
+            get() = clazz.allConstructors.map { it.toFunctionReference(this) }
 
-        override val functions: List<MemberFunctionReference.Psi> by lazy(NONE) {
-            clazz
+        override val functions: List<MemberFunctionReference.Psi>
+            get() = clazz
                 .children
                 .filterIsInstance<KtClassBody>()
                 .flatMap { it.functions }
                 .map { it.toFunctionReference(this) }
-        }
 
         override val annotations: List<AnnotationReference.Psi>
             get() = clazz.annotationEntries.map { it.toAnnotationReference(this, module) }
@@ -153,13 +150,11 @@ public sealed class ClassReference : Comparable<ClassReference>, AnnotatedRefere
                     ?.forEach { add(it.toPropertyReference(this@Psi)) }
             }
 
-        override val typeParameters: List<TypeParameterReference.Psi> by lazy(NONE) {
-            getTypeParameterReferences()
-        }
+        override val typeParameters: List<TypeParameterReference.Psi>
+            get() = getTypeParameterReferences()
 
-        private val directSuperTypeReferences: List<TypeReference> by lazy(NONE) {
-            clazz.superTypeListEntries.mapNotNull { it.typeReference?.toTypeReference(this, module) }
-        }
+        private val directSuperTypeReferences: List<TypeReference>
+            get() = clazz.superTypeListEntries.mapNotNull { it.typeReference?.toTypeReference(this, module) }
 
         private val enclosingClassesWithSelf
             get() = clazz.parents
@@ -225,17 +220,15 @@ public sealed class ClassReference : Comparable<ClassReference>, AnnotatedRefere
     ) : ClassReference() {
         override val fqName: FqName = classId.asSingleFqName()
 
-        override val constructors: List<MemberFunctionReference.Descriptor> by lazy(NONE) {
-            clazz.constructors.map { it.toFunctionReference(this) }
-        }
+        override val constructors: List<MemberFunctionReference.Descriptor>
+            get() = clazz.constructors.map { it.toFunctionReference(this) }
 
-        override val functions: List<MemberFunctionReference.Descriptor> by lazy(NONE) {
-            clazz.unsubstitutedMemberScope
+        override val functions: List<MemberFunctionReference.Descriptor>
+            get() = clazz.unsubstitutedMemberScope
                 .getContributedDescriptors(kindFilter = DescriptorKindFilter.FUNCTIONS)
                 .filterIsInstance<FunctionDescriptor>()
                 .filterNot { it is ConstructorDescriptor }
                 .map { it.toFunctionReference(this) }
-        }
 
         override val annotations: List<AnnotationReference.Descriptor>
             get() = clazz.annotations.map { it.toAnnotationReference(this, module) }
@@ -250,10 +243,9 @@ public sealed class ClassReference : Comparable<ClassReference>, AnnotatedRefere
                 }
                 .map { it.toPropertyReference(this) }
 
-        private val directSuperTypeReferences: List<TypeReference> by lazy(NONE) {
-            clazz.typeConstructor.supertypes.map { it.toTypeReference(this, module) }
+        private val directSuperTypeReferences: List<TypeReference>
+            get() = clazz.typeConstructor.supertypes.map { it.toTypeReference(this, module) }
                 .filterNot { it.asClassReference().fqName.asString() == "kotlin.Any" }
-        }
 
         private val enclosingClassesWithSelf
             get() = clazz.parents
@@ -334,24 +326,6 @@ public fun FqName.toClassReferenceOrNull(module: ModuleDescriptor): ClassReferen
 public fun FqName.toClassReference(module: ModuleDescriptor): ClassReference {
     return toClassReferenceOrNull(module)
         ?: throw Exception("Couldn't resolve ClassReference for $this.")
-}
-
-public fun ClassReference.generateClassName(
-    separator: String = "_",
-    suffix: String = ""
-): ClassId {
-    val className = enclosingClassesWithSelf().joinToString(separator = separator) { it.shortName }
-    return ClassId(packageFqName, FqName(className + suffix), false)
-}
-
-public fun ClassReference.asClassName(): ClassName = classId.asClassName()
-
-public fun ClassReference.asTypeName(): TypeName {
-    return if (!isGenericClass()) {
-        asClassName()
-    } else {
-        asClassName().parameterizedBy(typeParameters.map { it.typeVariableName })
-    }
 }
 
 /**

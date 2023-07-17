@@ -1,8 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp")
-    id("dev.arildo.iris-mock-plugin") version "1.0.1"
+    id("dev.arildo.iris-mock-plugin") version "1.0.10"
 }
 
 android {
@@ -25,22 +24,13 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
+
     buildFeatures {
         viewBinding = true
     }
     kotlinOptions {
         jvmTarget = "1.8"
     }
-}
-
-kotlin.sourceSets.main {
-    kotlin.srcDirs(
-        file("build/generated/ksp/main/kotlin")
-    )
 }
 
 dependencies {

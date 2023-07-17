@@ -12,10 +12,6 @@ public sealed class TypeParameterReference {
   public abstract val upperBounds: List<TypeReference>
   public abstract val declaringClass: ClassReference
 
-  public val typeVariableName: TypeVariableName by lazy(NONE) {
-    TypeVariableName(name, upperBounds.map { it.asTypeName() })
-  }
-
   public class Psi internal constructor(
     override val name: String,
     override val upperBounds: List<TypeReference.Psi>,

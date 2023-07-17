@@ -34,21 +34,6 @@ public sealed class MemberFunctionReference : AnnotatedReference, FunctionRefere
 
   public abstract fun isAbstract(): Boolean
   public abstract fun isConstructor(): Boolean
-  public fun resolveGenericReturnTypeOrNull(
-    implementingClass: ClassReference
-  ): ClassReference? {
-    return returnType
-      ?.resolveGenericTypeOrNull(implementingClass)
-      ?.asClassReferenceOrNull()
-  }
-
-  public fun resolveGenericReturnType(implementingClass: ClassReference): ClassReference =
-    resolveGenericReturnTypeOrNull(implementingClass)
-      ?: throw AnvilCompilationExceptionFunctionReference(
-        functionReference = this,
-        message = "Unable to resolve return type for function $fqName with the implementing " +
-          "class ${implementingClass.fqName}."
-      )
 
   override fun toString(): String = "$fqName()"
 

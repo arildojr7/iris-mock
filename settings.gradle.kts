@@ -1,6 +1,5 @@
 pluginManagement {
     plugins {
-        id("com.google.devtools.ksp") version "1.8.21-1.0.11"
         kotlin("jvm") version "1.8.21"
     }
     repositories {
@@ -29,5 +28,3 @@ rootProject.name = "iris-mock"
 include(":sample")
 include(":iris-mock")
 include(":iris-mock-plugin")
-//include(":iris-mock-ksp")
-//include(":kotlin-plugin")

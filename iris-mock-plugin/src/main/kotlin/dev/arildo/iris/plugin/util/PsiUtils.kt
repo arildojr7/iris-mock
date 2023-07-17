@@ -146,9 +146,7 @@ public fun PsiElement.requireFqName(
       // https://github.com/JetBrains/kotlin/blob/master/spec-docs/function-types.md
       val parameterCount = parameters.size
       if (parameterCount !in 0..22) {
-        throw Exception(
-          message = "Couldn't find function type for $parameterCount parameters."
-        )
+        throw Exception("Couldn't find function type for $parameterCount parameters.")
       }
       return FqName("kotlin.jvm.functions.Function$parameterCount")
     }
@@ -352,4 +350,8 @@ public inline fun <T, R : Any> Iterable<T>.firstNotNullOfOrNull(transform: (T) -
     }
   }
   return null
+}
+
+public fun PsiElement?.fq(module: ModuleDescriptor): ClassReference? {
+  return this?.requireFqName(module)?.toClassReference(module)
 }

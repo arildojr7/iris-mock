@@ -68,25 +68,9 @@ public sealed class TypeReference {
             message = "Unable to convert a type reference to a class reference."
         )
 
-    public fun asTypeNameOrNull(): TypeName? = typeNameOrNull
-    public fun asTypeName(): TypeName = typeName
-
     public abstract fun resolveGenericTypeOrNull(
         implementingClass: ClassReference
     ): TypeReference?
-
-    public fun resolveGenericTypeNameOrNull(
-        implementingClass: ClassReference
-    ): TypeName? {
-        asClassReferenceOrNull()?.let {
-            // Then it's a normal type and not a generic type.
-            return asTypeName()
-        }
-
-        return resolveGenericTypeOrNull(implementingClass)
-            ?.asTypeNameOrNull()
-            ?: asTypeNameOrNull()
-    }
 
     public fun isGenericType(): Boolean = asClassReferenceOrNull()?.isGenericClass() ?: true
     public abstract fun isFunctionType(): Boolean
@@ -226,7 +210,7 @@ public sealed class TypeReference {
                                 val bounds = findExtendsBound().map { it.asClassName(module) }
                                 return TypeVariableName(text, bounds)
                             } else {
-                                throw Exception(message = "Couldn't resolve fqName.")
+                                throw Exception("Couldn't resolve fqName.")
                             }
                         }
 

@@ -4,14 +4,12 @@ import com.squareup.kotlinpoet.AnnotationSpec
 import com.squareup.kotlinpoet.MemberName
 import dev.arildo.iris.plugin.util.AnnotationReference.Descriptor
 import dev.arildo.iris.plugin.util.AnnotationReference.Psi
-import org.gradle.kotlin.dsl.provideDelegate
 import org.jetbrains.kotlin.descriptors.ModuleDescriptor
 import org.jetbrains.kotlin.descriptors.annotations.AnnotationDescriptor
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.psi.KtAnnotationEntry
 import org.jetbrains.kotlin.psi.KtValueArgument
 import org.jetbrains.kotlin.resolve.descriptorUtil.annotationClass
-import kotlin.LazyThreadSafetyMode.NONE
 
 private const val DEFAULT_SCOPE_INDEX = 0
 
@@ -78,7 +76,8 @@ public sealed class AnnotationReference {
           argument.toAnnotationArgumentReference(this, index)
         }
 
-    private val defaultScope by lazy(NONE) { computeScope(DEFAULT_SCOPE_INDEX) }
+    private val defaultScope: ClassReference?
+      get() = computeScope(DEFAULT_SCOPE_INDEX)
 
     // We need the scope so often that it's better to cache the value. Since the index could be
     // potentially different, only cache the value for the default index.
@@ -99,9 +98,8 @@ public sealed class AnnotationReference {
     override val arguments: List<AnnotationArgumentReference.Descriptor>
       get() = annotation.allValueArguments.toList().map { it.toAnnotationArgumentReference(this) }
 
-    private val scope by lazy(NONE) {
-      arguments.singleOrNull { it.name == "scope" }?.value<ClassReference>()
-    }
+    private val scope: ClassReference?
+      get() = arguments.singleOrNull { it.name == "scope" }?.value<ClassReference>()
 
     override fun declaringClass(): ClassReference.Descriptor {
       return super.declaringClass() as ClassReference.Descriptor
@@ -126,9 +124,7 @@ public fun AnnotationDescriptor.toAnnotationReference(
   declaringClass: ClassReference.Descriptor?,
   module: ModuleDescriptor
 ): Descriptor {
-  val annotationClass = annotationClass ?: throw Exception(
-    message = "Couldn't find the annotation class for $fqName",
-  )
+  val annotationClass = annotationClass ?: throw Exception("Couldn't find the annotation class for $fqName")
 
   return Descriptor(
     annotation = this,

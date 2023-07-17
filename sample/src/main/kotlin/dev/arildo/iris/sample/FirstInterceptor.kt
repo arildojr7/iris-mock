@@ -10,9 +10,6 @@ import okhttp3.Interceptor
 @IrisMockInterceptor
 class FirstInterceptor : Interceptor {
 
-    init {
-    }
-
     override fun intercept(chain: Interceptor.Chain) = irisMockScope(chain) {
         enableLogs()
 

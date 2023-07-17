@@ -1,35 +1,26 @@
 package dev.arildo.iris.plugin
 
+import com.google.auto.service.AutoService
 import org.jetbrains.kotlin.compiler.plugin.AbstractCliOption
 import org.jetbrains.kotlin.compiler.plugin.CliOption
 import org.jetbrains.kotlin.compiler.plugin.CommandLineProcessor
-import org.jetbrains.kotlin.compiler.plugin.ExperimentalCompilerApi
 import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.config.CompilerConfigurationKey
 
-@ExperimentalCompilerApi
-class IrisMockCommandLineProcessor : CommandLineProcessor {
-    companion object {
-        private const val OPTION_STRING = "string"
-        private const val OPTION_FILE = "file"
+internal const val ENABLE_ONLY_ON_DEBUG_VARIANT = "enableOnlyOnDebugVariant"
+val ARG_ENABLE_ONLY_ON_DEBUG_VARIANT =
+    CompilerConfigurationKey<Boolean>(ENABLE_ONLY_ON_DEBUG_VARIANT)
 
-        val ARG_STRING = CompilerConfigurationKey<String>(OPTION_STRING)
-        val ARG_FILE = CompilerConfigurationKey<String>(OPTION_FILE)
-    }
+@AutoService(CommandLineProcessor::class)
+class IrisMockCommandLineProcessor : CommandLineProcessor {
 
     override val pluginId: String = "dev.arildo.iris-mock-plugin"
 
-    override val pluginOptions: Collection<CliOption> = listOf(
+    override val pluginOptions: Collection<AbstractCliOption> = listOf(
         CliOption(
-            optionName = OPTION_STRING,
-            valueDescription = "string",
-            description = "sample string argument",
-            required = false,
-        ),
-        CliOption(
-            optionName = OPTION_FILE,
-            valueDescription = "file",
-            description = "sample file argument",
+            optionName = ENABLE_ONLY_ON_DEBUG_VARIANT,
+            valueDescription = "<true|false>",
+            description = "If true, Iris Mock injection and DSL will be available only on debug build variants",
             required = false,
         ),
     )
@@ -39,10 +30,11 @@ class IrisMockCommandLineProcessor : CommandLineProcessor {
         value: String,
         configuration: CompilerConfiguration
     ) {
-        return when (option.optionName) {
-            OPTION_STRING -> configuration.put(ARG_STRING, value)
-            OPTION_FILE -> configuration.put(ARG_FILE, value)
-            else -> throw IllegalArgumentException("Unexpected config option ${option.optionName}")
+        when (option.optionName) {
+            ENABLE_ONLY_ON_DEBUG_VARIANT -> configuration.put(
+                ARG_ENABLE_ONLY_ON_DEBUG_VARIANT,
+                value.toBoolean()
+            )
         }
     }
 }

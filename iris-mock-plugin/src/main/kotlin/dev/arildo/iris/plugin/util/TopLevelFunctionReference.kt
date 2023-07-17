@@ -105,8 +105,3 @@ public fun KtFunction.toTopLevelFunctionReference(
   return Psi(function = this, fqName = requireFqName(), module = module)
 }
 
-public fun FunctionDescriptor.toTopLevelFunctionReference(
-  module: AnvilModuleDescriptor,
-): Descriptor {
-  return Descriptor(function = this, module = module)
-}

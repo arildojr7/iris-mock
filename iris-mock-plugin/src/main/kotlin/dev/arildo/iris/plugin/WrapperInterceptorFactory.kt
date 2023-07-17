@@ -1,11 +1,9 @@
 package dev.arildo.iris.plugin
 
-import org.jetbrains.kotlin.psi.KtFile
+import dev.arildo.iris.plugin.util.ClassReference
 
-const val PACKAGE = "dev.arildo.iris.mock"
-
-internal fun wrapperInterceptorFactory(classes: List<KtFile>) = """
-package $PACKAGE
+internal fun wrapperInterceptorFactory(classes: Sequence<ClassReference.Psi>) =
+"""package dev.arildo.iris.mock
 
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -16,12 +14,11 @@ import okio.Okio
 import okio.buffer
 import dev.arildo.iris.mock.util.log
 import dev.arildo.iris.mock.IrisMock
-${classes.joinToString("\n") { "import ${it.packageFqName.asString()}.${it.name}" }}
 
-class IrisWrapperInterceptor : Interceptor {
+class IrisMockWrapper : Interceptor {
     private val headerPlaceholder = "IRIS_MOCK"
     private val interceptors = listOf<Interceptor>(
-${classes.joinToString(",\n") { "        ${it.name}()" }}
+${classes.joinToString(",\n") { "        ${it.fqName.asString()}()" }}
     )
     override fun intercept(chain: Interceptor.Chain): Response {
         interceptors.forEach {
@@ -35,4 +32,4 @@ ${classes.joinToString(",\n") { "        ${it.name}()" }}
         return response.takeIf { IrisMock.enableLogs }?.let { it.log() } ?: response
     }
 }
- """
+"""

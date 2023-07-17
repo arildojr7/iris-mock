@@ -25,8 +25,6 @@ public sealed class MemberPropertyReference : AnnotatedReference, PropertyRefere
 
   public override val module: AnvilModuleDescriptor get() = declaringClass.module
 
-  public val memberName: MemberName get() = MemberName(declaringClass.asClassName(), name)
-
   protected abstract val type: TypeReference?
 
   public override fun typeOrNull(): TypeReference? = type

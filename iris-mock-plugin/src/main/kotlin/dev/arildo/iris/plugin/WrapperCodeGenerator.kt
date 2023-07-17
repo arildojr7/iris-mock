@@ -1,40 +1,43 @@
 package dev.arildo.iris.plugin
 
 import com.google.auto.service.AutoService
+import dev.arildo.iris.plugin.util.ClassReference
 import dev.arildo.iris.plugin.util.CodeGenerator
-import dev.arildo.iris.plugin.util.GeneratedFile
+import dev.arildo.iris.plugin.util.IRIS_MOCK_INTERCEPTOR
+import dev.arildo.iris.plugin.util.IRIS_WRAPPER_NAME
+import dev.arildo.iris.plugin.util.IRIS_WRAPPER_PACKAGE
+import dev.arildo.iris.plugin.util.classAndInnerClassReferences
 import dev.arildo.iris.plugin.util.createGeneratedFile
-import org.intellij.lang.annotations.Language
+import dev.arildo.iris.plugin.util.fq
 import org.jetbrains.kotlin.descriptors.ModuleDescriptor
 import org.jetbrains.kotlin.psi.KtFile
 import java.io.File
 
 @AutoService(CodeGenerator::class)
-class WrapperCodeGenerator : CodeGenerator {
-    override fun generateCode(
+internal class WrapperCodeGenerator : PrivateCodeGenerator() {
+
+    override fun generateCodePrivate(
         codeGenDir: File,
         module: ModuleDescriptor,
         projectFiles: Collection<KtFile>
-    ): Collection<GeneratedFile> {
-        val annotatedClasses = projectFiles.filter {
-            it.annotations.any { it.name == "dev.arildo.iris.mock.annotation.IrisMockInterceptor" }
-        }
-
-        annotatedClasses.forEach {
-            println("@@@ ${it.name}")
-        }
-
-        @Language("kotlin")
-        val generatedClass = wrapperInterceptorFactory(annotatedClasses)
-
+    ) {
+        val annotatedClasses = projectFiles
+            .classAndInnerClassReferences(module)
+            .filter { it.isAnnotatedWithIrisMock() }
 
         createGeneratedFile(
             codeGenDir = codeGenDir,
-            packageName = PACKAGE,
-            fileName = "MeuExemplo",
-            content = generatedClass
+            packageName = IRIS_WRAPPER_PACKAGE,
+            fileName = IRIS_WRAPPER_NAME,
+            content = wrapperInterceptorFactory(annotatedClasses)
         )
-        return emptyList()
     }
 
+}
+
+private fun ClassReference.Psi.isAnnotatedWithIrisMock(): Boolean {
+    return annotations.any {
+        it.annotation.fq(module)?.fqName?.asString()?.contains(IRIS_MOCK_INTERCEPTOR)
+            ?: false
+    }
 }

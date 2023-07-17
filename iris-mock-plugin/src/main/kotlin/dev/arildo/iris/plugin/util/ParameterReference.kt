@@ -17,31 +17,12 @@ public sealed class ParameterReference : AnnotatedReference {
 
   protected abstract val declaringClass: ClassReference?
 
-  /**
-   * The type can be null for generic type parameters like `T`. In this case try to resolve the
-   * type with [TypeReference.resolveGenericTypeOrNull].
-   */
-  public fun typeOrNull(): TypeReference? = type
   public fun type(): TypeReference = type
     ?: throw AnvilCompilationExceptionParameterReference(
       parameterReference = this,
       message = "Unable to get type for the parameter with name $name of " +
         "function ${declaringFunction.fqName}"
     )
-
-  public fun resolveTypeNameOrNull(
-    implementingClass: ClassReference
-  ): TypeName? {
-    return type?.resolveGenericTypeNameOrNull(implementingClass)
-  }
-
-  public fun resolveTypeName(implementingClass: ClassReference): TypeName =
-    resolveTypeNameOrNull(implementingClass)
-      ?: throw AnvilCompilationExceptionParameterReference(
-        message = "Unable to resolve type name for parameter with name $name with the " +
-          "implementing class ${implementingClass.fqName}.",
-        parameterReference = this
-      )
 
   override fun toString(): String {
     return "${this::class.qualifiedName}(${declaringFunction.fqName}(.., $name,..))"

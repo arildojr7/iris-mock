@@ -5,11 +5,7 @@ plugins {
     `kotlin-dsl`
     signing
     kotlin("jvm")
-}
-
-configure<JavaPluginExtension> {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    kotlin("kapt")
 }
 
 group = findProperty("GROUP_ID").toString()
@@ -23,7 +19,8 @@ gradlePlugin {
         create("irisMockGradlePlugin") {
             id = findProperty("PLUGIN_ID").toString()
             displayName = "Plugin to inject iris-mock custom interceptors at OkHttp"
-            description = "Injects custom interceptors at bytecode level in OkHttpClient. See GitHub for more info"
+            description =
+                "Injects custom interceptors at bytecode level in OkHttpClient. See GitHub for more info"
             tags.set(listOf("interceptor", "android", "okhttp", "mock"))
             implementationClass = "dev.arildo.iris.plugin.IrisMockGradlePlugin"
         }
@@ -45,10 +42,14 @@ dependencies {
     implementation("com.android.tools.build:gradle:7.2.2")
     implementation(kotlin("stdlib"))
     implementation(kotlin("gradle-plugin-api"))
-    compileOnly("org.jetbrains.kotlin:kotlin-compiler-embeddable:1.8.21")
+    implementation("com.squareup:kotlinpoet:1.14.2")
 
     compileOnly("dev.gradleplugins:gradle-api:7.6")
     compileOnly("com.squareup.okhttp3:okhttp:3.14.9")
+    compileOnly("org.jetbrains.kotlin:kotlin-compiler-embeddable:1.8.21")
+    compileOnly("com.google.auto.service:auto-service-annotations:1.0")
+    kapt("com.google.auto.service:auto-service:1.0")
+
     arrayOf("asm", "asm-util", "asm-commons").forEach {
         compileOnly("org.ow2.asm:$it:9.4")
     }
@@ -56,4 +57,19 @@ dependencies {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(11))
+    }
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs += listOf(
+            "-opt-in=kotlin.RequiresOptIn",
+            "-opt-in=org.jetbrains.kotlin.compiler.plugin.ExperimentalCompilerApi"
+        )
+    }
 }

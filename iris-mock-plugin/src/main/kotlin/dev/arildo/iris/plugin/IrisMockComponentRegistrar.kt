@@ -3,8 +3,6 @@ package dev.arildo.iris.plugin
 import dev.arildo.iris.plugin.util.CodeGenerationExtension
 import dev.arildo.iris.plugin.util.CodeGenerator
 import dev.arildo.iris.plugin.util.RealAnvilModuleDescriptor
-import dev.arildo.iris.plugin.util.srcGenDirKey
-import org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension
 import org.jetbrains.kotlin.cli.common.CLIConfigurationKeys
 import org.jetbrains.kotlin.cli.common.messages.MessageCollector
 import org.jetbrains.kotlin.compiler.plugin.CompilerPluginRegistrar
@@ -21,12 +19,8 @@ class IrisMockComponentRegistrar : CompilerPluginRegistrar() {
     override fun ExtensionStorage.registerExtensions(configuration: CompilerConfiguration) {
         val logger = configuration.get(CLIConfigurationKeys.MESSAGE_COLLECTOR_KEY, MessageCollector.NONE)
 
-        IrGenerationExtension.registerExtension(GenerationExtension(logger))
-
-
-        val sourceGenFolder = File(configuration.getNotNull(srcGenDirKey))
+        val sourceGenFolder = File("/Users/arildoborgesjr/CodeInLab/iris-mock/sample/build/irismock/src-gen-debug")
         val moduleDescriptorFactory = RealAnvilModuleDescriptor.Factory()
-
 
         AnalysisHandlerExtension.registerExtension(
             CodeGenerationExtension(

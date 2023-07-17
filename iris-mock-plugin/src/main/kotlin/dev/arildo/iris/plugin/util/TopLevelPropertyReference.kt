@@ -158,19 +158,7 @@ public sealed class TopLevelPropertyReference : AnnotatedReference, PropertyRefe
   }
 }
 
-public fun KtParameter.toTopLevelPropertyReference(
-  module: AnvilModuleDescriptor,
-): Psi {
-  if (!isPropertyParameter()) {
-    throw Exception("A KtParameter may only be turned into a PropertyReference if it's a val or var.")
-  }
-  return Psi(property = this, module = module)
-}
-
 public fun KtProperty.toTopLevelPropertyReference(
   module: AnvilModuleDescriptor,
 ): Psi = Psi(property = this, module = module)
 
-public fun PropertyDescriptor.toTopLevelPropertyReference(
-  module: AnvilModuleDescriptor,
-): Descriptor = Descriptor(property = this, module = module)
