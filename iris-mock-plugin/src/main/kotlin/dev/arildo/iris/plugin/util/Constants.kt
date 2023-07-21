@@ -20,4 +20,4 @@ internal const val IRIS_WRAPPER_NAME = "IrisMockWrapper"
 internal const val IRIS_WRAPPER_PACKAGE = "dev.arildo.iris.mock"
 
 internal const val srcGenDirName = "src-gen-dir"
-internal val srcGenDirKey = CompilerConfigurationKey.create<String>("anvil $srcGenDirName")
+internal val srcGenDirKey = CompilerConfigurationKey.create<String>("$srcGenDirName")
