@@ -1,8 +1,14 @@
+@file:Suppress("unused")
+
 package dev.arildo.iris.plugin
 
 import com.android.build.api.instrumentation.FramesComputationMode
 import com.android.build.api.instrumentation.InstrumentationScope
 import com.android.build.api.variant.AndroidComponentsExtension
+import dev.arildo.iris.plugin.BuildConfig.PLUGIN_ARTIFACT_ID
+import dev.arildo.iris.plugin.BuildConfig.PLUGIN_GROUP_ID
+import dev.arildo.iris.plugin.BuildConfig.PLUGIN_ID
+import dev.arildo.iris.plugin.BuildConfig.PLUGIN_VERSION
 import dev.arildo.iris.plugin.util.srcGenDirName
 import dev.arildo.iris.plugin.visitor.IrisMockVisitorFactory
 import org.gradle.api.Project
@@ -19,8 +25,7 @@ class IrisMockGradlePlugin : KotlinCompilerPluginSupportPlugin {
         target.extensions.create("irisMock", IrisMockGradleExtension::class.java)
 
         target.pluginManager.withPlugin("com.android.application") {
-            val androidComponents = target.extensions
-                .getByType(AndroidComponentsExtension::class)
+            val androidComponents = target.extensions.getByType(AndroidComponentsExtension::class)
 
             androidComponents.onVariants { variant ->
                 variant.instrumentation.setAsmFramesComputationMode(
@@ -36,33 +41,28 @@ class IrisMockGradlePlugin : KotlinCompilerPluginSupportPlugin {
         }
     }
 
-    override fun getCompilerPluginId(): String = "dev.arildo.iris-mock-plugin"
+    override fun getCompilerPluginId(): String = PLUGIN_ID
 
     override fun getPluginArtifact(): SubpluginArtifact = SubpluginArtifact(
-        groupId = "dev.arildo",
-        artifactId = "iris-mock-plugin",
-        version = VERSION
+        groupId = PLUGIN_GROUP_ID,
+        artifactId = PLUGIN_ARTIFACT_ID,
+        version = PLUGIN_VERSION
     )
 
     override fun isApplicable(kotlinCompilation: KotlinCompilation<*>): Boolean = true
 
     override fun applyToCompilation(kotlinCompilation: KotlinCompilation<*>): Provider<List<SubpluginOption>> {
         val project = kotlinCompilation.target.project
-        val extension = project.extensions.getByType(IrisMockGradleExtension::class.java)
 
         project.configurations.getByName("implementation").dependencies.add(
-            project.dependencies.create("dev.arildo:iris-mock:$VERSION")
+            project.dependencies.create("dev.arildo:iris-mock:$PLUGIN_VERSION")
         )
 
         return project.provider {
             listOf(
                 SubpluginOption(
-                    key = "enableOnlyOnDebugVariant",
-                    value = extension.enableOnlyOnDebugVariant.get().toString()
-                ),
-                SubpluginOption(
                     key = srcGenDirName,
-                    value = "${project.buildDir}${File.separator}iris-mock${File.separator}src-gen-debug"
+                    value = "${project.buildDir}${File.separator}iris-mock"
                 )
             )
         }

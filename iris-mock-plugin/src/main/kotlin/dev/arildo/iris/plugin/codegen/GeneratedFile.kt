@@ -1,4 +1,4 @@
-package dev.arildo.iris.plugin.util
+package dev.arildo.iris.plugin.codegen
 
 import java.io.File
 

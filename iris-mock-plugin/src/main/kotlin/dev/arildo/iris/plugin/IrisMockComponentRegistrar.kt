@@ -1,8 +1,9 @@
 package dev.arildo.iris.plugin
 
-import dev.arildo.iris.plugin.util.CodeGenerationExtension
-import dev.arildo.iris.plugin.util.CodeGenerator
-import dev.arildo.iris.plugin.util.RealAnvilModuleDescriptor
+import com.google.auto.service.AutoService
+import dev.arildo.iris.plugin.codegen.CodeGenerationExtension
+import dev.arildo.iris.plugin.codegen.CodeGenerator
+import dev.arildo.iris.plugin.codegen.IrisMockModuleDescriptorImpl
 import dev.arildo.iris.plugin.util.srcGenDirKey
 import org.jetbrains.kotlin.cli.common.CLIConfigurationKeys
 import org.jetbrains.kotlin.cli.common.messages.MessageCollector
@@ -12,6 +13,7 @@ import org.jetbrains.kotlin.resolve.extensions.AnalysisHandlerExtension
 import java.io.File
 import java.util.ServiceLoader
 
+@AutoService(CompilerPluginRegistrar::class)
 class IrisMockComponentRegistrar : CompilerPluginRegistrar() {
 
     override val supportsK2: Boolean = false
@@ -23,7 +25,7 @@ class IrisMockComponentRegistrar : CompilerPluginRegistrar() {
             CodeGenerationExtension(
                 codeGenDir = File(configuration.getNotNull(srcGenDirKey)),
                 codeGenerators = loadCodeGenerators(),
-                moduleDescriptorFactory = RealAnvilModuleDescriptor.Factory()
+                moduleDescriptorFactory = IrisMockModuleDescriptorImpl.Factory()
             )
         )
     }

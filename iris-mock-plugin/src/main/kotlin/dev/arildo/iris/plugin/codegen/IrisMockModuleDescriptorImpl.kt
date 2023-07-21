@@ -1,64 +1,40 @@
-package dev.arildo.iris.plugin.util
+package dev.arildo.iris.plugin.codegen
 
-import dev.arildo.iris.plugin.util.ClassReference.Descriptor
-import dev.arildo.iris.plugin.util.ClassReference.Psi
-import dev.arildo.iris.plugin.util.RealAnvilModuleDescriptor.ClassReferenceCacheKey.Companion.toClassReferenceCacheKey
-import dev.arildo.iris.plugin.util.RealAnvilModuleDescriptor.ClassReferenceCacheKey.Type.DESCRIPTOR
-import dev.arildo.iris.plugin.util.RealAnvilModuleDescriptor.ClassReferenceCacheKey.Type.PSI
+import dev.arildo.iris.plugin.codegen.ClassReference.Descriptor
+import dev.arildo.iris.plugin.codegen.ClassReference.Psi
+import dev.arildo.iris.plugin.codegen.IrisMockModuleDescriptorImpl.ClassReferenceCacheKey.Companion.toClassReferenceCacheKey
+import dev.arildo.iris.plugin.util.requireFqName
 import org.jetbrains.kotlin.descriptors.ClassDescriptor
 import org.jetbrains.kotlin.descriptors.ModuleDescriptor
-import org.jetbrains.kotlin.descriptors.TypeAliasDescriptor
-import org.jetbrains.kotlin.descriptors.findTypeAliasAcrossModuleDependencies
 import org.jetbrains.kotlin.descriptors.resolveClassByFqName
 import org.jetbrains.kotlin.incremental.components.LookupLocation
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.psi.KtClassOrObject
 import org.jetbrains.kotlin.psi.KtFile
-import org.jetbrains.kotlin.psi.KtFunction
-import org.jetbrains.kotlin.psi.KtProperty
 import org.jetbrains.kotlin.psi.psiUtil.parentsWithSelf
 import org.jetbrains.kotlin.resolve.descriptorUtil.classId
 import org.jetbrains.kotlin.resolve.descriptorUtil.fqNameSafe
 
-class RealAnvilModuleDescriptor private constructor(
-    delegate: ModuleDescriptor
-) : AnvilModuleDescriptor, ModuleDescriptor by delegate {
+/**
+ * Adapted from https://github.com/square/anvil
+ */
+class IrisMockModuleDescriptorImpl private constructor(delegate: ModuleDescriptor) :
+    IrisMockModuleDescriptor, ModuleDescriptor by delegate {
 
     private val ktFileToClassReferenceMap = mutableMapOf<String, List<Psi>>()
     private val allPsiClassReferences: Sequence<Psi>
         get() = ktFileToClassReferenceMap.values.asSequence().flatten()
 
-    private val ktFileToTopLevelFunctionReferenceMap =
-        mutableMapOf<String, List<TopLevelFunctionReference.Psi>>()
-
-    private val ktFileToTopLevelPropertyReferenceMap =
-        mutableMapOf<String, List<TopLevelPropertyReference.Psi>>()
-
     private val resolveDescriptorCache = mutableMapOf<FqName, ClassDescriptor?>()
     private val resolveClassIdCache = mutableMapOf<ClassId, FqName?>()
     private val classReferenceCache = mutableMapOf<ClassReferenceCacheKey, ClassReference>()
-
-    internal val allFiles: Sequence<KtFile>
-        get() = allPsiClassReferences
-            .map { it.clazz.containingKtFile }
-            .distinctBy { it.identifier }
 
     fun addFiles(files: Collection<KtFile>) {
         files.forEach { ktFile ->
             val classReferences = ktFile.classesAndInnerClasses().map { ktClass ->
                 Psi(ktClass, ktClass.toClassId(), this)
             }
-
-            classReferences.forEach { classReference ->
-                // A `FlushingCodeGenerator` can generate new KtFiles for already generated KtFiles.
-                // This can be problematic, because we might have ClassReferences for the old files and
-                // KtClassOrObject instances cached. We need to override the entries in the caches for
-                // these new files and classes.
-                classReferenceCache[classReference.clazz.toClassReferenceCacheKey()] = classReference
-                resolveClassIdCache[classReference.classId] = classReference.fqName
-            }
-
             ktFileToClassReferenceMap[ktFile.identifier] = classReferences
         }
     }
@@ -66,18 +42,6 @@ class RealAnvilModuleDescriptor private constructor(
     override fun getClassAndInnerClassReferences(ktFile: KtFile): List<Psi> {
         return ktFileToClassReferenceMap.getOrPut(ktFile.identifier) {
             ktFile.classesAndInnerClasses().map { getClassReference(it) }
-        }
-    }
-
-    override fun getTopLevelFunctionReferences(ktFile: KtFile): List<TopLevelFunctionReference.Psi> {
-        return ktFileToTopLevelFunctionReferenceMap.getOrPut(ktFile.identifier) {
-            ktFile.topLevelFunctions().map { it.toTopLevelFunctionReference(this) }
-        }
-    }
-
-    override fun getTopLevelPropertyReferences(ktFile: KtFile): List<TopLevelPropertyReference.Psi> {
-        return ktFileToTopLevelPropertyReferenceMap.getOrPut(ktFile.identifier) {
-            ktFile.topLevelProperties().map { it.toTopLevelPropertyReference(this) }
         }
     }
 
@@ -94,14 +58,8 @@ class RealAnvilModuleDescriptor private constructor(
         lookupLocation: LookupLocation
     ): ClassDescriptor? {
         return resolveDescriptorCache.getOrPut(fqName) {
-            // In the case of a typealias, we need to look up the original reference instead.
             resolveClassByFqName(fqName, lookupLocation)
-                ?: resolveTypeAliasFqNameOrNull(fqName)?.classDescriptor
         }
-    }
-
-    override fun resolveTypeAliasFqNameOrNull(fqName: FqName): TypeAliasDescriptor? {
-        return findTypeAliasAcrossModuleDependencies(fqName.classIdBestGuess())
     }
 
     override fun getClassReference(clazz: KtClassOrObject): Psi {
@@ -112,7 +70,8 @@ class RealAnvilModuleDescriptor private constructor(
 
     override fun getClassReference(descriptor: ClassDescriptor): Descriptor {
         return classReferenceCache.getOrPut(descriptor.toClassReferenceCacheKey()) {
-            val classId = descriptor.classId ?: throw Exception("Couldn't find the classId for $fqNameSafe. Are we stuck in a loop while " +
+            val classId = descriptor.classId ?: throw Exception(
+                "Couldn't find the classId for $fqNameSafe. Are we stuck in a loop while " +
                         "resolving super types? Note that it's not supported to contribute an inner class to " +
                         "a scope that is merged in an outer class."
             )
@@ -121,19 +80,10 @@ class RealAnvilModuleDescriptor private constructor(
     }
 
     override fun getClassReferenceOrNull(fqName: FqName): ClassReference? {
-        // Note that we don't cache the result, because all function calls get objects from caches.
-        // There's no need to optimize that.
         fun psiClassReference(): Psi? = allPsiClassReferences.firstOrNull { it.fqName == fqName }
         fun descriptorClassReference(): Descriptor? =
             resolveFqNameOrNull(fqName)?.let { getClassReference(it) }
 
-        // Prefer Psi to have consistent results. If the class is part of the compilation unit: it'll
-        // be a Psi implementation. If the class comes from a pre-compiled dependency, then it'll be a
-        // descriptor implementation.
-        //
-        // Otherwise, there are inconsistencies. If source code was written manually in this module,
-        // then we could use the descriptor or Psi implementation. If the source code was generated,
-        // then only Psi works.
         return psiClassReference() ?: descriptorClassReference()
     }
 
@@ -141,10 +91,10 @@ class RealAnvilModuleDescriptor private constructor(
         get() = packageFqName.asString() + name
 
     internal class Factory {
-        private val cache = mutableMapOf<ModuleDescriptor, RealAnvilModuleDescriptor>()
+        private val cache = mutableMapOf<ModuleDescriptor, IrisMockModuleDescriptorImpl>()
 
-        fun create(delegate: ModuleDescriptor): RealAnvilModuleDescriptor {
-            return cache.getOrPut(delegate) { RealAnvilModuleDescriptor(delegate) }
+        fun create(delegate: ModuleDescriptor): IrisMockModuleDescriptorImpl {
+            return cache.getOrPut(delegate) { IrisMockModuleDescriptorImpl(delegate) }
         }
     }
 
@@ -159,10 +109,10 @@ class RealAnvilModuleDescriptor private constructor(
 
         companion object {
             fun KtClassOrObject.toClassReferenceCacheKey(): ClassReferenceCacheKey =
-                ClassReferenceCacheKey(requireFqName(), PSI)
+                ClassReferenceCacheKey(requireFqName(), Type.PSI)
 
             fun ClassDescriptor.toClassReferenceCacheKey(): ClassReferenceCacheKey =
-                ClassReferenceCacheKey(fqNameSafe, DESCRIPTOR)
+                ClassReferenceCacheKey(fqNameSafe, Type.DESCRIPTOR)
         }
     }
 }
@@ -171,20 +121,9 @@ private fun KtFile.classesAndInnerClasses(): List<KtClassOrObject> {
     val children = findChildrenByClass(KtClassOrObject::class.java)
 
     return generateSequence(children.toList()) { list ->
-        list
-            .flatMap {
-                it.declarations.filterIsInstance<KtClassOrObject>()
-            }
+        list.flatMap { it.declarations.filterIsInstance<KtClassOrObject>() }
             .ifEmpty { null }
     }.flatten().toList()
-}
-
-private fun KtFile.topLevelFunctions(): List<KtFunction> {
-    return findChildrenByClass(KtFunction::class.java).toList()
-}
-
-private fun KtFile.topLevelProperties(): List<KtProperty> {
-    return findChildrenByClass(KtProperty::class.java).toList()
 }
 
 private fun KtClassOrObject.toClassId(): ClassId {

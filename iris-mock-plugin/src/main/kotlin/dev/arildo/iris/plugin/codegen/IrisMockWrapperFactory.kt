@@ -1,8 +1,6 @@
-package dev.arildo.iris.plugin
+package dev.arildo.iris.plugin.codegen
 
-import dev.arildo.iris.plugin.util.ClassReference
-
-internal fun wrapperInterceptorFactory(classes: Sequence<ClassReference.Psi>) =
+internal fun irisMockWrapperFactory(classes: Sequence<ClassReference.Psi>) =
 """package dev.arildo.iris.mock
 
 import okhttp3.Interceptor
