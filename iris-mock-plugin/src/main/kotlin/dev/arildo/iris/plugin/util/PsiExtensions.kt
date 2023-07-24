@@ -75,7 +75,6 @@ fun PsiElement.requireFqName(module: ModuleDescriptor): FqName {
 
             when {
                 qualifierText != null -> {
-
                     // The KtUserType might be fully qualified. Try to resolve it and return early.
                     FqName("$qualifierText.$className")
                         .takeIf { it.canResolveFqName(module) }
