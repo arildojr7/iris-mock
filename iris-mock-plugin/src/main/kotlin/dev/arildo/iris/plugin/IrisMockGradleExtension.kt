@@ -7,5 +7,4 @@ abstract class IrisMockGradleExtension @Inject constructor(objects: ObjectFactor
 
 //    val enableOnlyOnDebugVariant: Property<Boolean> =
 //        objects.property(Boolean::class.java).convention(false)
-
 }
