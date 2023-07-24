@@ -1,6 +1,6 @@
 package dev.arildo.iris.mock
 
 object IrisMock {
-    var enableLogs = true
+    var enableLogs = false
         internal set
 }

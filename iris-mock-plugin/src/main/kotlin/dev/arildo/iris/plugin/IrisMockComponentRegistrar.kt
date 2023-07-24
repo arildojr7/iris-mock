@@ -16,7 +16,8 @@ import java.util.ServiceLoader
 @AutoService(CompilerPluginRegistrar::class)
 class IrisMockComponentRegistrar : CompilerPluginRegistrar() {
 
-    override val supportsK2: Boolean = false
+    override val supportsK2: Boolean = false // TODO review it
+
     override fun ExtensionStorage.registerExtensions(configuration: CompilerConfiguration) {
         val logger =
             configuration.get(CLIConfigurationKeys.MESSAGE_COLLECTOR_KEY, MessageCollector.NONE)
