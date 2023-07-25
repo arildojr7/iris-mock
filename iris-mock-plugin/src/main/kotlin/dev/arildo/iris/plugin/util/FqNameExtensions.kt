@@ -9,7 +9,6 @@ import org.jetbrains.kotlin.name.FqName
 fun FqName.descendant(segments: String): FqName =
     if (isRoot) FqName(segments) else FqName("${asString()}.$segments")
 
-
 fun FqName.classIdBestGuess(): ClassId {
     val segments = pathSegments().map { it.asString() }
     val classNameIndex = segments.indexOfFirst { it[0].isUpperCase() }

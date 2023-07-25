@@ -71,9 +71,7 @@ class IrisMockModuleDescriptorImpl private constructor(delegate: ModuleDescripto
     override fun getClassReference(descriptor: ClassDescriptor): Descriptor {
         return classReferenceCache.getOrPut(descriptor.toClassReferenceCacheKey()) {
             val classId = descriptor.classId ?: throw Exception(
-                "Couldn't find the classId for $fqNameSafe. Are we stuck in a loop while " +
-                        "resolving super types? Note that it's not supported to contribute an inner class to " +
-                        "a scope that is merged in an outer class."
+                "Couldn't find the classId for $fqNameSafe."
             )
             Descriptor(descriptor, classId, this)
         } as Descriptor
@@ -104,7 +102,7 @@ class IrisMockModuleDescriptorImpl private constructor(delegate: ModuleDescripto
     ) {
         enum class Type {
             PSI,
-            DESCRIPTOR,
+            DESCRIPTOR
         }
 
         companion object {

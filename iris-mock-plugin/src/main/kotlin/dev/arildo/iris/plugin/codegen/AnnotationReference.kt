@@ -44,12 +44,12 @@ sealed class AnnotationReference {
     class Psi internal constructor(
         val annotation: KtAnnotationEntry,
         override val classReference: ClassReference,
-        override val declaringClass: ClassReference.Psi?,
+        override val declaringClass: ClassReference.Psi?
     ) : AnnotationReference()
 
     class Descriptor internal constructor(
         override val classReference: ClassReference,
-        override val declaringClass: ClassReference.Descriptor?,
+        override val declaringClass: ClassReference.Descriptor?
     ) : AnnotationReference()
 }
 
