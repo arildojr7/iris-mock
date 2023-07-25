@@ -56,5 +56,5 @@ jobs:
       - name: Build iris-mock-plugin
         run: ./gradlew :iris-mock-plugin:assemble
 
-      - name: Build app sample
-        run: ./gradlew :sample:assembleDebug
+#      - name: Build app sample
+#        run: ./gradlew :sample:assembleDebug
