@@ -1,8 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp")
-    id("dev.arildo.iris-mock-plugin") version "1.0.0"
+//    id("dev.arildo.iris-mock-plugin") version "1.0.1"
 }
 
 android {
@@ -25,22 +24,13 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
+
     buildFeatures {
         viewBinding = true
     }
     kotlinOptions {
         jvmTarget = "1.8"
     }
-}
-
-kotlin.sourceSets.main {
-    kotlin.srcDirs(
-        file("build/generated/ksp/main/kotlin")
-    )
 }
 
 dependencies {
@@ -52,11 +42,8 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
 
+    kotlinCompilerPluginClasspath(project(":iris-mock-plugin"))
     implementation(project(":iris-mock"))
-    kspDebug(project(":iris-mock-compiler"))
-
-//    implementation("dev.arildo:iris-mock:0.0.1-SNAPSHOT")
-//    ksp("dev.arildo:iris-mock-compiler:0.0.1-SNAPSHOT")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

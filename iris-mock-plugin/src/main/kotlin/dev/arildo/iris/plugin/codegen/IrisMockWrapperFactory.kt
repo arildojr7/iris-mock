@@ -1,9 +1,7 @@
-package dev.arildo.iris.processor.factory
+package dev.arildo.iris.plugin.codegen
 
-import com.google.devtools.ksp.symbol.KSClassDeclaration
-
-internal fun wrapperInterceptorFactory(classes: Sequence<KSClassDeclaration>) = """
-package dev.arildo.iris.mock
+internal fun irisMockWrapperFactory(classes: Sequence<ClassReference.Psi>) =
+"""package dev.arildo.iris.mock
 
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -14,12 +12,11 @@ import okio.Okio
 import okio.buffer
 import dev.arildo.iris.mock.util.log
 import dev.arildo.iris.mock.IrisMock
-${classes.joinToString("\n") { "import ${it.qualifiedName?.asString()}" }}
 
-class IrisWrapperInterceptor : Interceptor {
+class IrisMockWrapper : Interceptor {
     private val headerPlaceholder = "IRIS_MOCK"
     private val interceptors = listOf<Interceptor>(
-${classes.joinToString(",\n") { "        ${it.simpleName.asString()}()" }}
+${classes.joinToString(",\n") { "        ${it.fqName.asString()}()" }}
     )
     override fun intercept(chain: Interceptor.Chain): Response {
         interceptors.forEach {
@@ -33,4 +30,4 @@ ${classes.joinToString(",\n") { "        ${it.simpleName.asString()}()" }}
         return response.takeIf { IrisMock.enableLogs }?.let { it.log() } ?: response
     }
 }
- """
+"""
