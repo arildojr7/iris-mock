@@ -25,6 +25,6 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "iris-mock"
-//include(":sample")
+// include(":sample")
 include(":iris-mock")
 include(":iris-mock-plugin")
