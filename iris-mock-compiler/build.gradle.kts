@@ -7,6 +7,9 @@ plugins {
     id("com.github.gmazzo.buildconfig") version "3.0.3"
 }
 
+group = findProperty("GROUP_ID").toString()
+version = findProperty("PLUGIN_VERSION").toString()
+
 publishing {
     publications {
         create<MavenPublication>("maven") {
