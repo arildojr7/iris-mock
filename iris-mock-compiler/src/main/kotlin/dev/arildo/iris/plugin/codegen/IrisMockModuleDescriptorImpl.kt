@@ -3,7 +3,7 @@ package dev.arildo.iris.plugin.codegen
 import dev.arildo.iris.plugin.codegen.ClassReference.Descriptor
 import dev.arildo.iris.plugin.codegen.ClassReference.Psi
 import dev.arildo.iris.plugin.codegen.IrisMockModuleDescriptorImpl.ClassReferenceCacheKey.Companion.toClassReferenceCacheKey
-import dev.arildo.iris.plugin.util.requireFqName
+import dev.arildo.iris.plugin.utils.requireFqName
 import org.jetbrains.kotlin.descriptors.ClassDescriptor
 import org.jetbrains.kotlin.descriptors.ModuleDescriptor
 import org.jetbrains.kotlin.descriptors.resolveClassByFqName

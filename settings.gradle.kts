@@ -28,3 +28,4 @@ rootProject.name = "iris-mock"
 // include(":sample")
 include(":iris-mock")
 include(":iris-mock-plugin")
+include(":iris-mock-compiler")

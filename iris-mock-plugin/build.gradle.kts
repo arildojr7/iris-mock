@@ -6,7 +6,6 @@ plugins {
     `kotlin-dsl`
     signing
     kotlin("jvm")
-    kotlin("kapt")
 }
 
 group = findProperty("GROUP_ID").toString()
@@ -43,13 +42,9 @@ dependencies {
     implementation("com.android.tools.build:gradle:7.2.2")
     implementation(kotlin("stdlib"))
     implementation(kotlin("gradle-plugin-api"))
-    implementation("com.squareup:kotlinpoet:1.14.2")
 
     compileOnly("dev.gradleplugins:gradle-api:7.6")
     compileOnly("com.squareup.okhttp3:okhttp:3.14.9")
-    compileOnly("org.jetbrains.kotlin:kotlin-compiler-embeddable:1.8.21")
-    compileOnly("com.google.auto.service:auto-service-annotations:1.0.1")
-    kapt("com.google.auto.service:auto-service:1.0.1")
 
     arrayOf("asm", "asm-util", "asm-commons").forEach {
         compileOnly("org.ow2.asm:$it:9.4")
