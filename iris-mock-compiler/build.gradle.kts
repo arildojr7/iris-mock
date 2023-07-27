@@ -2,7 +2,7 @@ plugins {
     kotlin("jvm")
     kotlin("kapt")
     id("maven-publish")
-    signing
+    id("signing")
     `kotlin-dsl`
     id("com.github.gmazzo.buildconfig") version "3.0.3"
 }
