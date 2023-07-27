@@ -1,6 +1,9 @@
 name: publish-release
 
-on: workflow_dispatch
+on:
+  push:
+    tags-ignore:
+      - '*-snapshot'
 
 jobs:
   release:
