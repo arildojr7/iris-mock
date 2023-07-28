@@ -1,8 +1,8 @@
 plugins {
+    kotlin("jvm")
     id("java-library")
     id("maven-publish")
     id("signing")
-    kotlin("jvm")
 }
 
 java {
@@ -66,8 +66,8 @@ signing {
 }
 
 dependencies {
-    api("com.squareup.okhttp3:okhttp:3.14.9")
-    api("com.squareup.okio:okio:2.8.0")
+    compileOnly("com.squareup.okhttp3:okhttp:3.14.9")
+    compileOnly("com.squareup.okio:okio:2.8.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
