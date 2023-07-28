@@ -42,3 +42,6 @@ jobs:
 
       - name: Publish iris-mock-compiler
         run: ./gradlew :iris-mock-compiler:publish
+
+      - name: Publish iris-mock-plugin
+        run: ./gradlew :iris-mock-plugin:publishPlugins

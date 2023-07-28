@@ -66,8 +66,8 @@ signing {
 }
 
 dependencies {
-    compileOnly("com.squareup.okhttp3:okhttp:3.14.9")
-    compileOnly("com.squareup.okio:okio:2.8.0")
+    implementation("com.squareup.okhttp3:okhttp:3.14.9")
+    implementation("com.squareup.okio:okio:2.8.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
