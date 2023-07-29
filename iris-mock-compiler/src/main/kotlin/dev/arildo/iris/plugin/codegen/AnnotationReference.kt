@@ -1,6 +1,6 @@
 package dev.arildo.iris.plugin.codegen
 
-import dev.arildo.iris.plugin.util.requireFqName
+import dev.arildo.iris.plugin.utils.requireFqName
 import org.jetbrains.kotlin.descriptors.ModuleDescriptor
 import org.jetbrains.kotlin.descriptors.annotations.AnnotationDescriptor
 import org.jetbrains.kotlin.name.FqName

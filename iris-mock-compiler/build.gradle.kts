@@ -1,23 +1,18 @@
 plugins {
+    kotlin("jvm")
+    kotlin("kapt")
     id("java-library")
     id("maven-publish")
     id("signing")
-    kotlin("jvm")
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-    withJavadocJar()
-    withSourcesJar()
+    id("com.github.gmazzo.buildconfig") version "3.0.3"
 }
 
 publishing {
     publications {
         create<MavenPublication>("maven") {
             groupId = findProperty("GROUP_ID").toString()
-            artifactId = findProperty("LIB_ARTIFACT_ID").toString()
-            version = findProperty("LIB_VERSION").toString()
+            artifactId = findProperty("PLUGIN_ARTIFACT_ID").toString()
+            version = findProperty("PLUGIN_VERSION").toString()
 
             from(components["java"])
 
@@ -45,7 +40,6 @@ publishing {
             }
         }
     }
-
     repositories {
         maven {
             name = "OSSRH"
@@ -65,21 +59,36 @@ signing {
     sign(publishing.publications["maven"])
 }
 
-dependencies {
-    implementation("com.squareup.okhttp3:okhttp:3.14.9")
-    implementation("com.squareup.okio:okio:2.8.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
-    testImplementation("io.mockk:mockk:1.13.5")
+java {
+    withJavadocJar()
+    withSourcesJar()
 }
-tasks.test {
-    useJUnitPlatform()
-    testLogging {
-        events("passed", "skipped", "failed")
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs += listOf(
+            "-opt-in=kotlin.RequiresOptIn",
+            "-opt-in=org.jetbrains.kotlin.compiler.plugin.ExperimentalCompilerApi"
+        )
     }
 }
-fun getMavenUrl(): String = if (System.getenv("IS_RELEASE") == "true") { // todo refactor
+
+dependencies {
+    implementation("com.squareup:kotlinpoet:1.14.2")
+    compileOnly("org.jetbrains.kotlin:kotlin-compiler-embeddable:1.8.21")
+
+    compileOnly("com.google.auto.service:auto-service-annotations:1.0.1")
+    kapt("com.google.auto.service:auto-service:1.0.1")
+}
+
+val pluginId = findProperty("PLUGIN_ID").toString()
+
+buildConfig {
+    packageName("dev.arildo.iris.plugin")
+    buildConfigField("String", "PLUGIN_ID", "\"${pluginId}\"")
+}
+
+fun getMavenUrl(): String = if (System.getenv("IS_RELEASE") == "true") {
     "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
 } else {
     "https://s01.oss.sonatype.org/content/repositories/snapshots/"

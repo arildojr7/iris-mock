@@ -2,7 +2,7 @@ package dev.arildo.iris.plugin.codegen
 
 import dev.arildo.iris.plugin.codegen.ClassReference.Descriptor
 import dev.arildo.iris.plugin.codegen.ClassReference.Psi
-import dev.arildo.iris.plugin.util.classIdBestGuess
+import dev.arildo.iris.plugin.utils.classIdBestGuess
 import org.jetbrains.kotlin.descriptors.ClassDescriptor
 import org.jetbrains.kotlin.descriptors.ModuleDescriptor
 import org.jetbrains.kotlin.incremental.components.LookupLocation

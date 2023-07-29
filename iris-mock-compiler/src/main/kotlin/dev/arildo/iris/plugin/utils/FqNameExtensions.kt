@@ -1,4 +1,4 @@
-package dev.arildo.iris.plugin.util
+package dev.arildo.iris.plugin.utils
 
 import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.name.FqName
