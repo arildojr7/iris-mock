@@ -4,7 +4,7 @@ import com.google.auto.service.AutoService
 import dev.arildo.iris.plugin.codegen.CodeGenerationExtension
 import dev.arildo.iris.plugin.codegen.CodeGenerator
 import dev.arildo.iris.plugin.codegen.IrisMockModuleDescriptorImpl
-import dev.arildo.iris.plugin.util.srcGenDirKey
+import dev.arildo.iris.plugin.utils.srcGenDirKey
 import org.jetbrains.kotlin.cli.common.CLIConfigurationKeys
 import org.jetbrains.kotlin.cli.common.messages.MessageCollector
 import org.jetbrains.kotlin.compiler.plugin.CompilerPluginRegistrar

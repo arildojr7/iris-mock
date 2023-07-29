@@ -1,10 +1,6 @@
 package dev.arildo.iris.plugin
 
-import org.gradle.api.model.ObjectFactory
-import javax.inject.Inject
-
-abstract class IrisMockGradleExtension @Inject constructor(objects: ObjectFactory) {
-
+open class IrisMockGradleExtension {
 //    val enableOnlyOnDebugVariant: Property<Boolean> =
 //        objects.property(Boolean::class.java).convention(false)
 }

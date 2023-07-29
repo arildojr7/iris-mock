@@ -2,8 +2,8 @@ package dev.arildo.iris.plugin
 
 import com.google.auto.service.AutoService
 import dev.arildo.iris.plugin.BuildConfig.PLUGIN_ID
-import dev.arildo.iris.plugin.util.srcGenDirKey
-import dev.arildo.iris.plugin.util.srcGenDirName
+import dev.arildo.iris.plugin.utils.srcGenDirKey
+import dev.arildo.iris.plugin.utils.srcGenDirName
 import org.jetbrains.kotlin.compiler.plugin.AbstractCliOption
 import org.jetbrains.kotlin.compiler.plugin.CliOption
 import org.jetbrains.kotlin.compiler.plugin.CommandLineProcessor

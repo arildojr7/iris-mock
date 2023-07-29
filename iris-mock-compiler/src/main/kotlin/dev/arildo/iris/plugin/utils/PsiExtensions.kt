@@ -1,4 +1,4 @@
-package dev.arildo.iris.plugin.util
+package dev.arildo.iris.plugin.utils
 
 import dev.arildo.iris.plugin.codegen.ClassReference
 import dev.arildo.iris.plugin.codegen.canResolveFqName

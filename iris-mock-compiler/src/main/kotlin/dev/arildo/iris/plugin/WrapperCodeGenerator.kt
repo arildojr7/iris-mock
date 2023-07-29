@@ -6,10 +6,10 @@ import dev.arildo.iris.plugin.codegen.CodeGenerator
 import dev.arildo.iris.plugin.codegen.classAndInnerClassReferences
 import dev.arildo.iris.plugin.codegen.generateIrisMockWrapper
 import dev.arildo.iris.plugin.codegen.irisMockWrapperFactory
-import dev.arildo.iris.plugin.util.IRIS_MOCK_INTERCEPTOR
-import dev.arildo.iris.plugin.util.IRIS_WRAPPER_NAME
-import dev.arildo.iris.plugin.util.IRIS_WRAPPER_PACKAGE
-import dev.arildo.iris.plugin.util.fq
+import dev.arildo.iris.plugin.utils.IRIS_MOCK_INTERCEPTOR
+import dev.arildo.iris.plugin.utils.IRIS_WRAPPER_NAME
+import dev.arildo.iris.plugin.utils.IRIS_WRAPPER_PACKAGE
+import dev.arildo.iris.plugin.utils.fq
 import org.jetbrains.kotlin.descriptors.ModuleDescriptor
 import org.jetbrains.kotlin.psi.KtFile
 import java.io.File
