@@ -2,7 +2,7 @@
   <img src="assets/iris-mock-header.png" /> 
   <br><br>
   <img src="https://img.shields.io/github/actions/workflow/status/arildojr7/iris-mock/pull_request.yml?color=00b330" />
-  <img src="https://shields.io/badge/mavenCentral-v1.0.1-blue" />
+  <img src="https://shields.io/badge/mavenCentral-v1.1.0 alpha04-blue" />
   <a href="https://pinterest.github.io/ktlint/"><img src="https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg" alt="ktlint"></a>
   <img src="https://img.shields.io/endpoint?color=00b330&url=https%3A%2F%2Fhits.dwyl.com%2Farildojr7%2Firis-mock.json" />
   <img src="https://img.shields.io/github/license/arildojr7/iris-mock?color=0979ba" />
@@ -10,7 +10,7 @@
 
 A kotlin-first tool to intercept android network calls, modify requests/responses and mock entire APIs. Also includes a cool DSL, that helps to reduce boilerplate code and simplify development.
 <br><br>
-btw, Iris is my daughter's name 🥰
+btw, <b>Iris</b> is my daughter's name 🥰
 
 ## Features
 - Works with Retrofit, Volley and every libs that depend on OkHttp
@@ -20,26 +20,38 @@ btw, Iris is my daughter's name 🥰
 ## Why use iris mock?
 - A centralized tool to log, intercept and modify requests/response
 - As it works at bytecode level, can be used with 3rd-party libs
-- Compiler developed using [KSP](https://github.com/google/ksp), up to 2x faster than KAPT
+- No need to apply KAPT or KSP, since it's implemented directly through KCP
 - No need to do SSL things, like inject certificate
 
 ## How to use
 
-#### Dependencies
+#### build.gradle.kts
 
 ```kotlin
-// add plugin to app module build.gradle.kts
 plugins {
-    id("com.google.devtools.ksp")
-    id("dev.arildo.iris-mock-plugin") version "1.0.1"
-}
-
-// add dependencies
-dependencies {
-    implementation("dev.arildo:iris-mock:1.0.1")
-    ksp("dev.arildo:iris-mock-compiler:1.0.1")
+  id("dev.arildo.iris-mock-plugin") version "1.1.0-alpha04"
 }
 ```
+
+<details>
+  <summary>Using legacy plugin application - older gradle</summary>
+  
+  ```kotlin
+  buildscript {
+      repositories {
+          maven {
+              url = uri("https://plugins.gradle.org/m2/")
+          }
+      }
+      dependencies {
+          classpath("dev.arildo:iris-mock-plugin:1.1.0-alpha04")
+      }
+}
+
+apply(plugin = "dev.arildo.iris-mock-plugin")
+  ```
+</details>
+
 
 #### Code
 Just create a class implementing the `Interceptor` interface and annotate it with `@IrisMockInterceptor`. That's all. The interceptor will be automatically injected at `OkHttp`
