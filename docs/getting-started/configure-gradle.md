@@ -1,4 +1,4 @@
-In order to use iris mock, you need to add its dependencies to your gradle files. 
+To use iris mock you need to add its dependency to your gradle files.
 You can choose to configure iris mock for entire project or just for a specific build variant:
 
 ## Configuring on entire project
@@ -8,23 +8,35 @@ You can choose to configure iris mock for entire project or just for a specific 
     ```kotlin
     // add plugin to app module build.gradle.kts
     plugins {
-        id("com.google.devtools.ksp")
-        id("dev.arildo.iris-mock-plugin") version "1.0.1"
-    }
-
-    // add dependencies
-    dependencies {
-        implementation("dev.arildo:iris-mock:1.0.1")
-        ksp("dev.arildo:iris-mock-compiler:1.0.1")
+        id("dev.arildo.iris-mock-plugin") version "1.1.0-alpha04"
     }
     ```
 
 === "Groovy"
 
     ```kotlin
-    // todo
+    // add plugin to app module build.gradle
+    plugins {
+        id "dev.arildo.iris-mock-plugin" version "1.1.0-alpha04"
+    }
     ```
+<details>
+  <summary>Using legacy plugin application - older gradle</summary>
 
+```kotlin
+// build.gradle.kts
+buildscript {
+    repositories {
+        maven { url = uri("https://plugins.gradle.org/m2/") }
+    }
+    dependencies {
+        classpath("dev.arildo:iris-mock-plugin:1.1.0-alpha04")
+    }
+}
+
+apply(plugin = "dev.arildo.iris-mock-plugin")
+```
+</details>
 
 ## Configuring in a specific build variant
 
@@ -33,19 +45,13 @@ You can choose to configure iris mock for entire project or just for a specific 
     ```kotlin
     // add plugin to app module build.gradle.kts
     plugins {
-        id("com.google.devtools.ksp")
-        id("dev.arildo.iris-mock-plugin") version "1.0.1" apply false
+        id("dev.arildo.iris-mock-plugin") version "1.1.0-alpha04" apply false
     }
 
     buildTypes {
         debug {
             apply(plugin = "dev.arildo.iris-mock-plugin")
         }
-    }
-
-    dependencies {
-        debugImplementation("dev.arildo:iris-mock:1.0.1")
-        kspDebug("dev.arildo:iris-mock-compiler:1.0.1")
     }
     ```
 
@@ -56,7 +62,7 @@ You can choose to configure iris mock for entire project or just for a specific 
     ```
 
 ---
-You are now ready to create your own interceptors
+You are now ready to create your own interceptors :sunglasses:
 
 !!! note ""
 

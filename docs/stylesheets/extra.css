@@ -1,5 +1,9 @@
 :root {
-  --md-primary-fg-color: #BF40BF;
+    --md-primary-fg-color: #33333e;
+}
+
+.md-nav--primary .md-nav__item--active>.md-nav__link {
+    color: #777777 !important;
 }
 
 a.md-tabs__link {
@@ -7,7 +11,7 @@ a.md-tabs__link {
 }
 
 .md-content {
-    --md-typeset-a-color: #FF51FF;
+    --md-typeset-a-color: #FFF1FF;
 }
 
 .md-content .a:hover {
