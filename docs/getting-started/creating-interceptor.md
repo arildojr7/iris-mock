@@ -1,4 +1,4 @@
-Once iris mock depencencies are configured, you can start creating your custom interceptors.
+Once iris mock dependency is configured, you can start creating your custom interceptors.
 
 ## Creating class
 Create a new class implementing the [Interceptor](https://square.github.io/okhttp/3.x/okhttp/okhttp3/Interceptor.html){ target=_blank } 
@@ -30,7 +30,7 @@ IrisMock    I    Mocking Response: [GET] https://myhost.com/my/endpoint
 ---
 
 You can create as many interceptors as you like. It's a good idea to split them according to 
-responsibilities/context, how to create a `LoginInterceptor`, `ProfileInterceptor` and so on.
+responsibilities/context, like creating `LoginInterceptor`, `ProfileInterceptor` and so on.
 
 ---
 
