@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("dev.arildo.iris-mock-plugin") version "1.1.0-alpha03"
+    id("dev.arildo.iris-mock-plugin") version "1.1.0-alpha04"
 }
 
 android {
@@ -42,10 +42,13 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
 
-//    kotlinCompilerPluginClasspath(project(":iris-mock-plugin"))
-//    implementation(project(":iris-mock"))
-
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+}
+
+tasks.preBuild {
+    // First of all, publish plugin locally to get all changes
+    dependsOn(":iris-mock-plugin:publishToMavenLocal")
+    dependsOn(":iris-mock-compiler:publishToMavenLocal")
 }
