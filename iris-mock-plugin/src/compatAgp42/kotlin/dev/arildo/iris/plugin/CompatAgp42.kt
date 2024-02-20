@@ -23,5 +23,4 @@ fun handleAgp41(project: Project) {
             }
         }
     }
-
 }
