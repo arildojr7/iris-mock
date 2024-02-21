@@ -1,0 +1,4 @@
+appId: dev.arildo.iris.mock
+---
+- launchApp
+- assertVisible: "Intercepted!"
