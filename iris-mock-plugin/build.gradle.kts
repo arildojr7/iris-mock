@@ -44,8 +44,7 @@ val compatAgp72: SourceSet by sourceSets.creating
 val shared: SourceSet by sourceSets.creating
 
 dependencies {
-    shared.compileOnlyConfigurationName("dev.gradleplugins:gradle-api:7.6")
-    compatAgp72.compileOnlyConfigurationName("com.android.tools.build:gradle:8.2.2")
+    compatAgp72.compileOnlyConfigurationName("com.android.tools.build:gradle:7.2.2")
     compatAgp72.compileOnlyConfigurationName("dev.gradleplugins:gradle-api:7.6")
     compatAgp72.compileOnlyConfigurationName(shared.output)
 
@@ -62,10 +61,7 @@ dependencies {
     compileOnly(compatAgp71.output)
     compileOnly(shared.output)
 
-    implementation(kotlin("stdlib"))
-    implementation(kotlin("gradle-plugin-api"))
-
-    compileOnly("dev.gradleplugins:gradle-api:7.6")
+    compileOnly(kotlin("gradle-plugin"))
     compileOnly("com.squareup.okhttp3:okhttp:3.14.9")
 
     arrayOf("asm", "asm-util", "asm-commons").forEach {
@@ -82,7 +78,7 @@ tasks.withType<Jar> {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "17"
 }
 
 tasks.withType<KotlinCompile> {
