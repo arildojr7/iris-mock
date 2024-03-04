@@ -7,7 +7,7 @@ import dev.arildo.iris.plugin.util.PLUGIN_APPLICATION
 import dev.arildo.iris.plugin.visitor.IrisMockVisitorFactory
 import org.gradle.api.Project
 
-fun handleAgp41(project: Project) {
+fun handleAgp42(project: Project) {
     project.plugins.withId(PLUGIN_APPLICATION) {
         val androidComponents = project.extensions.getByType(AndroidComponentsExtension::class.java)
 

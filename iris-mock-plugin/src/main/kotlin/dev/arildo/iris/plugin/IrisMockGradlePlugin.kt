@@ -17,7 +17,7 @@ class IrisMockGradlePlugin : Plugin<Project> {
 
         when {
             agpVersion < VersionNumber.parse("4.2.0") -> error("android gradle plugin not supported")
-            agpVersion < VersionNumber.parse("7.1.0") -> handleAgp41(project)
+            agpVersion < VersionNumber.parse("7.1.0") -> handleAgp42(project)
             agpVersion < VersionNumber.parse("7.2.0") -> handleAgp71(project)
             else -> handleAgp72(project)
         }

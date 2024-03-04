@@ -44,16 +44,19 @@ val compatAgp72: SourceSet by sourceSets.creating
 val shared: SourceSet by sourceSets.creating
 
 dependencies {
+    shared.compileOnlyConfigurationName("com.android.tools.build:gradle:4.2.0")
+    shared.compileOnlyConfigurationName(gradleApi())
+
     compatAgp72.compileOnlyConfigurationName("com.android.tools.build:gradle:7.2.2")
-    compatAgp72.compileOnlyConfigurationName("dev.gradleplugins:gradle-api:7.6")
+    compatAgp72.compileOnlyConfigurationName(gradleApi())
     compatAgp72.compileOnlyConfigurationName(shared.output)
 
     compatAgp71.compileOnlyConfigurationName("com.android.tools.build:gradle:7.1.0")
-    compatAgp71.compileOnlyConfigurationName("dev.gradleplugins:gradle-api:7.6")
+    compatAgp71.compileOnlyConfigurationName(gradleApi())
     compatAgp71.compileOnlyConfigurationName(shared.output)
 
     compatAgp42.compileOnlyConfigurationName("com.android.tools.build:gradle:4.2.0")
-    compatAgp42.compileOnlyConfigurationName("dev.gradleplugins:gradle-api:7.6")
+    compatAgp42.compileOnlyConfigurationName(gradleApi())
     compatAgp42.compileOnlyConfigurationName(shared.output)
 
     compileOnly(compatAgp42.output)

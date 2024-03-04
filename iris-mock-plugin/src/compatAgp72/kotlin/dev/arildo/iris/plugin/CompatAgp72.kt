@@ -4,7 +4,7 @@ import com.android.build.api.instrumentation.FramesComputationMode
 import com.android.build.api.instrumentation.InstrumentationScope
 import com.android.build.api.variant.AndroidComponentsExtension
 import dev.arildo.iris.plugin.util.PLUGIN_APPLICATION
-import dev.arildo.iris.plugin.visitor.IrisMockVisitorFactory7Dot2
+import dev.arildo.iris.plugin.visitor.IrisMockVisitorFactory
 import org.gradle.api.Project
 
 fun handleAgp72(project: Project) {
@@ -16,7 +16,7 @@ fun handleAgp72(project: Project) {
                 FramesComputationMode.COMPUTE_FRAMES_FOR_INSTRUMENTED_METHODS
             )
             variant.instrumentation.transformClassesWith(
-                IrisMockVisitorFactory7Dot2::class.java,
+                IrisMockVisitorFactory::class.java,
                 InstrumentationScope.ALL
             ) { params ->
                 params.transformEpoch.set(System.currentTimeMillis())
