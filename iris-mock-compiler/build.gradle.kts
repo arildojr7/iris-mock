@@ -74,7 +74,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 }
 
 dependencies {
-    implementation("com.squareup:kotlinpoet:1.14.2")
     compileOnly("org.jetbrains.kotlin:kotlin-compiler-embeddable:1.8.21")
 
     compileOnly("com.google.auto.service:auto-service-annotations:1.0.1")

@@ -38,21 +38,50 @@ java {
     withSourcesJar()
 }
 
-dependencies {
-    implementation("com.android.tools.build:gradle:7.2.2")
-    implementation(kotlin("stdlib"))
-    implementation(kotlin("gradle-plugin-api"))
+val compatAgp42: SourceSet by sourceSets.creating
+val compatAgp71: SourceSet by sourceSets.creating
+val compatAgp72: SourceSet by sourceSets.creating
+val shared: SourceSet by sourceSets.creating
 
-    compileOnly("dev.gradleplugins:gradle-api:7.6")
+dependencies {
+    shared.compileOnlyConfigurationName("com.android.tools.build:gradle:4.2.0")
+    shared.compileOnlyConfigurationName(gradleApi())
+
+    compatAgp72.compileOnlyConfigurationName("com.android.tools.build:gradle:7.2.2")
+    compatAgp72.compileOnlyConfigurationName(gradleApi())
+    compatAgp72.compileOnlyConfigurationName(shared.output)
+
+    compatAgp71.compileOnlyConfigurationName("com.android.tools.build:gradle:7.1.0")
+    compatAgp71.compileOnlyConfigurationName(gradleApi())
+    compatAgp71.compileOnlyConfigurationName(shared.output)
+
+    compatAgp42.compileOnlyConfigurationName("com.android.tools.build:gradle:4.2.0")
+    compatAgp42.compileOnlyConfigurationName(gradleApi())
+    compatAgp42.compileOnlyConfigurationName(shared.output)
+
+    compileOnly(compatAgp42.output)
+    compileOnly(compatAgp72.output)
+    compileOnly(compatAgp71.output)
+    compileOnly(shared.output)
+
+    compileOnly(kotlin("gradle-plugin"))
     compileOnly("com.squareup.okhttp3:okhttp:3.14.9")
 
     arrayOf("asm", "asm-util", "asm-commons").forEach {
         compileOnly("org.ow2.asm:$it:9.4")
+        shared.compileOnlyConfigurationName("org.ow2.asm:$it:9.4")
     }
 }
 
+tasks.withType<Jar> {
+    from(compatAgp42.output)
+    from(compatAgp72.output)
+    from(compatAgp71.output)
+    from(shared.output)
+}
+
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "17"
 }
 
 tasks.withType<KotlinCompile> {

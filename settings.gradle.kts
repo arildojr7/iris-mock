@@ -4,9 +4,9 @@ pluginManagement {
     }
     repositories {
         google()
+        mavenLocal()
         mavenCentral()
         gradlePluginPortal()
-        mavenLocal()
         maven {
             url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
         }
@@ -16,11 +16,17 @@ dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
-        mavenCentral()
         mavenLocal()
+        mavenCentral()
         maven {
             url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
         }
+    }
+}
+
+buildscript {
+    configurations.all {
+        resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
     }
 }
 

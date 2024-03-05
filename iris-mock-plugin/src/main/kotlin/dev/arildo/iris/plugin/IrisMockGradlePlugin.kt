@@ -2,36 +2,23 @@
 
 package dev.arildo.iris.plugin
 
-import com.android.build.api.instrumentation.FramesComputationMode
-import com.android.build.api.instrumentation.InstrumentationScope
-import com.android.build.api.variant.AndroidComponentsExtension
 import dev.arildo.iris.plugin.BuildConfig.PLUGIN_VERSION
-import dev.arildo.iris.plugin.visitor.IrisMockVisitorFactory
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.getByType
+import org.gradle.util.internal.VersionNumber
 
 class IrisMockGradlePlugin : Plugin<Project> {
-    override fun apply(target: Project) {
-        target.extensions.create("irisMock", IrisMockGradleExtension::class.java)
-        addIrisMockRuntimeDependency(target)
+    override fun apply(project: Project) {
+        addIrisMockRuntimeDependency(project)
+        project.plugins.apply(IrisMockSubPlugin::class.java)
 
-        target.plugins.apply(IrisMockSubPlugin::class.java)
+        val agpVersion = project.getAgpVersion()
 
-        target.pluginManager.withPlugin("com.android.application") {
-            val androidComponents = target.extensions.getByType(AndroidComponentsExtension::class)
-
-            androidComponents.onVariants { variant ->
-                variant.instrumentation.setAsmFramesComputationMode(
-                    FramesComputationMode.COMPUTE_FRAMES_FOR_INSTRUMENTED_METHODS
-                )
-                variant.instrumentation.transformClassesWith(
-                    IrisMockVisitorFactory::class.java,
-                    InstrumentationScope.ALL
-                ) { params ->
-                    params.transformEpoch.set(System.currentTimeMillis())
-                }
-            }
+        when {
+            agpVersion < VersionNumber.parse("4.2.0") -> error("android gradle plugin not supported")
+            agpVersion < VersionNumber.parse("7.1.0") -> handleAgp42(project)
+            agpVersion < VersionNumber.parse("7.2.0") -> handleAgp71(project)
+            else -> handleAgp72(project)
         }
     }
 
@@ -39,5 +26,19 @@ class IrisMockGradlePlugin : Plugin<Project> {
         project.configurations.getByName("implementation").dependencies.add(
             project.dependencies.create("dev.arildo:iris-mock:$PLUGIN_VERSION")
         )
+    }
+
+    private fun Project.getAgpVersion(): VersionNumber {
+        val buildscript = rootProject.buildscript
+        val artifacts =
+            buildscript.configurations.getByName("classpath").resolvedConfiguration.resolvedArtifacts
+
+        // Find the Android Gradle plugin dependency
+        val androidGradlePlugin = artifacts.singleOrNull {
+            it.moduleVersion.id.toString().startsWith("com.android.tools.build:gradle:")
+        } ?: error("Could not determine Android Gradle plugin version")
+
+        // Extract the resolved Android Gradle plugin version
+        return VersionNumber.parse(androidGradlePlugin.moduleVersion.id.version)
     }
 }

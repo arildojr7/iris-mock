@@ -15,6 +15,6 @@ class FirstInterceptor : Interceptor {
 
         // just to switch between mock and real response on app sample
         if (!AppState.shouldIntercept) return@irisMockScope
-        onGet(endsWith = "/public/characters").mockResponse("{\"data\" : \"Intercepted!\"}")
+        onGet(endsWith = "/public/characters") mockResponse "{\"data\" : \"Intercepted!\"}"
     }
 }

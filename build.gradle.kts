@@ -7,4 +7,12 @@ plugins {
 }
 subprojects {
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
+
+    configurations.all {
+        resolutionStrategy.dependencySubstitution {
+            substitute(module("dev.arildo:iris-mock"))
+                .using(project(":iris-mock"))
+                .because("working with local development version")
+        }
+    }
 }
