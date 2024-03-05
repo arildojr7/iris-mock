@@ -13,7 +13,6 @@ class IrisMockGradlePlugin : Plugin<Project> {
         project.plugins.apply(IrisMockSubPlugin::class.java)
 
         val agpVersion = project.getAgpVersion()
-        println("@@@ $agpVersion")
 
         when {
             agpVersion < VersionNumber.parse("4.2.0") -> error("android gradle plugin not supported")
