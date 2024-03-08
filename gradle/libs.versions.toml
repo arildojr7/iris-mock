@@ -1,0 +1,68 @@
+[versions]
+kotlin = "1.9.22"
+agp = "7.4.2"
+okhttp = "3.14.9"
+okio = "2.8.0"
+asm = "9.6"
+buildconfig = "3.0.3"
+gradlePublish = "1.2.1"
+ktlintPlugin = "11.3.2"
+autoService = "1.1.1"
+irisMock = "1.1.0-alpha04"
+androidx-appcompat = "1.6.1"
+androidx-core = "1.12.0"
+androidx-material = "1.11.0"
+retrofit = "2.9.0"
+retrofitGson = "2.7.1"
+androidx-constraintLayout = "2.1.4"
+androidx-lifecycle = "2.7.0"
+coroutinesCore = "1.7.3"
+serializationJson = "1.5.1"
+junit = "5.10.2"
+mockk = "1.13.5"
+
+[libraries]
+agp420 = { module = "com.android.tools.build:gradle", version = "4.2.0" }
+agp710 = { module = "com.android.tools.build:gradle", version = "7.1.0" }
+agp722 = { module = "com.android.tools.build:gradle", version = "7.2.2" }
+
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
+androidx-material = { module = "com.google.android.material:material", version.ref = "androidx-material" }
+androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
+androidx-constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-constraintLayout" }
+androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
+
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutinesCore" }
+kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serializationJson" }
+
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofitGson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofitGson" }
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
+
+asm-core = { module = "org.ow2.asm:asm", version.ref = "asm" }
+asm-util = { module = "org.ow2.asm:asm-util", version.ref = "asm" }
+asm-commons = { module = "org.ow2.asm:asm-commons", version.ref = "asm" }
+
+kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlin-compiler = { module = "org.jetbrains.kotlin:kotlin-compiler-embeddable", version.ref = "kotlin" }
+
+autoService-processor = { module = "com.google.auto.service:auto-service", version.ref = "autoService" }
+autoService-annotations = { module = "com.google.auto.service:auto-service-annotations", version.ref = "autoService" }
+
+test-junit = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
+test-mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+
+[bundles]
+asm = ["asm-core", "asm-commons", "asm-util"]
+
+[plugins]
+application = { id = "com.android.application", version.ref = "agp" }
+library = { id = "com.android.library", version.ref = "agp" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+buildconfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildconfig" }
+gradlePublish = { id = "com.gradle.plugin-publish", version.ref = "gradlePublish" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintPlugin" }
+irisMock = { id = "dev.arildo.iris-mock-plugin", version.ref = "irisMock" }

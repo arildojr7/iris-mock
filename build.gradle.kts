@@ -1,13 +1,13 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    id("com.android.application") version "7.2.2" apply false
-    id("com.android.library") version "7.2.2" apply false
-    id("org.jetbrains.kotlin.android") version "1.8.21" apply false
-    id("org.jlleitschuh.gradle.ktlint") version "11.3.2"
+    alias(libs.plugins.application) apply false
+    alias(libs.plugins.library) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kotlin.kapt) apply false
+    alias(libs.plugins.kotlin.jvm) apply false
 }
 subprojects {
-    apply(plugin = "org.jlleitschuh.gradle.ktlint")
-
     configurations.all {
         resolutionStrategy.dependencySubstitution {
             substitute(module("dev.arildo:iris-mock"))
