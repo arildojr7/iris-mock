@@ -1,10 +1,12 @@
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    kotlin("jvm")
-    kotlin("kapt")
-    id("java-library")
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.buildconfig)
+    alias(libs.plugins.ktlint)
+//    id("java-library")
     id("maven-publish")
     id("signing")
-    id("com.github.gmazzo.buildconfig") version "3.0.3"
 }
 
 publishing {
@@ -74,10 +76,9 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 }
 
 dependencies {
-    compileOnly("org.jetbrains.kotlin:kotlin-compiler-embeddable:1.8.21")
-
-    compileOnly("com.google.auto.service:auto-service-annotations:1.0.1")
-    kapt("com.google.auto.service:auto-service:1.0.1")
+    compileOnly(libs.kotlin.compiler)
+    compileOnly(libs.autoService.annotations)
+    kapt(libs.autoService.processor)
 }
 
 val pluginId = findProperty("PLUGIN_ID").toString()

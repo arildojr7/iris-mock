@@ -1,8 +1,9 @@
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
+    alias(libs.plugins.kotlin.jvm)
     id("java-library")
     id("maven-publish")
     id("signing")
-    kotlin("jvm")
 }
 
 java {
@@ -66,12 +67,12 @@ signing {
 }
 
 dependencies {
-    implementation("com.squareup.okhttp3:okhttp:3.14.9")
-    implementation("com.squareup.okio:okio:2.8.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
-    testImplementation("io.mockk:mockk:1.13.5")
+    implementation(libs.okhttp)
+    implementation(libs.okio)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.serialization)
+    testImplementation(libs.test.junit)
+    testImplementation(libs.test.mockk)
 }
 tasks.test {
     useJUnitPlatform()
