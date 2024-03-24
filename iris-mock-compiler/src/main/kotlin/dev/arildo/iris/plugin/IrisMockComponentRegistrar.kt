@@ -19,7 +19,7 @@ class IrisMockComponentRegistrar : CompilerPluginRegistrar() {
         AnalysisHandlerExtension.registerExtension(
             CodeGenerationExtension(
                 codeGenDir = File(configuration.getNotNull(srcGenDirKey)),
-                codeGenerator = loadCodeGenerator(),
+                codeGenerator = loadCodeGenerator()
             )
         )
     }

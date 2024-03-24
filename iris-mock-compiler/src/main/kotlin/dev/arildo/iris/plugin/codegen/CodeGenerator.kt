@@ -10,7 +10,7 @@ interface CodeGenerator {
     fun generateCode(
         codeGenDir: File,
         module: ModuleDescriptor,
-        projectFiles: Collection<KtFile>,
+        projectFiles: Collection<KtFile>
     )
 
     fun CodeGenerator.generateIrisMockContainer(

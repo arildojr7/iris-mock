@@ -13,7 +13,7 @@ import java.io.File
 
 internal class CodeGenerationExtension(
     private val codeGenDir: File,
-    private val codeGenerator: CodeGenerator?,
+    private val codeGenerator: CodeGenerator?
 ) : AnalysisHandlerExtension {
 
     private var didRecompile = false

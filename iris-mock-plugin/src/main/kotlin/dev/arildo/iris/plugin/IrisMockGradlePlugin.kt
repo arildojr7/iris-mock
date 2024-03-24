@@ -8,23 +8,27 @@ import org.gradle.api.Project
 import org.gradle.util.internal.VersionNumber
 
 class IrisMockGradlePlugin : Plugin<Project> {
-    override fun apply(project: Project) {
-        addIrisMockRuntimeDependency(project)
-        project.plugins.apply(IrisMockSubPlugin::class.java)
+    override fun apply(project: Project) = with(project) {
+        val extension = extensions.create("irisMock", IrisMockExtension::class.java).also {
+            if (!it.enabled.get()) return@with
+        }
 
-        val agpVersion = project.getAgpVersion()
+        plugins.apply(IrisMockSubPlugin::class.java)
+        addIrisMockRuntimeDependency(extension.configuration.get())
+
+        val agpVersion = getAgpVersion()
 
         when {
             agpVersion < VersionNumber.parse("4.2.0") -> error("android gradle plugin not supported")
-            agpVersion < VersionNumber.parse("7.1.0") -> handleAgp42(project)
-            agpVersion < VersionNumber.parse("7.2.0") -> handleAgp71(project)
-            else -> handleAgp72(project)
+            agpVersion < VersionNumber.parse("7.1.0") -> handleAgp42(this)
+            agpVersion < VersionNumber.parse("7.2.0") -> handleAgp71(this)
+            else -> handleAgp72(this)
         }
     }
 
-    private fun addIrisMockRuntimeDependency(project: Project) {
-        project.configurations.getByName("implementation").dependencies.add(
-            project.dependencies.create("dev.arildo:iris-mock:$PLUGIN_VERSION")
+    private fun Project.addIrisMockRuntimeDependency(configuration: String) {
+        configurations.getByName(configuration).dependencies.add(
+            dependencies.create("dev.arildo:iris-mock:$PLUGIN_VERSION")
         )
     }
 

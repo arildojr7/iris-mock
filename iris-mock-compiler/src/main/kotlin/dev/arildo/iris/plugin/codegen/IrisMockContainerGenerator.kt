@@ -16,7 +16,7 @@ internal class IrisMockContainerGenerator : CodeGenerator {
     override fun generateCode(
         codeGenDir: File,
         module: ModuleDescriptor,
-        projectFiles: Collection<KtFile>,
+        projectFiles: Collection<KtFile>
     ) {
         val annotatedClasses = projectFiles
             .flatMap { it.classesAndInnerClasses() }
