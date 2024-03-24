@@ -4,10 +4,10 @@ import dev.arildo.iris.plugin.util.ADD
 import dev.arildo.iris.plugin.util.BUILD
 import dev.arildo.iris.plugin.util.CONSTRUCTOR
 import dev.arildo.iris.plugin.util.INIT
+import dev.arildo.iris.plugin.util.INTERCEPTORS
 import dev.arildo.iris.plugin.util.IRIS_WRAPPER_INTERCEPTOR
 import dev.arildo.iris.plugin.util.LIST_DESCRIPTOR
 import dev.arildo.iris.plugin.util.LIST_OWNER
-import dev.arildo.iris.plugin.util.NETWORK_INTERCEPTORS
 import dev.arildo.iris.plugin.util.OBJECT
 import dev.arildo.iris.plugin.util.OKHTTP_BUILDER_DESCRIPTOR
 import org.objectweb.asm.ClassVisitor
@@ -46,7 +46,7 @@ class IrisMockVisitor(apiVersion: Int, next: ClassVisitor) : ClassVisitor(apiVer
             visitFieldInsn(
                 Opcodes.GETFIELD,
                 OKHTTP_BUILDER_DESCRIPTOR,
-                NETWORK_INTERCEPTORS,
+                INTERCEPTORS,
                 LIST_DESCRIPTOR
             )
 

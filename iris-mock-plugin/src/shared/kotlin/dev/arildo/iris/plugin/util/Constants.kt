@@ -10,7 +10,7 @@ const val OKHTTP_BUILDER = "okhttp3.OkHttpClient\$Builder"
 const val INIT = "<init>"
 const val ADD = "add"
 const val BUILD = "build"
-const val NETWORK_INTERCEPTORS = "networkInterceptors"
+const val INTERCEPTORS = "interceptors"
 
 const val IRIS_WRAPPER_INTERCEPTOR = "dev/arildo/iris/mock/IrisMockWrapper"
 

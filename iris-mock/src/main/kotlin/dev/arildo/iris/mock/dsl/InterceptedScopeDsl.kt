@@ -1,5 +1,5 @@
 @file:JvmMultifileClass
-@file:Suppress("unused", "UnusedReceiverParameter")
+@file:Suppress("unused")
 
 package dev.arildo.iris.mock.dsl
 
