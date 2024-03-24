@@ -11,13 +11,9 @@ import org.jetbrains.kotlin.resolve.BindingTrace
 import org.jetbrains.kotlin.resolve.jvm.extensions.AnalysisHandlerExtension
 import java.io.File
 
-/**
- * Adapted from https://github.com/square/anvil
- */
 internal class CodeGenerationExtension(
     private val codeGenDir: File,
-    private val codeGenerators: List<CodeGenerator>,
-    private val moduleDescriptorFactory: IrisMockModuleDescriptorImpl.Factory
+    private val codeGenerator: CodeGenerator?
 ) : AnalysisHandlerExtension {
 
     private var didRecompile = false
@@ -44,19 +40,16 @@ internal class CodeGenerationExtension(
         if (didRecompile) return null
         didRecompile = true
 
-        val irisMockModule = moduleDescriptorFactory.create(module)
-        irisMockModule.addFiles(files)
-
         codeGenDir.listFiles()?.forEach {
             check(it.deleteRecursively()) { "Could not clean file: $it" }
         }
 
-        codeGenerators.forEach { it.generateCode(codeGenDir, irisMockModule, files) }
+        codeGenerator?.generateCode(codeGenDir, module, files)
 
         // This restarts the analysis phase and will include our files.
         return RetryWithAdditionalRoots(
             bindingContext = bindingTrace.bindingContext,
-            moduleDescriptor = irisMockModule,
+            moduleDescriptor = module,
             additionalJavaRoots = emptyList(),
             additionalKotlinRoots = listOf(codeGenDir),
             addToEnvironment = true

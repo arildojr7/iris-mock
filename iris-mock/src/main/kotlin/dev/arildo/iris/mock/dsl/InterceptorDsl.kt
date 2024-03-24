@@ -1,5 +1,5 @@
 @file:JvmMultifileClass
-@file:Suppress("unused")
+
 package dev.arildo.iris.mock.dsl
 
 import dev.arildo.iris.mock.IrisMockCondition

@@ -1,5 +1,3 @@
-@file:Suppress("unused")
-
 package dev.arildo.iris.mock.util
 
 import dev.arildo.iris.mock.IrisMockScope

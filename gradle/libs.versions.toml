@@ -1,6 +1,6 @@
 [versions]
-kotlin = "1.9.22"
-agp = "7.4.2"
+kotlin = "1.9.10"
+agp = "8.3.0"
 okhttp = "3.14.9"
 okio = "2.8.0"
 asm = "9.6"
