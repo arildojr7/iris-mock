@@ -16,7 +16,7 @@ jobs:
       SIGNING_KEY_ID: ${{ secrets.GPG_KEY_ID }}
       SIGNING_PASSWORD: ${{ secrets.GPG_KEY_PASSWORD }}
       SIGNING_KEY: ${{ secrets.GPG_FILE_BASE64 }}
-      VERSION: ${{ github.ref_name }} | cut -c 2- # remove the "v" from tag
+      VERSION: ${{ github.ref_name }}
 
     runs-on: ubuntu-latest
     steps:
@@ -31,6 +31,7 @@ jobs:
 
       - name: Set credentials
         run: |
+          export VERSION=$(echo $VERSION | cut -c 2- )
           echo "signing.keyId=${SIGNING_KEY_ID}" > ~/.gradle/gradle.properties
           echo "signing.password=${SIGNING_PASSWORD}" >> ~/.gradle/gradle.properties
           echo "signing.secretKeyRingFile=${HOME}/.gradle/secring.gpg" >> ~/.gradle/gradle.properties
