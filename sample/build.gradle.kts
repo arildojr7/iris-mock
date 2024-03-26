@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("dev.arildo.iris-mock-plugin") version "1.1.0-alpha04"
+    id("dev.arildo.iris-mock-plugin") version "0.0.1-snapshot"
 }
 
 android {
