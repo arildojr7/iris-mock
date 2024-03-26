@@ -1,7 +1,7 @@
 name: publish snapshot
 
 on:
-  push:
+  pull_request_target:
     types: [closed]
     branches:
       - main
