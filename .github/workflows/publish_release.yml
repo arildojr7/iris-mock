@@ -2,8 +2,6 @@ name: publish release
 
 on:
   push:
-    tags:
-      - 'v*.*.*'
     tags-ignore:
       - '*-snapshot'
 
@@ -18,7 +16,7 @@ jobs:
       SIGNING_KEY_ID: ${{ secrets.GPG_KEY_ID }}
       SIGNING_PASSWORD: ${{ secrets.GPG_KEY_PASSWORD }}
       SIGNING_KEY: ${{ secrets.GPG_FILE_BASE64 }}
-      VERSION: ${{ github.event.release.tag_name }}
+      VERSION: ${{ github.event.release.tag_name }} | cut -c 2- # remove the "v" from tag
 
     runs-on: ubuntu-latest
     steps:
@@ -39,8 +37,8 @@ jobs:
           echo ${SIGNING_KEY} | base64 -d > ~/.gradle/secring.gpg
           echo "gradle.publish.key=${GRADLE_PLUGIN_KEY}" >> ~/.gradle/gradle.properties
           echo "gradle.publish.secret=${GRADLE_PLUGIN_SECRET}" >> ~/.gradle/gradle.properties
-          sed -i "" "/LIB_VERSION/s/=.*$/=${VERSION}/" gradle.properties
-          sed -i "" "/PLUGIN_VERSION/s/=.*$/=${VERSION}/" gradle.properties
+          sed -i "" "/LIB_VERSION/s/=.*$/=${VERSION}/" ./gradle.properties
+          sed -i "" "/PLUGIN_VERSION/s/=.*$/=${VERSION}/" ./gradle.properties
 
       - name: Publish iris-mock
         run: ./gradlew :iris-mock:publish
