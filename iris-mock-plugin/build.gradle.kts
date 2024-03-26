@@ -1,11 +1,12 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    id("com.gradle.plugin-publish") version "1.2.0"
-    id("com.github.gmazzo.buildconfig") version "3.0.3"
+    alias(libs.plugins.gradlePublish)
+    alias(libs.plugins.buildconfig)
+    alias(libs.plugins.ktlint)
     `kotlin-dsl`
     signing
-    kotlin("jvm")
 }
 
 group = findProperty("GROUP_ID").toString()
@@ -44,33 +45,30 @@ val compatAgp72: SourceSet by sourceSets.creating
 val shared: SourceSet by sourceSets.creating
 
 dependencies {
-    shared.compileOnlyConfigurationName("com.android.tools.build:gradle:4.2.0")
     shared.compileOnlyConfigurationName(gradleApi())
+    shared.compileOnlyConfigurationName(libs.agp420)
+    shared.compileOnlyConfigurationName(libs.bundles.asm)
 
-    compatAgp72.compileOnlyConfigurationName("com.android.tools.build:gradle:7.2.2")
-    compatAgp72.compileOnlyConfigurationName(gradleApi())
-    compatAgp72.compileOnlyConfigurationName(shared.output)
+    compatAgp42.compileOnlyConfigurationName(gradleApi())
+    compatAgp42.compileOnlyConfigurationName(libs.agp420)
+    compatAgp42.compileOnlyConfigurationName(shared.output)
 
-    compatAgp71.compileOnlyConfigurationName("com.android.tools.build:gradle:7.1.0")
     compatAgp71.compileOnlyConfigurationName(gradleApi())
+    compatAgp71.compileOnlyConfigurationName(libs.agp710)
     compatAgp71.compileOnlyConfigurationName(shared.output)
 
-    compatAgp42.compileOnlyConfigurationName("com.android.tools.build:gradle:4.2.0")
-    compatAgp42.compileOnlyConfigurationName(gradleApi())
-    compatAgp42.compileOnlyConfigurationName(shared.output)
+    compatAgp72.compileOnlyConfigurationName(gradleApi())
+    compatAgp72.compileOnlyConfigurationName(libs.agp722)
+    compatAgp72.compileOnlyConfigurationName(shared.output)
 
     compileOnly(compatAgp42.output)
     compileOnly(compatAgp72.output)
     compileOnly(compatAgp71.output)
     compileOnly(shared.output)
 
-    compileOnly(kotlin("gradle-plugin"))
-    compileOnly("com.squareup.okhttp3:okhttp:3.14.9")
-
-    arrayOf("asm", "asm-util", "asm-commons").forEach {
-        compileOnly("org.ow2.asm:$it:9.4")
-        shared.compileOnlyConfigurationName("org.ow2.asm:$it:9.4")
-    }
+    compileOnly(libs.kotlin.gradlePlugin)
+    compileOnly(libs.okhttp)
+    compileOnly(libs.bundles.asm)
 }
 
 tasks.withType<Jar> {

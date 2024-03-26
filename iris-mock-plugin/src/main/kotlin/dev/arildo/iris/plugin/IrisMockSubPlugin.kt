@@ -12,7 +12,8 @@ import org.jetbrains.kotlin.gradle.plugin.SubpluginOption
 import java.io.File
 
 class IrisMockSubPlugin : KotlinCompilerPluginSupportPlugin {
-    override fun isApplicable(kotlinCompilation: KotlinCompilation<*>) = true
+    override fun isApplicable(kotlinCompilation: KotlinCompilation<*>): Boolean =
+        kotlinCompilation.target.project.extensions.getByType(IrisMockExtension::class.java).enabled.get()
 
     override fun getCompilerPluginId() = PLUGIN_ID
 
@@ -23,8 +24,8 @@ class IrisMockSubPlugin : KotlinCompilerPluginSupportPlugin {
     )
 
     override fun applyToCompilation(kotlinCompilation: KotlinCompilation<*>): Provider<List<SubpluginOption>> {
-        return kotlinCompilation.target.project.let { project ->
-            project.provider {
+        return kotlinCompilation.target.project.run {
+            provider {
                 listOf(
                     SubpluginOption(
                         key = "src-gen-dir",

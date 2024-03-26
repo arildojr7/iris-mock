@@ -8,10 +8,10 @@ import dev.arildo.iris.mock.dsl.onGet
 import okhttp3.Interceptor
 
 @IrisMockInterceptor
-class FirstInterceptor : Interceptor {
+class SecondInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain) = irisMockScope(chain) {
         enableLogs()
-        onGet(endsWith = "/public/characters") mockResponse "{\"data\" : \"Intercepted!\"}"
+        onGet(endsWith = "/public/characters") mockResponse "{\"data\" : \"aham!\"}"
     }
 }

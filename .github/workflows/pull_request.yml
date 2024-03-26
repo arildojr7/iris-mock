@@ -21,6 +21,90 @@ jobs:
       - name: Run checks
         run: ./gradlew ktlintCheck
 
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: gradle
+
+      - name: Setup gradle
+        uses: gradle/gradle-build-action@v2.4.2
+
+      - name: Build iris-mock
+        run: ./gradlew :iris-mock:publishToMavenLocal
+
+      - name: Build iris-mock-plugin
+        run: ./gradlew :iris-mock-plugin:publishToMavenLocal
+
+      - name: Build iris-mock-compiler
+        run: ./gradlew :iris-mock-compiler:publishToMavenLocal
+
+      - name: Build app sample
+        run: ./gradlew :sample:assembleDebug
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app-sample
+          path: sample/build/outputs/apk/debug/sample-debug.apk
+
+  ui-tests:
+    runs-on: ubuntu-latest
+    needs: build
+    strategy:
+      matrix:
+        api-level: [29]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: app-sample
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: AVD cache
+        uses: actions/cache@v4
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ matrix.api-level }}
+
+      - name: Create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          script: echo "Generated AVD snapshot for caching."
+
+      - name: Run UI tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          force-avd-creation: false
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          script: |
+            adb uninstall dev.arildo.iris.mock || true
+            adb install sample-debug.apk
+            curl -Ls "https://get.maestro.mobile.dev" | bash
+            $HOME/.maestro/bin/maestro test .maestro/
+
   unit-tests:
     runs-on: ubuntu-latest
     steps:
@@ -36,25 +120,3 @@ jobs:
 
       - name: Run unit tests
         run: ./gradlew test
-
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
-        with:
-          distribution: temurin
-          java-version: 17
-          cache: gradle
-
-      - name: Setup gradle
-        uses: gradle/gradle-build-action@v2.4.2
-
-      - name: Build iris-mock
-        run: ./gradlew :iris-mock:assemble
-
-      - name: Build iris-mock-plugin
-        run: ./gradlew :iris-mock-plugin:assemble
-
-      - name: Build app sample
-        run: ./gradlew :sample:assembleDebug
