@@ -17,7 +17,7 @@ jobs:
       SIGNING_KEY_ID: ${{ secrets.GPG_KEY_ID }}
       SIGNING_PASSWORD: ${{ secrets.GPG_KEY_PASSWORD }}
       SIGNING_KEY: ${{ secrets.GPG_FILE_BASE64 }}
-      VERSION: 0.0.1-snapshot
+      VERSION: 0.0.1-SNAPSHOT
 
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
