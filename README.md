@@ -2,7 +2,7 @@
   <img src="assets/iris-mock-header.png" /> 
   <br><br>
   <img src="https://img.shields.io/github/actions/workflow/status/arildojr7/iris-mock/pull_request.yml?color=00b330" />
-  <img src="https://shields.io/badge/mavenCentral-v1.1.0 alpha04-blue" />
+  <img src="https://shields.io/badge/mavenCentral-v1.1.0-blue" />
   <a href="https://pinterest.github.io/ktlint/"><img src="https://img.shields.io/badge/code%20style-%E2%9D%A4-FF4081.svg" alt="ktlint"></a>
   <img src="https://img.shields.io/endpoint?color=00b330&url=https%3A%2F%2Fhits.dwyl.com%2Farildojr7%2Firis-mock.json" />
   <img src="https://img.shields.io/github/license/arildojr7/iris-mock?color=0979ba" />
@@ -29,7 +29,7 @@ btw, <b>Iris</b> is my daughter's name 🥰
 
 ```kotlin
 plugins {
-  id("dev.arildo.iris-mock-plugin") version "1.1.0-alpha04"
+  id("dev.arildo.iris-mock-plugin") version "1.1.0"
 }
 ```
 
@@ -78,12 +78,14 @@ See [official docs](https://irismock.arildo.dev/getting-started/configure-gradle
 - Expand DSL
 - and many other cool things
 
+## Getting started video
+[![Iris Mock](https://github.com/arildojr7/iris-mock/assets/32650006/a8526d9a-923f-49b1-b58f-fe0dbd15d051)](https://www.youtube.com/watch?v=fe3bJ55tIck)
+
 ## Contributing
 Feel free to open PRs and submit feature suggestions via the repository issues. Everything's welcome 😎
 
 ## Support
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://bmc.link/arildojr7)
-
 
 ## License
 ```
