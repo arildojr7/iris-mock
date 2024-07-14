@@ -18,9 +18,18 @@ class IrisMockScope internal constructor(chain: Interceptor.Chain) {
     @VisibleForTesting
     internal var useCustomResponse = false
 
+    @VisibleForTesting
+    internal var useOriginalResponse = false
+
+    private val originalResponse by lazy { chain.proceed(chain.request()) }
+
     internal val customResponse = Response.Builder()
     internal val customRequest = chain.request().newBuilder()
     internal val url = chain.request().url().toString()
+
+    internal fun proceedOriginalResponse() {
+        useOriginalResponse = true
+    }
 
     internal fun createCustomResponse(httpCode: HttpCode, body: String = "") {
         val request = customRequest.build()
@@ -42,8 +51,11 @@ class IrisMockScope internal constructor(chain: Interceptor.Chain) {
         .addHeader(IRIS_HEADER_KEY, IRIS_HEADER_IGNORE)
         .build()
 
-    internal fun build(): Response =
-        if (useCustomResponse) customResponse.build() else createBlankResponse()
+    internal fun build(): Response = when {
+        useOriginalResponse -> originalResponse
+        useCustomResponse -> customResponse.build()
+        else -> createBlankResponse()
+    }
 
     companion object {
         internal val logger = Logger.getLogger(IRIS_MOCK_TAG)

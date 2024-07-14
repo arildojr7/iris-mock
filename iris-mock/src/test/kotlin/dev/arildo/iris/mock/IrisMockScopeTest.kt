@@ -8,6 +8,7 @@ import io.mockk.every
 import io.mockk.mockk
 import okhttp3.Interceptor
 import okhttp3.Request
+import okhttp3.Response
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNull
@@ -62,5 +63,20 @@ class IrisMockScopeTest {
         val response = IrisMockScope(chainMock).build()
 
         assertEquals(IRIS_HEADER_IGNORE, response.header(IRIS_HEADER_KEY))
+    }
+
+    @Test
+    fun `when proceed original call, then return original response`() {
+        val expectedResponse = mockk<Response>()
+        val request = chainMock.request()
+        every { chainMock.proceed(request) } returns expectedResponse
+
+        val irisMockScope = IrisMockScope(chainMock)
+        assertFalse(irisMockScope.useOriginalResponse)
+
+        irisMockScope.proceedOriginalResponse()
+        assertTrue(irisMockScope.useOriginalResponse)
+
+        assertEquals(expectedResponse, irisMockScope.build())
     }
 }

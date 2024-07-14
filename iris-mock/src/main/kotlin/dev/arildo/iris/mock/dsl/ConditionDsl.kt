@@ -126,3 +126,19 @@ fun IrisMockCondition.mockEmptyJsonObject() = "{}"
  * @return an empty json array response
  */
 fun IrisMockCondition.mockEmptyJsonArray() = "[]"
+
+/**
+ * Proceed with original call
+ * 
+ * // sample
+ * override fun intercept(chain: Chain) = irisMockScope(chain) {
+ *   onGet("/products") then {
+ *     if (!BuildConfig.DEBUG) {
+ *       proceedOriginalCall()
+ *     }
+ *   }
+ * }
+ * */
+fun IrisMockCondition.proceedOriginalCall() {
+    irisMockScope.proceedOriginalResponse()
+}
