@@ -1,7 +1,7 @@
 package dev.arildo.iris.mock.dsl
 
-import dev.arildo.iris.mock.callmodifier.CustomResponseModifierBody
 import dev.arildo.iris.mock.IrisMock
+import dev.arildo.iris.mock.callmodifier.CustomResponseBodyModifier
 import dev.arildo.iris.mock.util.Method
 import io.mockk.every
 import io.mockk.mockk
@@ -45,7 +45,7 @@ class MockDslTest {
         }
 
         assertEquals(
-            CustomResponseModifierBody(chainMock.hashCode(), expectedJson),
+            CustomResponseBodyModifier(chainMock.hashCode(), expectedJson),
             IrisMock.callModifiers.elementAt(0)
         )
     }
