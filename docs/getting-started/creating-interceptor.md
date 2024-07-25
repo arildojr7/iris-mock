@@ -4,13 +4,13 @@ Once iris mock dependency is configured, you can start creating your custom inte
 Create a new class implementing the [Interceptor](https://square.github.io/okhttp/3.x/okhttp/okhttp3/Interceptor.html){ target=_blank } 
 interface and annotate it with `@IrisMockInterceptor`.
 
-Using `irisMockScope(chain)`, all DSL functions will be available:
+Using `irisMock(chain)`, all DSL functions will be available:
 
 ```kotlin
 @IrisMockInterceptor
 class MyFirstInterceptor : Interceptor {
 
-    override fun intercept(chain: Chain) = irisMockScope(chain) {
+    override fun intercept(chain: Chain) = irisMock(chain) {
         onGet(endsWith = "/my/endpoint") mockResponse "myCoolJsonResponse"
     }
     

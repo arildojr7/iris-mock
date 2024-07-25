@@ -9,7 +9,7 @@
   <img src="https://img.shields.io/github/license/arildojr7/iris-mock?color=0979ba" />
 </p>
 <br>
-A kotlin-first tool to intercept android network calls, modify requests/responses and mock entire APIs. Also includes a cool DSL, that helps to reduce boilerplate code and simplify development.
+A kotlin tool to intercept android network calls, modify requests/responses and mock entire APIs. Also includes a cool DSL, that helps to reduce boilerplate code and simplify development.
 <br><br>
 btw, <b>Iris</b> is my daughter's name :smiling_face_with_3_hearts:
 

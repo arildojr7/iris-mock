@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch(Dispatchers.IO) {
             val result = RetrofitInitializer.apiService().getUserProfile()
             withContext(Dispatchers.Main) {
-                binding.tvTest.text = result.body()?.data
+                binding.tvTest.text = result.body()?.data ?: result.errorBody()?.string()
             }
         }
     }

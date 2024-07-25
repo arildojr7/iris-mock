@@ -24,7 +24,7 @@ publishing {
 
             pom {
                 name.set("iris-mock")
-                description.set("A kotlin-first tool to intercept android network calls, modify requests/responses and mock entire APIs")
+                description.set("A kotlin tool to intercept android network calls, modify requests/responses and mock entire APIs")
                 url.set("https://github.com/arildojr7/iris-mock")
                 licenses {
                     license {
@@ -70,7 +70,7 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.okio)
     implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.serialization)
+    implementation(libs.gson)
     testImplementation(libs.test.junit)
     testImplementation(libs.test.mockk)
 }
