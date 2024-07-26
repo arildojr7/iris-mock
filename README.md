@@ -8,7 +8,7 @@
   <img src="https://img.shields.io/github/license/arildojr7/iris-mock?color=0979ba" />
 </p>
 
-A kotlin-first tool to intercept android network calls, modify requests/responses and mock entire APIs. Also includes a cool DSL, that helps to reduce boilerplate code and simplify development.
+A kotlin tool to intercept android network calls, modify requests/responses and mock entire APIs. Also includes a cool DSL, that helps to reduce boilerplate code and simplify development.
 <br><br>
 btw, <b>Iris</b> is my daughter's name 🥰
 
@@ -59,14 +59,15 @@ Just create a class implementing the `Interceptor` interface and annotate it wit
 ```kotlin
 @IrisMockInterceptor
 class MyInterceptor : Interceptor {
-    override fun intercept(chain: Interceptor.Chain) = irisMockScope(chain) {
+    override fun intercept(chain: Interceptor.Chain) = irisMock(chain) {
+        enableLogs() // you can log requests
+
         onGet(contains = "user/profile") mockResponse userProfileJson
-        onPost(endsWith = "/login") then {
-            delay(2_000) // supports coroutine 
-            if (requestContains("validPassword")) mockResponse(successLoginJson)
+        onPost(endsWith = "/login") {
+            delay(2_000)
+            if (containsInRequestBody("validPassword")) mockResponse(successLoginJson)
             else mockResponse(errorPasswordJson)
         }
-        enableLogs() // you can log requests
     }
 }
 ```

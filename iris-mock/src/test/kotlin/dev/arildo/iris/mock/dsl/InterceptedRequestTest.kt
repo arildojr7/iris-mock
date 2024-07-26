@@ -1,6 +1,7 @@
-package dev.arildo.iris.mock
+package dev.arildo.iris.mock.dsl
 
-import dev.arildo.iris.mock.dsl.onIntercept
+import dev.arildo.iris.mock.IrisMockScope
+import dev.arildo.iris.mock.interceptCall
 import dev.arildo.iris.mock.util.Method
 import io.mockk.every
 import io.mockk.mockk
@@ -12,7 +13,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class IrisMockConditionTest {
+class InterceptedRequestTest1 {
     private val chainMock: Interceptor.Chain = mockk()
 
     @BeforeEach
@@ -22,13 +23,14 @@ class IrisMockConditionTest {
             .method(Method.GET.name, null)
             .build()
         every { chainMock.request() } returns blankGetRequest
+        every { chainMock.connection()?.protocol() } returns null
     }
 
     @Test
     fun `when endsWith and contains are empty, then throw exception`() {
         assertThrows(IllegalArgumentException::class.java) {
             IrisMockScope(chainMock).apply {
-                onIntercept(" ", " ", Method.GET)
+                interceptCall(" ", " ", Method.GET)
             }
         }
     }
@@ -37,7 +39,7 @@ class IrisMockConditionTest {
     fun `when endsWith and contains are not empty, then throw exception`() {
         assertThrows(IllegalArgumentException::class.java) {
             IrisMockScope(chainMock).apply {
-                onIntercept("any", "any", Method.GET)
+                interceptCall("any", "any", Method.GET)
             }
         }
     }
@@ -45,28 +47,28 @@ class IrisMockConditionTest {
     @Test
     fun `when endsWith matches url, then shouldIntercept must be true`() {
         IrisMockScope(chainMock).apply {
-            assertTrue(onIntercept("user/me", "", Method.GET).shouldIntercept)
+            assertTrue(interceptCall("user/me", "", Method.GET).shouldIntercept)
         }
     }
 
     @Test
     fun `when contains matches url, then shouldIntercept must be true`() {
         IrisMockScope(chainMock).apply {
-            assertTrue(onIntercept("", "user/me", Method.GET).shouldIntercept)
+            assertTrue(interceptCall("", "user/me", Method.GET).shouldIntercept)
         }
     }
 
     @Test
     fun `when endsWith not matches url, then shouldIntercept must be true`() {
         IrisMockScope(chainMock).apply {
-            assertFalse(onIntercept("any", "", Method.GET).shouldIntercept)
+            assertFalse(interceptCall("any", "", Method.GET).shouldIntercept)
         }
     }
 
     @Test
     fun `when contains not matches url, then shouldIntercept must be true`() {
         IrisMockScope(chainMock).apply {
-            assertFalse(onIntercept("", "any", Method.GET).shouldIntercept)
+            assertFalse(interceptCall("", "any", Method.GET).shouldIntercept)
         }
     }
 }

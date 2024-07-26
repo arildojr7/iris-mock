@@ -17,9 +17,9 @@ retrofitGson = "2.7.1"
 androidx-constraintLayout = "2.1.4"
 androidx-lifecycle = "2.7.0"
 coroutinesCore = "1.7.3"
-serializationJson = "1.5.1"
 junit = "5.10.2"
 mockk = "1.13.5"
+gson = "2.11.0"
 
 [libraries]
 agp420 = { module = "com.android.tools.build:gradle", version = "4.2.0" }
@@ -32,8 +32,8 @@ androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx-cor
 androidx-constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-constraintLayout" }
 androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutinesCore" }
-kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serializationJson" }
 
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofitGson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofitGson" }
