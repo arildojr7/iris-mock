@@ -11,7 +11,7 @@ open class InterceptedRequest internal constructor(
     internal val method: Method,
     internal val shouldIntercept: Boolean,
 ) {
-    internal fun addEvent(event: CallModifier) = IrisMock.callModifiers.add(event)
+    internal fun addModifier(modifier: CallModifier) = IrisMock.callModifiers.add(modifier)
 }
 
 internal fun IrisMockScope.interceptCall(

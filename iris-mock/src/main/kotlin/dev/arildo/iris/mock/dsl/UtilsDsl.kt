@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package dev.arildo.iris.mock.dsl
 
 import dev.arildo.iris.mock.InterceptedRequest
@@ -18,7 +20,7 @@ inline val emptyJsonArray: String
 
 fun InterceptedRequest.delay(timeMillis: Long) {
     if (shouldIntercept) {
-        addEvent(DelayModifier(irisMockScope.chain.hashCode(), timeMillis))
+        addModifier(DelayModifier(irisMockScope.chain.hashCode(), timeMillis))
     }
 }
 

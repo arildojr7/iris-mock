@@ -1,5 +1,5 @@
 @file:JvmMultifileClass
-@file:Suppress("unused", "UnusedReceiverParameter")
+@file:Suppress("UnusedReceiverParameter")
 
 package dev.arildo.iris.mock.dsl
 
@@ -25,7 +25,7 @@ import dev.arildo.iris.mock.callmodifier.CustomResponseBodyModifier
 
 infix fun InterceptedRequest.mockResponse(response: String) {
     if (shouldIntercept) {
-        addEvent(CustomResponseBodyModifier(irisMockScope.chain.hashCode(), response))
+        addModifier(CustomResponseBodyModifier(irisMockScope.chain.hashCode(), response))
     }
 }
 
@@ -49,6 +49,6 @@ infix fun InterceptedRequest.mockResponse(response: Map<String, Any?>) {
         IrisMock.logger.info("Mocking Response: [$method] $url")
 
         val jsonResponse = Gson().toJson(response)
-        addEvent(CustomResponseBodyModifier(irisMockScope.chain.hashCode(), jsonResponse))
+        addModifier(CustomResponseBodyModifier(irisMockScope.chain.hashCode(), jsonResponse))
     }
 }

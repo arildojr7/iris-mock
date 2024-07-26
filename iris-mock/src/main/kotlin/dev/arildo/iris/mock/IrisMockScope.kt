@@ -12,7 +12,7 @@ import java.util.logging.Logger
 class IrisMockScope internal constructor(internal val chain: Interceptor.Chain) {
 
     // as [Interceptor] requires a non null Response, let's build a blank one to return
-    // since the real party it's happening on [IrisMockWrapper]
+    // since the real processing it's happening on [IrisMockWrapper]
     internal fun build() = Response.Builder()
         .request(chain.request())
         .protocol(Protocol.HTTP_1_1)

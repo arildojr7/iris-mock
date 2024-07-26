@@ -1,5 +1,3 @@
-@file:Suppress("UnusedReceiverParameter")
-
 package dev.arildo.iris.plugin.codegen
 
 import org.jetbrains.kotlin.descriptors.ModuleDescriptor
