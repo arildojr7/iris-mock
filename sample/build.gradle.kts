@@ -40,7 +40,11 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.14"
     }
 
     compileOptions {
@@ -54,6 +58,8 @@ android {
 }
 
 dependencies {
+    implementation(platform(libs.compose.bom))
+    implementation(libs.compose.material3)
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.material)
@@ -61,7 +67,11 @@ dependencies {
     implementation(libs.retrofitGson)
     implementation(libs.androidx.constraintLayout)
     implementation(libs.androidx.lifecycle)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.activity.compose)
+    implementation(libs.compose.ui.tooling.preview)
 
+    debugImplementation(libs.compose.ui.tooling)
     testImplementation(libs.test.junit)
 }
 

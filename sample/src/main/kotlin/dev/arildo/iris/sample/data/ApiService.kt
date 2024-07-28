@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 
 interface ApiService {
-    @Headers("IrisTest: any")
+    @Headers("NormalHeader: any")
     @GET("/v1/public/characters")
     suspend fun getUserProfile(): Response<DummyResponse>
 
