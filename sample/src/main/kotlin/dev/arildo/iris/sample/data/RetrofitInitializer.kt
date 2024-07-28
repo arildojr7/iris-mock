@@ -18,6 +18,6 @@ object RetrofitInitializer {
         .build()
     fun apiService(): ApiService = createNetworkClient().create(ApiService::class.java)
 
-    const val TIMEOUT: Long = 10
-    const val BASE_URL = "https://gateway.marvel.com"
+    private const val TIMEOUT: Long = 10
+    private const val BASE_URL = "https://gateway.marvel.com"
 }
