@@ -7,6 +7,6 @@ internal data class AddHeaderResponseModifier(
     val header: Pair<String, String>,
 ) : ResponseModifier(chainHashCode) {
     override fun process(response: Response.Builder) {
-        response.addHeader(header.first, header.second)
+        response.header(header.first, header.second)
     }
 }

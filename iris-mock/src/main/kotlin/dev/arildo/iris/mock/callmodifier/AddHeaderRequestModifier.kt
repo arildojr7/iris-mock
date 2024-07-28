@@ -7,6 +7,6 @@ internal data class AddHeaderRequestModifier(
     val header: Pair<String, String>,
 ) : RequestModifier(chainHashCode) {
     override fun process(request: Request.Builder) {
-        request.addHeader(header.first, header.second)
+        request.header(header.first, header.second)
     }
 }
