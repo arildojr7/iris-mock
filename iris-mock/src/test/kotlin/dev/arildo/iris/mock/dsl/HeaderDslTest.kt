@@ -1,11 +1,12 @@
 package dev.arildo.iris.mock.dsl
 
-import dev.arildo.iris.mock.IrisMock
+import dev.arildo.iris.mock.ModifierProcessor
 import dev.arildo.iris.mock.callmodifier.AddHeaderRequestModifier
 import dev.arildo.iris.mock.callmodifier.AddHeaderResponseModifier
 import dev.arildo.iris.mock.callmodifier.RemoveHeaderRequestModifier
 import dev.arildo.iris.mock.callmodifier.RemoveHeaderResponseModifier
 import dev.arildo.iris.mock.util.Method
+import dev.arildo.iris.mock.util.createBlankResponse
 import io.mockk.every
 import io.mockk.mockk
 import okhttp3.Interceptor
@@ -28,11 +29,12 @@ class HeaderDslTest {
             .method(Method.GET.name, null)
             .build()
         every { chainMock.request() } returns blankGetRequest
+        every { chainMock.proceed(any()) } returns createBlankResponse(chainMock)
     }
 
     @AfterEach
     fun tearDown() {
-        IrisMock.callModifiers.clear()
+        ModifierProcessor.callModifiers.clear()
     }
 
     @Test
@@ -45,7 +47,7 @@ class HeaderDslTest {
 
         assertEquals(
             AddHeaderRequestModifier(chainMock.hashCode(), expectedHeader),
-            IrisMock.callModifiers.elementAt(0)
+            ModifierProcessor.callModifiers.elementAt(0)
         )
     }
 
@@ -59,7 +61,7 @@ class HeaderDslTest {
 
         assertEquals(
             RemoveHeaderRequestModifier(chainMock.hashCode(), expectedHeaderKey),
-            IrisMock.callModifiers.elementAt(0)
+            ModifierProcessor.callModifiers.elementAt(0)
         )
     }
 
@@ -74,7 +76,7 @@ class HeaderDslTest {
 
         assertEquals(
             AddHeaderResponseModifier(chainMock.hashCode(), expectedHeader),
-            IrisMock.callModifiers.elementAt(0)
+            ModifierProcessor.callModifiers.elementAt(0)
         )
     }
 
@@ -88,7 +90,7 @@ class HeaderDslTest {
 
         assertEquals(
             RemoveHeaderResponseModifier(chainMock.hashCode(), expectedHeaderKey),
-            IrisMock.callModifiers.elementAt(0)
+            ModifierProcessor.callModifiers.elementAt(0)
         )
     }
 }

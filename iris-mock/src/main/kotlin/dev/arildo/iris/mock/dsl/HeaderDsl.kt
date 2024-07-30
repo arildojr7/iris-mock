@@ -17,7 +17,7 @@ fun InterceptedRequest.addHeaderRequest(header: Pair<String, String>) {
 }
 
 /**
- * Remove a header to the original/modified request
+ * Remove a header from the original/modified request
  */
 fun InterceptedRequest.removeHeaderRequest(headerKey: String) {
     addModifier(RemoveHeaderRequestModifier(irisMockScope.chain.hashCode(), headerKey))
@@ -31,7 +31,7 @@ fun InterceptedRequest.addHeaderResponse(header: Pair<String, String>) {
 }
 
 /**
- * Remove a header to the original/modified response
+ * Remove a header from the original/modified response
  */
 fun InterceptedRequest.removeHeaderResponse(headerKey: String) {
     addModifier(RemoveHeaderResponseModifier(irisMockScope.chain.hashCode(), headerKey))
