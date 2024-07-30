@@ -35,16 +35,14 @@ infix fun InterceptedRequest.mockResponse(response: String) {
  * ```
  * // sample
  * override fun intercept(chain: Chain) = irisMock(chain) {
- *     onGet("/image") mockResponse mapOf("imageUrl" to "https://imageurl.com")
+ *     onGet("/image") mockResponse MyModel()
  *     // or
- *     onGet("/image") {
- *         mapOf("imageUrl" to "https://imageurl.com")
- *     }
+ *     onGet("/image") mockResponse mapOf("imageUrl" to "https://imageurl.com")
  * }
  * ```
  *  @param response used as response body
  */
-infix fun InterceptedRequest.mockResponse(response: Map<String, Any?>) {
+infix fun InterceptedRequest.mockResponse(response: Any) {
     if (shouldIntercept) {
         IrisMock.logger.info("Mocking Response: [$method] $url")
 
