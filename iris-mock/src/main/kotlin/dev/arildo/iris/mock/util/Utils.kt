@@ -1,7 +1,6 @@
 package dev.arildo.iris.mock.util
 
 import dev.arildo.iris.mock.IrisMock
-import dev.arildo.iris.mock.IrisMockWrapper.Companion.IRIS_MOCK_INTERCEPTORS
 import okhttp3.Interceptor.Chain
 import okhttp3.MediaType
 import okhttp3.Protocol

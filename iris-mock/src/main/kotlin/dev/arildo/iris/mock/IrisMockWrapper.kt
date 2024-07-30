@@ -2,6 +2,8 @@
 
 package dev.arildo.iris.mock
 
+import dev.arildo.iris.mock.util.INTERCEPTORS_FIELD
+import dev.arildo.iris.mock.util.IRIS_MOCK_INTERCEPTORS
 import dev.arildo.iris.mock.util.log
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -11,7 +13,7 @@ import okhttp3.Response
  * this class is called to instantiate the annotated interceptor
  * implementations, granting that all of them are considered.
  *
- * When using only the iris-mock dsl package, this class is not called,
+ * When using only the iris-mock api dependency, this class is not called,
  * since the interceptor is being added manually to the OkHttp builder.
  */
 internal class IrisMockWrapper : Interceptor {
@@ -33,9 +35,4 @@ internal class IrisMockWrapper : Interceptor {
             .apply { isAccessible = true }
             .get(listOf<Interceptor>()) as List<Interceptor>
     }.getOrDefault(emptyList())
-
-    companion object {
-        const val IRIS_MOCK_INTERCEPTORS = "dev.arildo.iris.mock.IrisMockContainer"
-        const val INTERCEPTORS_FIELD = "interceptors"
-    }
 }
