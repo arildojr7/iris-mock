@@ -24,8 +24,13 @@ mockk = "1.13.5"
 gson = "2.11.0"
 
 [libraries]
+#noinspection SimilarGradleDependency
 agp420 = { module = "com.android.tools.build:gradle", version = "4.2.0" }
+
+#noinspection SimilarGradleDependency
 agp710 = { module = "com.android.tools.build:gradle", version = "7.1.0" }
+
+#noinspection SimilarGradleDependency
 agp722 = { module = "com.android.tools.build:gradle", version = "7.2.2" }
 
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }

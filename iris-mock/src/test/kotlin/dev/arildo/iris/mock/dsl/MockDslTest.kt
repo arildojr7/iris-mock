@@ -31,7 +31,7 @@ class MockDslTest {
     }
 
     @Test
-    fun `when use custom response extension, then return correct json response`() {
+    fun `when use mockResponse map, then return correct json response`() {
         val expectedJson = "{\"key1\":\"value1\",\"key2\":\"value2\",\"key3\":\"value4\"}"
 
         irisMock(chainMock) {
@@ -49,4 +49,34 @@ class MockDslTest {
             IrisMock.callModifiers.elementAt(0)
         )
     }
+
+    @Test
+    fun `when use mockResponse string, then return correct json response`() {
+        val expectedJson = "{\"id\":2,\"name\":\"Arildo\"}"
+
+        irisMock(chainMock) {
+            onGet("user/me").mockResponse(expectedJson)
+        }
+
+        assertEquals(
+            CustomResponseBodyModifier(chainMock.hashCode(), expectedJson),
+            IrisMock.callModifiers.elementAt(0)
+        )
+    }
+
+    @Test
+    fun `when use mockResponse model class, then return correct json response`() {
+        val expectedJson = "{\"id\":2,\"name\":\"Arildo\"}"
+
+        irisMock(chainMock) {
+            onGet("user/me").mockResponse(ModelTest(id = 2, name = "Arildo"))
+        }
+
+        assertEquals(
+            CustomResponseBodyModifier(chainMock.hashCode(), expectedJson),
+            IrisMock.callModifiers.elementAt(0)
+        )
+    }
+
+    private data class ModelTest(val id: Int, val name: String)
 }
