@@ -1,8 +1,9 @@
 package dev.arildo.iris.mock.dsl
 
-import dev.arildo.iris.mock.IrisMock
+import dev.arildo.iris.mock.ModifierProcessor
 import dev.arildo.iris.mock.callmodifier.CustomResponseBodyModifier
 import dev.arildo.iris.mock.util.Method
+import dev.arildo.iris.mock.util.createBlankResponse
 import io.mockk.every
 import io.mockk.mockk
 import okhttp3.Interceptor
@@ -22,12 +23,13 @@ class MockDslTest {
             .method(Method.GET.name, null)
             .build()
         every { chainMock.request() } returns blankGetRequest
+        every { chainMock.proceed(any()) } returns createBlankResponse(chainMock)
         every { chainMock.connection()?.protocol() } returns null
     }
 
     @AfterEach
     fun tearDown() {
-        IrisMock.callModifiers.clear()
+        ModifierProcessor.callModifiers.clear()
     }
 
     @Test
@@ -46,7 +48,7 @@ class MockDslTest {
 
         assertEquals(
             CustomResponseBodyModifier(chainMock.hashCode(), expectedJson),
-            IrisMock.callModifiers.elementAt(0)
+            ModifierProcessor.callModifiers.elementAt(0)
         )
     }
 
@@ -60,7 +62,7 @@ class MockDslTest {
 
         assertEquals(
             CustomResponseBodyModifier(chainMock.hashCode(), expectedJson),
-            IrisMock.callModifiers.elementAt(0)
+            ModifierProcessor.callModifiers.elementAt(0)
         )
     }
 
@@ -74,7 +76,7 @@ class MockDslTest {
 
         assertEquals(
             CustomResponseBodyModifier(chainMock.hashCode(), expectedJson),
-            IrisMock.callModifiers.elementAt(0)
+            ModifierProcessor.callModifiers.elementAt(0)
         )
     }
 

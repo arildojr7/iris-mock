@@ -1,9 +1,10 @@
 package dev.arildo.iris.mock.dsl
 
-import dev.arildo.iris.mock.IrisMock
+import dev.arildo.iris.mock.ModifierProcessor
 import dev.arildo.iris.mock.callmodifier.CustomResponseBodyModifier
 import dev.arildo.iris.mock.util.APPLICATION_JSON
 import dev.arildo.iris.mock.util.Method
+import dev.arildo.iris.mock.util.createBlankResponse
 import io.mockk.every
 import io.mockk.mockk
 import okhttp3.Interceptor
@@ -27,12 +28,13 @@ class RequestMethodDslTest {
             .method(Method.GET.name, null)
             .build()
         every { chainMock.request() } returns blankGetRequest
+        every { chainMock.proceed(any()) } returns createBlankResponse(chainMock)
         every { chainMock.connection()?.protocol() } returns null
     }
 
     @AfterEach
     fun tearDown() {
-        IrisMock.callModifiers.clear()
+        ModifierProcessor.callModifiers.clear()
     }
 
     @Test
@@ -43,7 +45,7 @@ class RequestMethodDslTest {
 
         assertEquals(
             CustomResponseBodyModifier(chainMock.hashCode(), expectedResponse),
-            IrisMock.callModifiers.elementAt(0)
+            ModifierProcessor.callModifiers.elementAt(0)
         )
     }
 
@@ -53,7 +55,7 @@ class RequestMethodDslTest {
             onPost("user/me") mockResponse "anyResponse"
         }
 
-        assertTrue(IrisMock.callModifiers.isEmpty())
+        assertTrue(ModifierProcessor.callModifiers.isEmpty())
     }
 
     @Test
@@ -62,16 +64,16 @@ class RequestMethodDslTest {
             onPost("any") mockResponse "anyResponse"
         }
 
-        assertTrue(IrisMock.callModifiers.isEmpty())
+        assertTrue(ModifierProcessor.callModifiers.isEmpty())
     }
 
     @Test
-    fun `when method matches and url does not, then do not add it to the call modifiersl`() {
+    fun `when method matches and url does not, then do not add it to the call modifiers`() {
         irisMock(chainMock) {
             onGet("any") mockResponse "anyResponse"
         }
 
-        assertTrue(IrisMock.callModifiers.isEmpty())
+        assertTrue(ModifierProcessor.callModifiers.isEmpty())
     }
 
     @Test
@@ -86,7 +88,7 @@ class RequestMethodDslTest {
 
         assertEquals(
             CustomResponseBodyModifier(chainMock.hashCode(), expectedResponse),
-            IrisMock.callModifiers.elementAt(0)
+            ModifierProcessor.callModifiers.elementAt(0)
         )
     }
 
@@ -109,7 +111,7 @@ class RequestMethodDslTest {
 
         assertEquals(
             CustomResponseBodyModifier(chainMock.hashCode(), expectedResponse),
-            IrisMock.callModifiers.elementAt(0)
+            ModifierProcessor.callModifiers.elementAt(0)
         )
     }
 
@@ -132,7 +134,7 @@ class RequestMethodDslTest {
 
         assertEquals(
             CustomResponseBodyModifier(chainMock.hashCode(), expectedResponse),
-            IrisMock.callModifiers.elementAt(0)
+            ModifierProcessor.callModifiers.elementAt(0)
         )
     }
 
@@ -155,7 +157,7 @@ class RequestMethodDslTest {
 
         assertEquals(
             CustomResponseBodyModifier(chainMock.hashCode(), expectedResponse),
-            IrisMock.callModifiers.elementAt(0)
+            ModifierProcessor.callModifiers.elementAt(0)
         )
     }
 
@@ -178,7 +180,7 @@ class RequestMethodDslTest {
 
         assertEquals(
             CustomResponseBodyModifier(chainMock.hashCode(), expectedResponse),
-            IrisMock.callModifiers.elementAt(0)
+            ModifierProcessor.callModifiers.elementAt(0)
         )
     }
 
@@ -198,7 +200,7 @@ class RequestMethodDslTest {
 
         assertEquals(
             CustomResponseBodyModifier(chainMock.hashCode(), expectedJson),
-            IrisMock.callModifiers.elementAt(0)
+            ModifierProcessor.callModifiers.elementAt(0)
         )
     }
 }
