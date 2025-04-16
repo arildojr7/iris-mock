@@ -1,23 +1,23 @@
 [versions]
-kotlin = "2.0.0"
-agp = "8.9.0"
+kotlin = "2.1.10"
+agp = "8.9.1"
 okhttp = "3.14.9"
-okio = "2.8.0"
+okio = "3.2.0"
 asm = "9.7"
 buildconfig = "3.0.3"
 gradlePublish = "1.2.1"
 ktlintPlugin = "11.3.2"
 irisMock = "0.0.1-SNAPSHOT"
 androidx-appcompat = "1.7.0"
-androidx-core = "1.15.0"
+androidx-core = "1.16.0"
 androidx-material = "1.12.0"
-composeBom = "2025.03.00"
+composeBom = "2025.04.00"
 activityCompose = "1.10.1"
 retrofit = "2.9.0"
 retrofitGson = "2.7.1"
 androidx-constraintLayout = "2.2.1"
 androidx-lifecycle = "2.8.7"
-coroutinesCore = "1.7.3"
+coroutinesCore = "1.8.1"
 junit = "5.10.2"
 mockk = "1.13.5"
 gson = "2.11.0"
@@ -57,7 +57,6 @@ asm-util = { module = "org.ow2.asm:asm-util", version.ref = "asm" }
 asm-commons = { module = "org.ow2.asm:asm-commons", version.ref = "asm" }
 
 kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
-kotlin-compiler = { module = "org.jetbrains.kotlin:kotlin-compiler-embeddable", version.ref = "kotlin" }
 
 test-junit = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
 test-mockk = { module = "io.mockk:mockk", version.ref = "mockk" }

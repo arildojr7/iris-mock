@@ -1,6 +1,5 @@
 package dev.arildo.irismock.callmodifier
 
-import dev.arildo.irismock.callmodifier.ResponseModifier
 import dev.arildo.irismock.util.HttpCode
 import okhttp3.Response
 

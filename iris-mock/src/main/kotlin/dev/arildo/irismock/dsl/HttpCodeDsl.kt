@@ -3,8 +3,8 @@
 
 package dev.arildo.irismock.dsl
 
-import dev.arildo.irismock.callmodifier.SetHttpCodeResponseModifier
 import dev.arildo.irismock.InterceptedRequest
+import dev.arildo.irismock.callmodifier.SetHttpCodeResponseModifier
 import dev.arildo.irismock.util.HttpCode
 
 /**

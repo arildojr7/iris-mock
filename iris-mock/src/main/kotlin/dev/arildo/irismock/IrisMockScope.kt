@@ -12,7 +12,7 @@ class IrisMockScope internal constructor(internal val chain: Interceptor.Chain) 
 
     internal fun build(): Response {
         return if (isUsingIrisMockPlugin()) {
-            /* when using iris-mock plugin to auto-inject interceptors, then return
+            /* when using IrisMock plugin to inject interceptors, then return
              * a blank response (as the Interceptor interface requires one).
              * The real processing will take place on [IrisMockWrapper],
              * considering all configured interceptors

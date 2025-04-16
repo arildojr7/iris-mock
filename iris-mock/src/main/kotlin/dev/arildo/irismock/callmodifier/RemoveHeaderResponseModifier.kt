@@ -1,6 +1,5 @@
 package dev.arildo.irismock.callmodifier
 
-import dev.arildo.irismock.callmodifier.ResponseModifier
 import okhttp3.Response
 
 internal data class RemoveHeaderResponseModifier(

@@ -5,7 +5,7 @@ import dev.arildo.irismock.dsl.IrisMockDslMarker
 import dev.arildo.irismock.util.Method
 
 @IrisMockDslMarker
-open class InterceptedRequest internal constructor(
+class InterceptedRequest internal constructor(
     internal val irisMockScope: IrisMockScope,
     internal val url: String,
     internal val method: Method,

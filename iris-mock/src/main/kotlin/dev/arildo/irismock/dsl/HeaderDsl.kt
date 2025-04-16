@@ -3,11 +3,11 @@
 
 package dev.arildo.irismock.dsl
 
+import dev.arildo.irismock.InterceptedRequest
 import dev.arildo.irismock.callmodifier.AddHeaderRequestModifier
 import dev.arildo.irismock.callmodifier.AddHeaderResponseModifier
 import dev.arildo.irismock.callmodifier.RemoveHeaderRequestModifier
 import dev.arildo.irismock.callmodifier.RemoveHeaderResponseModifier
-import dev.arildo.irismock.InterceptedRequest
 
 /**
  * Add header to the original/modified request

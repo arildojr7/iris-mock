@@ -48,7 +48,7 @@ fun AppScaffold(
                             contentDescription = ""
                         )
                         Spacer(modifier = Modifier.size(8.dp))
-                        Text("iris-mock")
+                        Text("IrisMock")
                     }
 
                 },

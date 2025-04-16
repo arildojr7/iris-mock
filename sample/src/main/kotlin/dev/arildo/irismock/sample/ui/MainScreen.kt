@@ -15,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.arildo.irismock.util.HttpCode
 import dev.arildo.irismock.sample.ui.components.AppScaffold
 import dev.arildo.irismock.sample.ui.components.BlankLine
 import dev.arildo.irismock.sample.ui.components.CodeBlock
@@ -23,6 +22,7 @@ import dev.arildo.irismock.sample.ui.components.MultilineText
 import dev.arildo.irismock.sample.ui.components.TextAttribution
 import dev.arildo.irismock.sample.ui.components.TextCommented
 import dev.arildo.irismock.sample.ui.theme.AppTheme
+import dev.arildo.irismock.util.HttpCode
 
 @Composable
 fun MainScreen(uiState: MainUiState, onIrisMockChecked: (checked: Boolean) -> Unit) {

@@ -8,7 +8,7 @@ You can choose to configure iris mock for entire project or just for a specific 
     ```kotlin
     // add plugin to app module build.gradle.kts
     plugins {
-        id("dev.arildo.iris-mock-plugin") version "1.1.0-alpha04"
+        id("dev.arildo.iris-mock-plugin") version "LATEST_VERSION"
     }
     ```
 
@@ -17,7 +17,7 @@ You can choose to configure iris mock for entire project or just for a specific 
     ```kotlin
     // add plugin to app module build.gradle
     plugins {
-        id "dev.arildo.iris-mock-plugin" version "1.1.0-alpha04"
+        id "dev.arildo.iris-mock-plugin" version "LATEST_VERSION"
     }
     ```
 <details>
@@ -30,7 +30,7 @@ buildscript {
         maven { url = uri("https://plugins.gradle.org/m2/") }
     }
     dependencies {
-        classpath("dev.arildo:iris-mock-plugin:1.1.0-alpha04")
+        classpath("dev.arildo:iris-mock-plugin:LATEST_VERSION")
     }
 }
 
@@ -45,7 +45,7 @@ apply(plugin = "dev.arildo.iris-mock-plugin")
     ```kotlin
     // add plugin to app module build.gradle.kts
     plugins {
-        id("dev.arildo.iris-mock-plugin") version "1.1.0-alpha04" apply false
+        id("dev.arildo.iris-mock-plugin") version "LATEST_VERSION" apply false
     }
 
     buildTypes {

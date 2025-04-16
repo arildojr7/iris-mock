@@ -1,6 +1,5 @@
 package dev.arildo.irismock.callmodifier
 
-import dev.arildo.irismock.callmodifier.RequestModifier
 import okhttp3.Request
 
 internal data class RemoveHeaderRequestModifier(

@@ -35,6 +35,6 @@ fun IrisMockSetupScope.enableLogs() {
  * }
  * ```
  */
-fun IrisMockSetupScope.interceptors(vararg interceptors: KFunction0<Interceptor>) {
+fun IrisMockSetupScope.interceptors(vararg interceptors: () -> Interceptor) {
     IrisMock.interceptors.addAll(interceptors)
 }
