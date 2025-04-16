@@ -7,7 +7,6 @@ interface and annotate it with `@IrisMockInterceptor`.
 Using `irisMock(chain)`, all DSL functions will be available:
 
 ```kotlin
-@IrisMockInterceptor
 class MyFirstInterceptor : Interceptor {
 
     override fun intercept(chain: Chain) = irisMock(chain) {

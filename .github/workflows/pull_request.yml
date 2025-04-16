@@ -42,9 +42,6 @@ jobs:
       - name: Build iris-mock-plugin
         run: ./gradlew :iris-mock-plugin:publishToMavenLocal
 
-      - name: Build iris-mock-compiler
-        run: ./gradlew :iris-mock-compiler:publishToMavenLocal
-
       - name: Build app sample
         run: ./gradlew :sample:assembleDebug
 

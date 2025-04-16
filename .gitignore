@@ -17,4 +17,3 @@ local.properties
 *.gpg
 /iris-mock/build/
 /iris-mock-plugin/build/
-/iris-mock-compiler/build/
