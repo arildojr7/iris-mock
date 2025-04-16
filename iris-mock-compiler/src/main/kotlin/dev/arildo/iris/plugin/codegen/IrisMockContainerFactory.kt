@@ -8,7 +8,7 @@ internal fun irisMockContainer(classes: List<String>) =
 
 import okhttp3.Interceptor
 
-private object $IRIS_MOCK_CONTAINER {
+object $IRIS_MOCK_CONTAINER {
     val interceptors = listOf<Interceptor>(
 ${classes.joinToString(",\n") { "        $it()" }}
     )

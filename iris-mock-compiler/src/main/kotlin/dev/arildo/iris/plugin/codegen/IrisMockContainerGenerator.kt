@@ -1,52 +1,22 @@
 package dev.arildo.iris.plugin.codegen
 
-import com.google.auto.service.AutoService
-import dev.arildo.iris.plugin.utils.IRIS_MOCK_ANNOTATION
 import dev.arildo.iris.plugin.utils.IRIS_MOCK_CONTAINER
 import dev.arildo.iris.plugin.utils.IRIS_MOCK_PACKAGE
-import org.jetbrains.kotlin.descriptors.ModuleDescriptor
-import org.jetbrains.kotlin.psi.KtClassOrObject
-import org.jetbrains.kotlin.psi.KtFile
-import org.jetbrains.kotlin.psi.psiUtil.getSuperNames
+import org.jetbrains.kotlin.ir.declarations.IrClass
+import org.jetbrains.kotlin.ir.util.packageFqName
 import java.io.File
 
-@AutoService(CodeGenerator::class)
 internal class IrisMockContainerGenerator : CodeGenerator {
-
-    override fun generateCode(
-        codeGenDir: File,
-        module: ModuleDescriptor,
-        projectFiles: Collection<KtFile>
-    ) {
-        val annotatedClasses = projectFiles
-            .flatMap { it.classesAndInnerClasses() }
-            .filter { it.isAnnotatedWithIrisMock() }
-            .onEach { it.assertThatImplementsInterceptorInterface() }
-            .mapNotNull { it.fqName?.asString() }
-
+    override fun generateCode(codeGenDir: File, annotatedClasses: List<IrClass>) {
         generateIrisMockContainer(
             codeGenDir = codeGenDir,
             packageName = IRIS_MOCK_PACKAGE,
             fileName = IRIS_MOCK_CONTAINER,
-            content = irisMockContainer(annotatedClasses)
+            content = irisMockContainer(annotatedClasses.map { it.qualifiedName })
         )
+        println("@@@ generateCode")
+
     }
 
-    private fun KtClassOrObject.isAnnotatedWithIrisMock() =
-        annotationEntries.any { it.shortName.toString().contains(IRIS_MOCK_ANNOTATION) }
-
-    private fun KtClassOrObject.assertThatImplementsInterceptorInterface() {
-        if (!getSuperNames().contains("Interceptor")) {
-            error("${fqName?.shortNameOrSpecial()} does not implements the okhttp3.Interceptor interface")
-        }
-    }
-
-    private fun KtFile.classesAndInnerClasses(): List<KtClassOrObject> {
-        val children = findChildrenByClass(KtClassOrObject::class.java)
-
-        return generateSequence(children.toList()) { list ->
-            list.flatMap { it.declarations.filterIsInstance<KtClassOrObject>() }
-                .ifEmpty { null }
-        }.flatten().toList()
-    }
+    private val IrClass.qualifiedName: String get() = packageFqName?.asString() + "." + name.asString()
 }

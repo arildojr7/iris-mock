@@ -1,6 +1,5 @@
 package dev.arildo.iris.plugin
 
-import com.google.auto.service.AutoService
 import dev.arildo.iris.plugin.BuildConfig.PLUGIN_ID
 import dev.arildo.iris.plugin.utils.srcGenDirKey
 import dev.arildo.iris.plugin.utils.srcGenDirName
@@ -9,7 +8,6 @@ import org.jetbrains.kotlin.compiler.plugin.CliOption
 import org.jetbrains.kotlin.compiler.plugin.CommandLineProcessor
 import org.jetbrains.kotlin.config.CompilerConfiguration
 
-@AutoService(CommandLineProcessor::class)
 class IrisMockCommandLineProcessor : CommandLineProcessor {
 
     override val pluginId: String = PLUGIN_ID

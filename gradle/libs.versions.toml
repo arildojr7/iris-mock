@@ -1,36 +1,35 @@
 [versions]
-kotlin = "1.9.24"
-agp = "8.3.0"
+kotlin = "2.0.0"
+agp = "8.9.0"
 okhttp = "3.14.9"
 okio = "2.8.0"
-asm = "9.6"
+asm = "9.7"
 buildconfig = "3.0.3"
 gradlePublish = "1.2.1"
 ktlintPlugin = "11.3.2"
-autoService = "1.1.1"
-irisMock = "1.1.0"
+irisMock = "0.0.1-SNAPSHOT"
 androidx-appcompat = "1.7.0"
-androidx-core = "1.13.1"
+androidx-core = "1.15.0"
 androidx-material = "1.12.0"
-composeBom = "2024.06.00"
-activityCompose = "1.9.1"
+composeBom = "2025.03.00"
+activityCompose = "1.10.1"
 retrofit = "2.9.0"
 retrofitGson = "2.7.1"
-androidx-constraintLayout = "2.1.4"
-androidx-lifecycle = "2.8.4"
+androidx-constraintLayout = "2.2.1"
+androidx-lifecycle = "2.8.7"
 coroutinesCore = "1.7.3"
 junit = "5.10.2"
 mockk = "1.13.5"
 gson = "2.11.0"
 
 [libraries]
-#noinspection SimilarGradleDependency
+#noinspection AndroidGradlePluginVersion,SimilarGradleDependency
 agp420 = { module = "com.android.tools.build:gradle", version = "4.2.0" }
 
-#noinspection SimilarGradleDependency
+#noinspection AndroidGradlePluginVersion,SimilarGradleDependency
 agp710 = { module = "com.android.tools.build:gradle", version = "7.1.0" }
 
-#noinspection SimilarGradleDependency
+#noinspection AndroidGradlePluginVersion,SimilarGradleDependency
 agp722 = { module = "com.android.tools.build:gradle", version = "7.2.2" }
 
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
@@ -60,9 +59,6 @@ asm-commons = { module = "org.ow2.asm:asm-commons", version.ref = "asm" }
 kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-compiler = { module = "org.jetbrains.kotlin:kotlin-compiler-embeddable", version.ref = "kotlin" }
 
-autoService-processor = { module = "com.google.auto.service:auto-service", version.ref = "autoService" }
-autoService-annotations = { module = "com.google.auto.service:auto-service-annotations", version.ref = "autoService" }
-
 test-junit = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
 test-mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 
@@ -73,8 +69,8 @@ asm = ["asm-core", "asm-commons", "asm-util"]
 application = { id = "com.android.application", version.ref = "agp" }
 library = { id = "com.android.library", version.ref = "agp" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 buildconfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildconfig" }
 gradlePublish = { id = "com.gradle.plugin-publish", version.ref = "gradlePublish" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintPlugin" }

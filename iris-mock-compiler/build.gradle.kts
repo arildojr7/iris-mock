@@ -2,7 +2,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.buildconfig)
     alias(libs.plugins.ktlint)
@@ -78,8 +77,7 @@ tasks.withType<KotlinCompile> {
 
 dependencies {
     compileOnly(libs.kotlin.compiler)
-    compileOnly(libs.autoService.annotations)
-    kapt(libs.autoService.processor)
+    compileOnly(libs.okhttp)
 }
 
 val pluginId = findProperty("PLUGIN_ID").toString()

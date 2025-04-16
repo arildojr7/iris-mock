@@ -40,11 +40,11 @@ internal class CodeGenerationExtension(
         if (didRecompile) return null
         didRecompile = true
 
-        codeGenDir.listFiles()?.forEach {
-            check(it.deleteRecursively()) { "Could not clean file: $it" }
-        }
-
-        codeGenerator?.generateCode(codeGenDir, module, files)
+//        codeGenDir.listFiles()?.forEach {
+//            check(it.deleteRecursively()) { "Could not clean file: $it" }
+//        }
+//
+//        codeGenerator?.generateCode(codeGenDir, files)
 
         // This restarts the analysis phase and will include our files.
         return RetryWithAdditionalRoots(

@@ -29,7 +29,7 @@ class IrisMockSubPlugin : KotlinCompilerPluginSupportPlugin {
                 listOf(
                     SubpluginOption(
                         key = "src-gen-dir",
-                        value = "${project.buildDir}${File.separator}iris-mock"
+                        value = "${project.buildDir}"
                     )
                 )
             }

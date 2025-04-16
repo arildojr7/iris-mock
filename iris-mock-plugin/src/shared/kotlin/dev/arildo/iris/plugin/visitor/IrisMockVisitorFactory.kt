@@ -9,8 +9,7 @@ import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Internal
 import org.objectweb.asm.ClassVisitor
 
-abstract class IrisMockVisitorFactory :
-    AsmClassVisitorFactory<IrisMockVisitorFactory.Params> {
+abstract class IrisMockVisitorFactory : AsmClassVisitorFactory<IrisMockVisitorFactory.Params> {
 
     override fun createClassVisitor(
         classContext: ClassContext,

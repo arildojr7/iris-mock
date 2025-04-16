@@ -1,14 +1,12 @@
 package dev.arildo.iris.plugin.codegen
 
-import org.jetbrains.kotlin.descriptors.ModuleDescriptor
-import org.jetbrains.kotlin.psi.KtFile
+import org.jetbrains.kotlin.ir.declarations.IrClass
 import java.io.File
 
 interface CodeGenerator {
     fun generateCode(
         codeGenDir: File,
-        module: ModuleDescriptor,
-        projectFiles: Collection<KtFile>
+        annotatedClasses: List<IrClass>,
     )
 
     fun CodeGenerator.generateIrisMockContainer(

@@ -16,7 +16,6 @@ class SampleInterceptor : Interceptor {
         enableLogs()
 
         if (!enableMocks) return@irisMock
-
         onGet(endsWith = "/public/characters") {
             addHeaderRequest("AddedOne" to "newValue")
             addHeaderResponse("AnotherOne" to "anotherValue")
