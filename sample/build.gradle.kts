@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "dev.arildo.iris.sample"
+    namespace = "dev.arildo.irismock.sample"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "dev.arildo.iris.mock"
+        applicationId = "dev.arildo.irismock"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -80,5 +80,4 @@ dependencies {
 tasks.preBuild {
     // First of all, publish plugin locally to get all changes
     dependsOn(":iris-mock-plugin:publishToMavenLocal")
-    dependsOn(":iris-mock-compiler:publishToMavenLocal")
 }

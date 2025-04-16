@@ -100,7 +100,7 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
-            adb uninstall dev.arildo.iris.mock || true
+            adb uninstall dev.arildo.irismock || true
             adb install sample-debug.apk
             curl -Ls "https://get.maestro.mobile.dev" | bash
             $HOME/.maestro/bin/maestro test .maestro/
