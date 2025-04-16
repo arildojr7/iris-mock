@@ -1,22 +1,33 @@
 Once iris mock dependency is configured, you can start creating your custom interceptors.
 
-## Creating class
+## Create interceptor
 Create a new class implementing the [Interceptor](https://square.github.io/okhttp/3.x/okhttp/okhttp3/Interceptor.html){ target=_blank } 
-interface and annotate it with `@IrisMockInterceptor`.
+interface.
 
 Using `irisMock(chain)`, all DSL functions will be available:
 
 ```kotlin
 class MyFirstInterceptor : Interceptor {
-
     override fun intercept(chain: Chain) = irisMock(chain) {
         onGet(endsWith = "/my/endpoint") mockResponse "myCoolJsonResponse"
     }
-    
 }
 ```
 
-That's all :sunglasses:
+## Add interceptor to IrisMock
+You need to add the interceptors to IrisMock `interceptors()` dsl on `Application.onCreate()`:
+```kotlin
+class SampleApp : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        startIrisMock {
+            enableLogs()
+            interceptors(::MyFirstInterceptor)
+        }
+    }
+}
+```
+
 
 Run your app and you should see the following output on logcat:
 
