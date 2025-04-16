@@ -100,8 +100,7 @@ jobs:
             adb uninstall dev.arildo.irismock || true
             adb install sample-debug.apk
             curl -Ls "https://get.maestro.mobile.dev" | bash
-            $HOME/.maestro/bin/maestro test .maestro/
-            exit 0
+            $HOME/.maestro/bin/maestro test .maestro/ && killall -INT crashpad_handler || true
 
   unit-tests:
     runs-on: ubuntu-latest
