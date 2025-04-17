@@ -6,7 +6,6 @@ package dev.arildo.irismock.dsl
 import dev.arildo.irismock.IrisMock
 import dev.arildo.irismock.IrisMockSetupScope
 import okhttp3.Interceptor
-import kotlin.reflect.KFunction0
 
 /**
  * Entry point for IrisMock setup.

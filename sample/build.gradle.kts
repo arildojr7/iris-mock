@@ -51,12 +51,6 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
-
-    sourceSets {
-        getByName("main") {
-            kotlin.srcDirs( "src/main/java", "build/generated/source/iris-mock")
-        }
-    }
 }
 
 dependencies {

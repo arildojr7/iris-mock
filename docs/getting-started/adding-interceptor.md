@@ -1,4 +1,4 @@
-Once iris mock dependency is configured, you can start creating your custom interceptors.
+Once IrisMock dependency is configured, you can start creating your custom interceptors.
 
 ## Create interceptor
 Create a new class implementing the [Interceptor](https://square.github.io/okhttp/3.x/okhttp/okhttp3/Interceptor.html){ target=_blank } 
@@ -50,6 +50,6 @@ Need more examples? take a look at the  [:fontawesome-brands-github: app sample]
 
 !!! note ""
 
-    If you configured iris mock for a specific build variant, you need to create the classes according. 
+    If you configured IrisMock for a specific build variant, you need to create the classes according. 
     
     [See more](https://developer.android.com/build/build-variants#sourcesets){ target=_blank }

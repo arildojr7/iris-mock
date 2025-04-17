@@ -1,5 +1,5 @@
-To use iris mock you need to add its dependency to your gradle files.
-You can choose to configure iris mock for entire project or just for a specific build variant:
+To use IrisMock you need to add its dependency to your gradle files.
+You can choose to configure IrisMock for entire project or just for a specific build variant:
 
 ## Configuring on entire project
 
@@ -66,5 +66,5 @@ You are now ready to create your own interceptors :sunglasses:
 
 !!! note ""
 
-    Since iris mock uses the new `Transform API`, it only works on AGP 4.2.0+
+    Since IrisMock uses the new `Transform API`, it only works on AGP 4.2.0+
 

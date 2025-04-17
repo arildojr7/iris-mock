@@ -1,9 +1,9 @@
 package dev.arildo.irismock.dsl
 
 import dev.arildo.irismock.ModifierProcessor
+import dev.arildo.irismock.Utils.createBlankResponse
 import dev.arildo.irismock.callmodifier.CustomResponseBodyModifier
 import dev.arildo.irismock.util.Method
-import dev.arildo.irismock.util.createBlankResponse
 import io.mockk.every
 import io.mockk.mockk
 import okhttp3.Interceptor

@@ -1,8 +1,9 @@
 package dev.arildo.irismock
 
-import dev.arildo.irismock.util.IRIS_MOCK_TAG
 import okhttp3.Interceptor
 import java.util.logging.Logger
+
+private const val IRIS_MOCK_TAG = "IrisMock"
 
 object IrisMock {
     internal var enableLogs = false

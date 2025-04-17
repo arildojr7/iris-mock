@@ -1,12 +1,12 @@
 package dev.arildo.irismock.dsl
 
 import dev.arildo.irismock.ModifierProcessor
+import dev.arildo.irismock.Utils.createBlankResponse
 import dev.arildo.irismock.callmodifier.AddHeaderRequestModifier
 import dev.arildo.irismock.callmodifier.AddHeaderResponseModifier
 import dev.arildo.irismock.callmodifier.RemoveHeaderRequestModifier
 import dev.arildo.irismock.callmodifier.RemoveHeaderResponseModifier
 import dev.arildo.irismock.util.Method
-import dev.arildo.irismock.util.createBlankResponse
 import io.mockk.every
 import io.mockk.mockk
 import okhttp3.Interceptor

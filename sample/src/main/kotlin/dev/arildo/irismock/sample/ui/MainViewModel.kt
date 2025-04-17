@@ -47,7 +47,7 @@ class MainViewModel : ViewModel() {
             responseBody = gson.toJson(result.body() ?: errorBody),
             responseCode = result.code().let { HttpCode.getEnum(it) }
         )
-        delay(300)
+        delay(200)
         _uiState.emit(uiState)
     }
 
