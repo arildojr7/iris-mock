@@ -1,4 +1,4 @@
-site_name: iris mock
+site_name: IrisMock - Official documentation
 site_url: https://irismock.arildo.dev
 repo_url: https://github.com/arildojr7/iris-mock
 repo_name: arildojr7/iris-mock
@@ -85,7 +85,7 @@ nav:
   - Home: index.md
   - Getting Started:
       - Configure Gradle: getting-started/configure-gradle.md
-      - Creating Interceptor: getting-started/creating-interceptor.md
+      - Adding Interceptor: getting-started/adding-interceptor.md
   - DSL functions:
       - Conditionals: dsl/dsl.md
       - Headers: dsl/dsl.md

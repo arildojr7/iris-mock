@@ -1,4 +1,4 @@
-name: pr
+name: build
 
 on:
   pull_request:
@@ -42,11 +42,8 @@ jobs:
       - name: Build iris-mock-plugin
         run: ./gradlew :iris-mock-plugin:publishToMavenLocal
 
-      - name: Build iris-mock-compiler
-        run: ./gradlew :iris-mock-compiler:publishToMavenLocal
-
       - name: Build app sample
-        run: ./gradlew :sample:assembleDebug
+        run: ./gradlew :sample:assembleDebug --refresh-dependencies
 
       - uses: actions/upload-artifact@v4
         with:
@@ -100,10 +97,10 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
-            adb uninstall dev.arildo.iris.mock || true
+            adb uninstall dev.arildo.irismock || true
             adb install sample-debug.apk
             curl -Ls "https://get.maestro.mobile.dev" | bash
-            $HOME/.maestro/bin/maestro test .maestro/
+            $HOME/.maestro/bin/maestro test .maestro/ && killall -INT crashpad_handler || true
 
   unit-tests:
     runs-on: ubuntu-latest
@@ -119,4 +116,4 @@ jobs:
         uses: gradle/gradle-build-action@v2.4.2
 
       - name: Run unit tests
-        run: ./gradlew test
+        run: ./gradlew :iris-mock:test

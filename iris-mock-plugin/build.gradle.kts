@@ -23,7 +23,7 @@ gradlePlugin {
             description =
                 "Injects custom interceptors at bytecode level in OkHttpClient. See GitHub for more info"
             tags.set(listOf("interceptor", "android", "okhttp", "mock"))
-            implementationClass = "dev.arildo.iris.plugin.IrisMockGradlePlugin"
+            implementationClass = "dev.arildo.irismock.plugin.IrisMockGradlePlugin"
         }
     }
 }
@@ -95,9 +95,8 @@ val pluginId = findProperty("PLUGIN_ID").toString()
 val pluginArtifactId = findProperty("PLUGIN_ARTIFACT_ID").toString()
 
 buildConfig {
-    packageName("dev.arildo.iris.plugin")
+    packageName("dev.arildo.irismock.plugin")
     buildConfigField("String", "PLUGIN_ID", "\"${pluginId}\"")
     buildConfigField("String", "PLUGIN_GROUP_ID", "\"${group}\"")
-    buildConfigField("String", "PLUGIN_ARTIFACT_ID", "\"${pluginArtifactId}\"")
     buildConfigField("String", "PLUGIN_VERSION", "\"${version}\"")
 }

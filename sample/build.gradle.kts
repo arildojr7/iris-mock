@@ -1,18 +1,18 @@
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.irisMock)
 }
 
 android {
-    namespace = "dev.arildo.iris.sample"
-    compileSdk = 34
+    namespace = "dev.arildo.irismock.sample"
+    compileSdk = 35
 
     defaultConfig {
-        applicationId = "dev.arildo.iris.mock"
+        applicationId = "dev.arildo.irismock"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0.0"
 
@@ -41,10 +41,6 @@ android {
 
     buildFeatures {
         compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.14"
     }
 
     compileOptions {
@@ -78,5 +74,4 @@ dependencies {
 tasks.preBuild {
     // First of all, publish plugin locally to get all changes
     dependsOn(":iris-mock-plugin:publishToMavenLocal")
-    dependsOn(":iris-mock-compiler:publishToMavenLocal")
 }
